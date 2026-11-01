@@ -12,7 +12,6 @@
   },
   "common": {
     "close": "Cerrar",
-    "back": "Atrás",
     "dismiss": "Cerrar aviso",
     "playersRange": "{min}–{max} {max, plural, one {jugador} other {jugadores}}",
     "players": "{n, plural, one {# jugador} other {# jugadores}}",
@@ -94,7 +93,6 @@
     "fogHint": "Solo para revisar el reparto; en la partida sigue boca abajo",
     "printed": "Como en el reglamento",
     "printedHint": "El mapa exacto del escenario, para una primera partida",
-    "language": "Idioma",
     "build": "Crear tablero"
   },
   "scenario": {
@@ -157,8 +155,7 @@
   },
   "language": {
     "title": "Idioma",
-    "subtitle": "La app empieza en el idioma de tu teléfono. Un código de tablero vale en cualquier idioma.",
-    "note": "Los nombres de terrenos, recursos y escenarios están traducidos."
+    "button": "Idioma: {name}"
   },
   "pwa": {
     "installTitle": "Instalar como app",

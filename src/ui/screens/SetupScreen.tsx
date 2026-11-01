@@ -1,15 +1,4 @@
-import {
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Dices,
-  Hash,
-  House,
-  Languages,
-  Sailboat,
-  Trophy,
-  Users,
-} from 'lucide-react'
+import { Check, ChevronDown, Dices, Hash, House, Sailboat, Trophy, Users } from 'lucide-react'
 import { useState } from 'react'
 import {
   groupsOf,
@@ -43,7 +32,8 @@ import {
   scenarioName,
   victoryLabel,
 } from '../format.ts'
-import { LANGS, langInfo, useI18n } from '../i18n/index.ts'
+import { LanguageMenu } from '../components/LanguageMenu.tsx'
+import { useI18n } from '../i18n/index.ts'
 import { groupOf, type Settings } from '../state/storage.ts'
 import styles from './screens.module.css'
 
@@ -53,17 +43,15 @@ export function SetupScreen({
   onChange,
   onNewCode,
   onPickScenario,
-  onLanguage,
   onBuild,
 }: {
   settings: Settings
   onChange: (change: Partial<Settings>) => void
   onNewCode: () => void
   onPickScenario: () => void
-  onLanguage: () => void
   onBuild: () => void
 }) {
-  const { t, lang } = useI18n()
+  const { t } = useI18n()
   const group = groupOf(settings)
   const variant = resolveVariant(group, settings.seats)
   // What's typed, until it's committed; a new code from elsewhere (the dice) replaces it.
@@ -122,8 +110,13 @@ export function SetupScreen({
 
   return (
     <main className={`${styles.screen} ${styles.paper}`}>
-      <h1 className={styles.screenTitle}>{t('setup.title')}</h1>
-      <p className={styles.lead}>{t('setup.subtitle')}</p>
+      <header className={styles.paperHeader}>
+        <div className={styles.titles}>
+          <h1 className={styles.screenTitle}>{t('setup.title')}</h1>
+          <p className={styles.lead}>{t('setup.subtitle')}</p>
+        </div>
+        <LanguageMenu tone="paper" />
+      </header>
 
       <section className={styles.section} aria-labelledby="setup-game">
         <SectionTitle id="setup-game">{t('setup.game')}</SectionTitle>
@@ -286,24 +279,6 @@ export function SetupScreen({
               onChange={(fog) => onChange({ fog })}
             />
           ) : null}
-        </Card>
-      </section>
-
-      <section className={styles.section} aria-labelledby="setup-language">
-        <SectionTitle id="setup-language">{t('setup.language')}</SectionTitle>
-        <Card>
-          <button type="button" className={styles.row} onClick={onLanguage}>
-            <span className={styles.rowIcon}>
-              <Languages size={24} aria-hidden="true" />
-            </span>
-            <span className={styles.rowText}>
-              <span className={styles.rowTitle} lang={langInfo(lang).tag}>
-                {langInfo(lang).name}
-              </span>
-              <span className={styles.rowMeta}>{LANGS.map((l) => l.name).join(' · ')}</span>
-            </span>
-            <ChevronRight size={22} className={styles.rowChevron} aria-hidden="true" />
-          </button>
         </Card>
       </section>
 

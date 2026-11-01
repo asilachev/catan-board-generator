@@ -43,19 +43,34 @@ describe('first launch (design 01, 06)', () => {
     expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language ?? null).toBeNull()
   })
 
-  it('switches the language from Setup and remembers it', async () => {
+  it('switches the language from the board’s header and remembers it (#21)', async () => {
     const user = userEvent.setup()
     await openLink('#s=base34&p=4&c=anchor-4821')
     await act(async () => {
       await loadCatalog('ru')
     })
-    await user.click(screen.getByRole('button', { name: 'Setup' }))
-    await user.click(screen.getByRole('button', { name: /^English/ }))
-    await user.click(screen.getByRole('radio', { name: /Русский/ }))
-    expect(await screen.findByRole('heading', { name: 'Язык' })).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Language: English' }))
+    const menu = screen.getByRole('menu', { name: 'Language' })
+    expect(within(menu).getByRole('menuitemradio', { name: /English/ })).toBeChecked()
+    await user.click(within(menu).getByRole('menuitemradio', { name: /Русский/ }))
+    expect(await screen.findByRole('button', { name: 'Язык: Русский' })).toBeInTheDocument()
+    expect(screen.queryByRole('menu')).toBeNull()
     expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language).toBe('ru')
-    await user.click(screen.getByRole('button', { name: 'Назад' }))
-    expect(screen.getByRole('heading', { name: 'Настройка поля' })).toBeInTheDocument()
+  })
+
+  it('switches the language from the top of Setup; Escape closes the menu', async () => {
+    const user = userEvent.setup()
+    await openLink('#s=base34&p=4&c=anchor-4821')
+    await act(async () => {
+      await loadCatalog('de')
+    })
+    await user.click(screen.getByRole('button', { name: 'Setup' }))
+    await user.click(screen.getByRole('button', { name: 'Language: English' }))
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('menu')).toBeNull()
+    await user.click(screen.getByRole('button', { name: 'Language: English' }))
+    await user.click(screen.getByRole('menuitemradio', { name: /Deutsch/ }))
+    expect(await screen.findByRole('heading', { name: 'Spielplan-Aufbau' })).toBeInTheDocument()
   })
 })
 

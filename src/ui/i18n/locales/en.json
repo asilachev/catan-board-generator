@@ -12,7 +12,6 @@
   },
   "common": {
     "close": "Close",
-    "back": "Back",
     "dismiss": "Dismiss",
     "playersRange": "{min}–{max} {max, plural, one {player} other {players}}",
     "players": "{n, plural, one {# player} other {# players}}",
@@ -94,7 +93,6 @@
     "fogHint": "Only to check the layout; fog stays face down in play",
     "printed": "As printed in the rulebook",
     "printedHint": "The scenario’s map exactly, for a first game",
-    "language": "Language",
     "build": "Build board"
   },
   "scenario": {
@@ -157,8 +155,7 @@
   },
   "language": {
     "title": "Language",
-    "subtitle": "The app starts in your phone's language. A board code works in any language.",
-    "note": "Terrain, resource and scenario names are translated for each language."
+    "button": "Language: {name}"
   },
   "pwa": {
     "installTitle": "Install as app",

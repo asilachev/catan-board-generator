@@ -2,6 +2,7 @@ import { ChevronDown, Copy, Dices, Hash, Hexagon, Share2, SlidersHorizontal } fr
 import { useMemo, useRef, type CSSProperties, type ReactNode, type Ref } from 'react'
 import type { Board } from '../../engine/index.ts'
 import { BoardViewport } from '../board/BoardViewport.tsx'
+import { LanguageMenu } from '../components/LanguageMenu.tsx'
 import { boardGeometry } from '../board/geometry.ts'
 import { Legend } from '../board/Legend.tsx'
 import { dealtTokens, dealTiming, tileStagger } from '../board/timing.ts'
@@ -85,14 +86,17 @@ export function BoardScreen({
             <ChevronDown size={18} aria-hidden="true" />
           </button>
         </div>
-        <IconButton
-          label={t('board.share')}
-          tone="sea"
-          onClick={onShare}
-          className={styles.shareButton}
-        >
-          <Share2 size={22} />
-        </IconButton>
+        <div className={styles.headerActions}>
+          <LanguageMenu tone="sea" />
+          <IconButton
+            label={t('board.share')}
+            tone="sea"
+            onClick={onShare}
+            className={styles.shareButton}
+          >
+            <Share2 size={22} />
+          </IconButton>
+        </div>
       </header>
 
       {install}

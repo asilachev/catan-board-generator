@@ -35,7 +35,6 @@ import {
 import { InstallBanner, IosInstallSheet, Splash } from './pwa/Pwa.tsx'
 import { usePwaToasts } from './pwa/usePwaToasts.tsx'
 import { BoardScreen } from './screens/BoardScreen.tsx'
-import { LanguageScreen } from './screens/LanguageScreen.tsx'
 import { PrintSheet } from './screens/PrintSheet.tsx'
 import { ScenarioScreen } from './screens/ScenarioScreen.tsx'
 import { ScenarioSheet } from './screens/ScenarioSheet.tsx'
@@ -127,7 +126,6 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
   // Every launch opens on the board: the saved one, a shared link's, or on the first launch the
   // base game with a fresh code. Setup opens only when asked for.
   const [tab, setTab] = useState<Tab>('board')
-  const [languageOpen, setLanguageOpen] = useState(false)
   const [overlay, setOverlay] = useState<'sheet' | 'share' | 'ios' | null>(null)
   const [nonce, setNonce] = useState(0)
   const [dealing, setDealing] = useState<string | null>(null)
@@ -147,7 +145,7 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
     [variant.id, settings.code, settings.options, settings.version],
   )
   const url = shareUrl(settings)
-  const surface = !languageOpen && tab === 'board' ? 'sea' : 'paper'
+  const surface = tab === 'board' ? 'sea' : 'paper'
 
   const change = useCallback(
     (next: Partial<Settings>) => setSettings((s) => withChange(s, next)),
@@ -181,7 +179,7 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
-  }, [tab, languageOpen])
+  }, [tab])
 
   useWakeLock(surface === 'sea')
 
@@ -298,22 +296,13 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
     launchedAt > prefs.installHiddenUntil
 
   let view
-  if (languageOpen) {
-    view = (
-      <LanguageScreen
-        initial={prefs.language ?? detectLang(browserLanguages())}
-        onPick={(lang) => updatePrefs({ language: lang })}
-        onBack={() => setLanguageOpen(false)}
-      />
-    )
-  } else if (tab === 'setup') {
+  if (tab === 'setup') {
     view = (
       <SetupScreen
         settings={settings}
         onChange={change}
         onNewCode={newBoard}
         onPickScenario={() => setOverlay('sheet')}
-        onLanguage={() => setLanguageOpen(true)}
         onBuild={() => {
           requestPersistentStorage()
           setNonce((n) => n + 1)
@@ -358,7 +347,7 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
   return (
     <>
       <div className="screen-only">{view}</div>
-      {languageOpen ? null : <TabBar active={tab} onChange={setTab} />}
+      <TabBar active={tab} onChange={setTab} />
       {overlay === 'sheet' ? (
         <ScenarioSheet
           game={settings.game}
