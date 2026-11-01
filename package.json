@@ -2,6 +2,7 @@
   "name": "catan-board-generator",
   "private": true,
   "version": "0.1.0",
+  "license": "MIT",
   "description": "Phone-first PWA that deals fair, shareable boards for the CATAN base game and all nine Seafarers scenarios.",
   "type": "module",
   "engines": {

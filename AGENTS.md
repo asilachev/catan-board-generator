@@ -56,8 +56,8 @@ change to a rule or ruling updates the docs in the same PR.
   publishers, and you need your own copy of the game.
 - **Languages.** English, Español, Deutsch, Русский and Српски. **Serbian is Cyrillic only.**
 - **Visibility.** The landing page is public; the app sends `noindex`, because the landing page is
-  its public face. The repository is public, like splendor-marvel-automa: no secrets, no
-  rulebook scans, nothing that isn't ours to share.
+  its public face. The repository is public under the MIT License (`LICENSE`), like
+  splendor-marvel-automa: no secrets, no rulebook scans, nothing that isn't ours to share.
 - **No secrets.** There is no backend. Don't add analytics, accounts or network calls without an
   issue that approves them.
   - The one approved analytics is Vercel Web Analytics: anonymous, cookieless page views, only in
