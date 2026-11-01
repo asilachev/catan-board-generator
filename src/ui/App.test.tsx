@@ -160,7 +160,7 @@ describe('setup (design 02, 07, 08)', () => {
     await user.click(screen.getByRole('button', { name: 'Setup' }))
     await user.click(screen.getByRole('switch', { name: /No equal numbers/ }))
     // Still the v1 link's board, so it keeps v1's format.
-    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821&o=r1s0t1l0p0')
+    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821&o=r1s0t1l0')
   })
 
   it('takes a typed code as v1 did: trimmed, with its case and spaces', async () => {

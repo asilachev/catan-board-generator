@@ -96,6 +96,8 @@ export interface Board {
   readonly code: string
   readonly options: DealOptions
   readonly version: BoardVersion
+  /** Dealt on the rulebook's printed map (docs/rules.md → Printed maps), sea included. */
+  readonly printedMap: boolean
   readonly cells: readonly Cell[]
   readonly harbors: readonly Harbor[]
   /** Tokens left in the box (villages took theirs). */
@@ -249,6 +251,7 @@ export function buildBoard(
       code,
       options,
       version,
+      printedMap: true,
       cells: dealt.cells,
       harbors: dealt.harbors,
       leftover: dealt.leftover,
@@ -473,6 +476,7 @@ export function buildBoard(
     code,
     options,
     version,
+    printedMap: false,
     cells: done,
     harbors,
     leftover,

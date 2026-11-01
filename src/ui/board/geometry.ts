@@ -69,7 +69,7 @@ export function boardGeometry(board: Board): Geometry {
 
   const taken = new Set(board.cells.map((c) => axialKey(c.q, c.r)))
   const sea: { x: number; y: number }[] = []
-  if (board.variant.game === 'seafarers' && !board.cells.some((c) => c.kind === 'sea')) {
+  if (board.variant.game === 'seafarers' && !board.printedMap) {
     const seen = new Set<string>()
     for (const c of board.cells) {
       for (const [dq, dr] of AXIAL_DIRECTIONS) {

@@ -93,8 +93,21 @@ export function offersPrinted(map: PrintedMap): boolean {
   )
 }
 
-/** Reads a map's rows. Throws on anything that isn't a hex on the grid, so a typo can't move one. */
-export function parseMap(rows: readonly string[]): PrintedHex[] {
+const parsed = new WeakMap<readonly string[], readonly PrintedHex[]>()
+
+/**
+ * Reads a map's rows, once per map. Throws on anything that isn't a hex on the grid, so a typo
+ * can't move one.
+ */
+export function parseMap(rows: readonly string[]): readonly PrintedHex[] {
+  const known = parsed.get(rows)
+  if (known) return known
+  const hexes = readRows(rows)
+  parsed.set(rows, hexes)
+  return hexes
+}
+
+function readRows(rows: readonly string[]): PrintedHex[] {
   const hexes: PrintedHex[] = []
   rows.forEach((row, y) => {
     for (const match of row.matchAll(/\S+/g)) {
@@ -240,8 +253,13 @@ export function dealPrinted(
     }
   const cell = (i: number) => work[i] as Work
   const groupsInOrder = [...new Set(hexes.filter(moves).map((h) => h.group as string))]
-  const membersOf = (g: string) =>
-    work.flatMap((w, i) => (moves(w.hex) && w.hex.group === g ? [i] : []))
+  const members = new Map(
+    groupsInOrder.map((g) => [
+      g,
+      work.flatMap((w, i) => (moves(w.hex) && w.hex.group === g ? [i] : [])),
+    ]),
+  )
+  const membersOf = (g: string) => members.get(g) ?? []
 
   // Terrain, group by group in the order the map first shows them.
   for (const g of groupsInOrder) {
@@ -317,13 +335,20 @@ export function dealPrinted(
   work.forEach((w, i) => {
     for (const j of w.adj) if (j > i && numbered(w) && numbered(cell(j))) pairs.push([i, j])
   })
-  const avoided = (ci: number, n: number) =>
-    (map.avoid ?? []).some(
-      (rule) =>
-        rule.numbers.includes(n) &&
-        ((rule.terrains?.includes(cell(ci).terrain as Terrain) ?? false) ||
-          (rule.at?.some(([x, y]) => x === cell(ci).hex.x && y === cell(ci).hex.y) ?? false)),
-    )
+  // The numbers each cell should avoid, now that its terrain is dealt.
+  const avoidedAt = work.map(
+    (w) =>
+      new Set(
+        (map.avoid ?? [])
+          .filter(
+            (rule) =>
+              (rule.terrains?.includes(w.terrain as Terrain) ?? false) ||
+              (rule.at?.some(([x, y]) => x === w.hex.x && y === w.hex.y) ?? false),
+          )
+          .flatMap((rule) => rule.numbers),
+      ),
+  )
+  const avoided = (ci: number, n: number) => avoidedAt[ci]?.has(n) ?? false
   const cost = (a: readonly number[]) => {
     let total = 0
     for (const [i, j] of pairs) {
@@ -405,7 +430,8 @@ export function dealPrinted(
     }
     sizes.push(size)
   })
-  const main = sizes.indexOf(Math.max(...sizes))
+  // Islands tied for the biggest are all main (Scenario 6's two).
+  const biggest = Math.max(...sizes)
   const villages = new Map<number, number[]>()
   for (const [x, y, n] of map.villages ?? []) {
     const [q, r] = axialOf(x, y)
@@ -415,7 +441,13 @@ export function dealPrinted(
 
   const cells: Cell[] = work.map((w, i) => {
     const kind: CellKind =
-      w.hex.terrain === 'fog' ? 'fog' : !land(w) ? 'sea' : island[i] === main ? 'main' : 'isle'
+      w.hex.terrain === 'fog'
+        ? 'fog'
+        : !land(w)
+          ? 'sea'
+          : sizes[island[i] ?? -1] === biggest
+            ? 'main'
+            : 'isle'
     return {
       q: w.q,
       r: w.r,

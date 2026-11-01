@@ -6,6 +6,7 @@ import {
   gameOf,
   isGroupId,
   normalizeCode,
+  readVersion,
   type BoardRef,
   type BoardVersion,
   type DealOptions,
@@ -148,15 +149,18 @@ export function loadSettings(fallbackCode: string, storage = browserStorage()): 
   const base = defaultSettings(fallbackCode)
   if (!isRecord(v)) return base
   const code = typeof v.code === 'string' ? normalizeCode(v.code) : ''
+  // Settings saved before boards had versions were dealt by v1: they stay v1 boards.
+  const version = readVersion(v.version)
+  const options = parseOptions(v.options)
   return {
     game: v.game === 'seafarers' ? 'seafarers' : 'base',
     base: isGroupId(v.base) && gameOf(v.base) === 'base' ? v.base : base.base,
     sea: isGroupId(v.sea) && gameOf(v.sea) === 'seafarers' ? v.sea : base.sea,
     seats: v.seats === 3 ? 3 : 4,
     code: code || fallbackCode,
-    options: parseOptions(v.options),
+    options: { ...options, printed: options.printed && version >= 2 },
     fog: v.fog === true,
-    version: v.version === 1 ? 1 : BOARD_VERSION,
+    version,
   }
 }
 

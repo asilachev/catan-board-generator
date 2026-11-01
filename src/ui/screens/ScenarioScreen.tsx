@@ -148,9 +148,7 @@ export function ScenarioDetails({
           </div>
         </Card>
         {/* Boards from v1 links draw only the land; printed maps draw their sea too. */}
-        {variant.game === 'seafarers' &&
-        !variant.pools?.random &&
-        !board?.cells.some((c) => c.kind === 'sea') ? (
+        {variant.game === 'seafarers' && !variant.pools?.random && board?.printedMap !== true ? (
           <p className={styles.note}>
             <Info size={18} aria-hidden="true" />
             {t('scenario.seaNote')}
@@ -207,7 +205,7 @@ export function ScenarioDetails({
                 // their own; boards from v1 links don't draw them.
                 variant.group === 's9'
                   ? 'scenario.harborsNewWorld'
-                  : board !== null && board.harbors.length === 0
+                  : board !== null && !board.printedMap
                     ? 'scenario.harborsSeaHidden'
                     : 'scenario.harborsSea',
                 { special: variant.harbors.special, generic: variant.harbors.generic },

@@ -249,6 +249,12 @@ describe.runIf(MAPS.length > 0)('the rulebook’s maps (docs/rules.md → Printe
     }
   })
 
+  it('calls both of Scenario 6’s main islands main', () => {
+    const board = buildBoard('s6', 'anchor-4821', { ...DEFAULT_OPTIONS, printed: true })
+    expect(board.cells.filter((c) => c.kind === 'main')).toHaveLength(20)
+    expect(board.printedMap).toBe(true)
+  })
+
   it.each(MAPS)('%s keeps its outline in every deal', (id, map) => {
     const outline = parseMap(map.rows)
       .map((h) => axialKey(...axialOf(h.x, h.y)))

@@ -68,11 +68,14 @@ same scenario; the code card's deal again replays the deal of this one.
 
 - `#s=<group>&p=<players>&c=<code>&v=2`. Without `v=` it is v1's format, and v1's links open the
   boards they showed then (version 1, docs/rules.md → R2).
-- `&o=r1s0t1l0p0` is added only when the options differ from the defaults (r = 6 and 8 apart,
-  s = equal numbers apart, t = spread terrain, l = letters, p = as printed in the rulebook), because
-  they change the board. Links without `p` read it as off.
+- `&o=r1s0t1l0` is added only when the options differ from the defaults (r = 6 and 8 apart,
+  s = equal numbers apart, t = spread terrain, l = letters), because they change the board. `p1`
+  (as printed in the rulebook) follows only where it changes the board: a version 2 board of a
+  scenario that offers it. So every board has exactly one link.
 - A board keeps its version while only the token rules change, so a v1 link's board stays itself;
-  a new code, scenario, player count or As printed makes a version 2 board.
+  a new code, scenario, player count or As printed makes a version 2 board. Settings saved before
+  boards had versions load as v1 boards, and a `v=` newer than the app knows reads as the newest it
+  knows (the update toast offers the rest).
 - The address bar always shows the current board's link; a link opened in the app becomes the
   current board. `?lang=xx` (from the landing page) sets the language once and is removed.
 

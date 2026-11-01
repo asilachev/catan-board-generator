@@ -2,7 +2,14 @@ import { describe, expect, it } from 'vitest'
 import { DEFAULT_OPTIONS } from './board.ts'
 import { makeCode, normalizeCode } from './code.ts'
 import { axialDistance, edgeCorners, growIsland, ringCells, spiralCells } from './hex.ts'
-import { decodeHash, decodeOptions, encodeHash, encodeOptions } from './link.ts'
+import {
+  decodeHash,
+  decodeOptions,
+  encodeHash,
+  encodeOptions,
+  printedApplies,
+  readVersion,
+} from './link.ts'
 import { hashSeed, mulberry32, shuffled } from './rng.ts'
 import {
   GROUP_IDS,
@@ -148,8 +155,34 @@ describe('share links', () => {
     } as const
     expect(encodeHash(ref)).toBe('s=base34&p=4&c=anchor-4821')
     const custom = { ...ref, options: { ...DEFAULT_OPTIONS, same: false } }
-    expect(encodeHash(custom)).toBe('s=base34&p=4&c=anchor-4821&o=r1s0t1l0p0')
+    expect(encodeHash(custom)).toBe('s=base34&p=4&c=anchor-4821&o=r1s0t1l0')
     expect(decodeHash(encodeHash(custom))).toEqual(custom)
+  })
+
+  it('writes As printed only where it changes the board, so each board has one link', () => {
+    const on = { ...DEFAULT_OPTIONS, printed: true }
+    const base = { group: 'base34', seats: 4, code: 'x', options: on, version: 2 } as const
+    expect(encodeHash(base)).toBe('s=base34&p=4&c=x&v=2')
+    // Scenario 7 changes nothing but harbors at random; v1 boards aren't dealt from the maps.
+    expect(encodeHash({ ...base, group: 's7' })).toBe('s=s7&p=4&c=x&v=2')
+    expect(encodeHash({ ...base, group: 's2', version: 1 })).toBe('s=s2&p=4&c=x')
+    expect(encodeHash({ ...base, group: 's2' })).toBe('s=s2&p=4&c=x&o=r1s1t1l0p1&v=2')
+    expect(printedApplies({ group: 's2', seats: 3, version: 2 })).toBe(true)
+    expect(printedApplies({ group: 's9', seats: 4, version: 2 })).toBe(false)
+  })
+
+  it('reads a link’s version: none is v1, a newer one the newest this app knows', () => {
+    expect(readVersion(null)).toBe(1)
+    expect(readVersion('1')).toBe(1)
+    expect(readVersion('2')).toBe(2)
+    expect(readVersion('3')).toBe(2)
+    expect(readVersion('two')).toBe(1)
+    expect(readVersion(undefined)).toBe(1)
+    // A v1 board can't be as printed, whatever its link says.
+    expect(decodeHash('s=s2&p=4&c=x&o=r1s1t1l0p1')).toMatchObject({
+      version: 1,
+      options: { printed: false },
+    })
   })
 
   it('marks boards from the printed maps with v=2, and reads older option letters', () => {

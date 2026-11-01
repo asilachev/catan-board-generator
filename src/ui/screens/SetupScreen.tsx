@@ -82,7 +82,12 @@ export function SetupScreen({
   // token rules have nothing to do (except in fog, which is always dealt at random).
   const map = PRINTED_MAPS[variant.id]
   const printedChoice = map !== undefined && offersPrinted(map)
-  const asPrinted = printedChoice && settings.options.printed && map.fromTable === undefined
+  // A v1 link's board isn't dealt from the map, so As printed doesn't hold its rules.
+  const asPrinted =
+    printedChoice &&
+    settings.version >= 2 &&
+    settings.options.printed &&
+    map.fromTable === undefined
 
   const gameTile = (game: Game) => {
     const groups = groupsOf(game)
@@ -200,7 +205,7 @@ export function SetupScreen({
                   <ToggleRow
                     title={t('setup.printed')}
                     hint={t('setup.printedHint')}
-                    checked={settings.options.printed}
+                    checked={settings.version >= 2 && settings.options.printed}
                     onChange={(on) => setOption('printed', on)}
                   />
                 </Card>
