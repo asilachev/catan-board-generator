@@ -92,8 +92,9 @@ To build from source instead, run `docker build -t catan-boards . && docker run 
 ### Landing page (GitHub Pages)
 
 `.github/workflows/pages.yml` captures the app in five languages, builds `_site/` and deploys it
-from `master`. In the repo's *Settings → Pages*, the source is *GitHub Actions* and the custom domain
-is `catan.silachev.com`, with a DNS CNAME `catan` → `asilachev.github.io`.
+from `master` (only from a public repository: Pages on a free plan needs one). In the repo's
+*Settings → Pages*, the source is *GitHub Actions* and the custom domain is `catan.silachev.com`,
+with a DNS CNAME `catan` → `asilachev.github.io`.
 
 ## Development
 

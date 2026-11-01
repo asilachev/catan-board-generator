@@ -85,8 +85,9 @@ You need Node 22 or later (see `.nvmrc`). Use npm.
 
 CI (`.github/workflows/ci.yml`) runs `lint`, `format:check`, `typecheck`, `test` and `build` on every
 PR and on every push to `master`. Run the same commands before pushing. `docker.yml` builds the
-image on PRs and publishes it to GHCR from `master`. `pages.yml` captures the screenshots, builds the
-landing page on PRs and deploys it to GitHub Pages from `master`. `vercel.ts` configures the other
+image on PRs and publishes it to GHCR from `master`. `pages.yml` captures the screenshots and builds
+the landing page on every run, and deploys it to GitHub Pages from `master` once the repository is
+public (#8). `vercel.ts` configures the other
 way to host the app, Vercel's Git integration; keep its caching and security headers in step with
 `docker/nginx.conf` and `docker/security-headers.inc`.
 
