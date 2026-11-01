@@ -9,7 +9,7 @@ This document records what the code follows and the decisions behind it.
 1. **A companion, not a digital game.** The table holds the real game; the app deals and says what
    to take from the box. No game art.
 2. **Same code, same board.** A board is a pure function of the variant, the code and the token
-   rules, on any device and in any language. Codes from v1 still work.
+   rules, on any device and in any language. Links from v1 still open the boards they showed.
 3. **Readable at arm's length.** Big tiles, numbers in Spectral, probability dots, a legend.
 4. **Few taps, thumb reach.** One primary action per screen at the bottom; a floating tab bar.
 5. **Offline and phone-first.** Installs as a PWA, works without a network, keeps the screen awake
@@ -41,11 +41,17 @@ same scenario; the code card's deal again replays the deal of this one.
 
 ## Determinism
 
-- `buildBoard(variant, code, options)` in `src/engine/board.ts` is v1's algorithm step by step:
-  seed = `hashSeed("<variant>#<code>")`, mulberry32, then terrain by pool, the desert and gold
-  placement rules, numbers by hill climbing, letters, villages, harbors.
+- `buildBoard(variant, code, options, version)` in `src/engine/board.ts` seeds mulberry32 with
+  `hashSeed("<variant>#<code>")`, then deals by the board's version:
+  - **Version 2**, every new board: Seafarers scenarios are dealt on the rulebook's printed maps
+    (`src/engine/printed.ts`, data in `maps.ts`). Terrain, then numbers, trade places within the
+    groups the scenario allows, numbers by hill climbing, then harbor types (docs/rules.md →
+    Printed maps). The base game deals as in version 1.
+  - **Version 1**, links without `v=`: v1's algorithm step by step: terrain by pool, the desert and
+    gold placement rules, numbers by hill climbing, letters, villages, harbors.
 - `src/engine/v1.test.ts` loads `docs/v1/index.html`, runs its generator in a VM, and compares every
-  variant across codes and token rules. A failing test means shared boards would change.
+  variant across codes and token rules with version 1. A failing test means shared boards would
+  change. Changing how version 2 deals changes every board shared since; it needs a version 3.
 - New codes take a word from the current language's `codeWords` and four digits from
   `crypto.getRandomValues`; the engine never makes randomness of its own.
 
@@ -60,9 +66,13 @@ same scenario; the code card's deal again replays the deal of this one.
 
 ## Share links
 
-- `#s=<group>&p=<players>&c=<code>`, v1's format, so v1 links open the same boards.
-- `&o=r1s0t1l0` is added only when the token rules differ from the defaults (r = 6 and 8 apart,
-  s = equal numbers apart, t = spread terrain, l = letters), because they change the board.
+- `#s=<group>&p=<players>&c=<code>&v=2`. Without `v=` it is v1's format, and v1's links open the
+  boards they showed then (version 1, docs/rules.md → R2).
+- `&o=r1s0t1l0p0` is added only when the options differ from the defaults (r = 6 and 8 apart,
+  s = equal numbers apart, t = spread terrain, l = letters, p = as printed in the rulebook), because
+  they change the board. Links without `p` read it as off.
+- A board keeps its version while only the token rules change, so a v1 link's board stays itself;
+  a new code, scenario, player count or As printed makes a version 2 board.
 - The address bar always shows the current board's link; a link opened in the app becomes the
   current board. `?lang=xx` (from the landing page) sets the language once and is removed.
 

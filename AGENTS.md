@@ -34,11 +34,13 @@ change to a rule or ruling updates the docs in the same PR.
 
 - **Companion, not a digital game.** No game art, no CATAN logo, no card or tile scans. Icons are
   [Lucide](https://lucide.dev) plus our own drawings (the cactus, the logo, the tokens).
-- **Same code, same board.** A board is a pure function of `(variant, code, token rules)`.
-  - Codes and links made by any version keep building the same board, v1's included.
-    `src/engine/v1.test.ts` checks the port against `docs/v1/index.html`.
-  - The order of random draws and the key order of the scenario tables are part of that contract.
-    Changing them changes every shared board: it needs an issue and a new link format first.
+- **Same code, same board.** A board is a pure function of `(variant, code, options, version)`.
+  - Links made by any version keep building the same board, v1's included: a link without `v=` is
+    dealt as v1 dealt it, and `src/engine/v1.test.ts` checks that against `docs/v1/index.html`.
+    New boards are version 2: Seafarers on the rulebook's printed maps (`src/engine/maps.ts`).
+  - The order of random draws, the key order of the scenario tables and the printed maps are part
+    of that contract. Changing them changes every shared board: it needs an issue and a new
+    version (`BOARD_VERSION`, the link's `v=`) first.
 - **Engine purity.** `src/engine/` is plain TypeScript: no React, DOM, `Date.now()` or
   `Math.random()`. All randomness comes from the seeded RNG; new codes get their randomness from the
   UI (`crypto.getRandomValues`).
