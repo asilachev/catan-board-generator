@@ -558,30 +558,62 @@ h3 {
 
 /* ---- Phones ---------------------------------------------------------------------------------- */
 
+/* One phone, drawn to scale (#26): a current phone's body, about 1 : 2.07, around the whole
+   780 × 1688 screenshot. The phone is a size container and every length is a share of its width
+   (cqi), so a small phone is the big one scaled down:
+   - the screen is 92.4 % wide with 12.8 % corners, inside a 3.8 % bezel: black glass, then rim;
+   - the body's corners are 16.6 %, the screen's plus the bezel, so the two stay concentric;
+   - the buttons stand out of the rim: action button and volume rocker left, side button right. */
 .phone {
+  container-type: inline-size;
+  position: relative;
   margin: 0;
-  padding: 11px;
-  border-radius: 52px;
-  background: #1c1813;
+  /* 16.6 % of the width on both axes: the body is 2.0756 times as tall as it is wide. */
+  border-radius: 16.6% / 8%;
+  background: linear-gradient(150deg, #7a6a58, #3a3027 30%, #231d17 55%, #4b3f33 85%, #6e5f4f);
   box-shadow:
-    inset 0 0 0 2px #3a332a,
-    0 30px 60px rgb(0 0 0 / 35%);
+    inset 0 0 0 1px rgb(255 240 215 / 18%),
+    var(--phone-shadow, 0 30px 60px rgb(0 0 0 / 35%));
 }
 
 .phone img {
-  width: 100%;
-  border-radius: 42px;
+  display: block;
+  width: 92.4cqi;
+  height: auto;
+  margin: 3.8cqi;
+  border-radius: 12.8cqi;
+  /* The black glass between the screen and the rim. */
+  box-shadow: 0 0 0 2.6cqi #0d0b09;
 }
 
-.phone.crop {
-  overflow: hidden;
+.phone::before,
+.phone::after {
+  content: '';
+  position: absolute;
+  width: 0.9cqi;
+  background: #4b3f33;
 }
 
-.phone.crop img {
-  aspect-ratio: 390 / 700;
-  object-fit: cover;
-  object-position: top;
-  border-radius: 42px;
+/* The action button and the volume rocker, as gaps in one strip. */
+.phone::before {
+  right: 100%;
+  top: 21cqi;
+  height: 47cqi;
+  border-radius: 0.5cqi 0 0 0.5cqi;
+  background: linear-gradient(
+    #4b3f33 0 6.5cqi,
+    transparent 0 12.5cqi,
+    #4b3f33 0 26cqi,
+    transparent 0 30cqi,
+    #4b3f33 0
+  );
+}
+
+.phone::after {
+  left: 100%;
+  top: 34cqi;
+  height: 21cqi;
+  border-radius: 0 0.5cqi 0.5cqi 0;
 }
 
 /* ---- What you need ---------------------------------------------------------------------------- */
@@ -764,11 +796,13 @@ h3 {
 
 /* ---- Gallery ---------------------------------------------------------------------------------- */
 
+/* Whole phones about 300 px wide, so each row of three fits on a laptop screen. */
 .gallery {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 48px 32px;
-  margin: 48px 0 0;
+  gap: 56px clamp(24px, 4vw, 56px);
+  max-width: 1040px;
+  margin: 48px auto 0;
   padding: 0;
   list-style: none;
   text-align: start;
@@ -1479,10 +1513,12 @@ h3 {
   align-items: start;
 }
 
+/* A real border, not an inset shadow: an open item's background would paint over the shadow
+   (#27). */
 .accordion {
+  border: 1px solid var(--border);
   border-radius: 24px;
   background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--border);
   overflow: hidden;
 }
 
@@ -1531,8 +1567,11 @@ h3 {
   color: #fff7e8;
 }
 
+/* Padding, not a bottom margin: the margin collapsed out of <details>, so the open item's tint
+   stopped short of the next divider (#27). */
 .accordion p {
-  margin: -6px 24px 22px;
+  margin: -6px 0 0;
+  padding: 0 24px 22px;
   color: var(--ink-soft);
 }
 
@@ -1686,7 +1725,6 @@ h3 {
     padding-left: 0;
   }
   .cards.three,
-  .gallery,
   .steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1730,7 +1768,6 @@ h3 {
     padding: 0;
   }
   .cards.three,
-  .gallery,
   .steps,
   .scenario-grid,
   .platforms {
@@ -1739,10 +1776,24 @@ h3 {
   .lang-cards {
     grid-template-columns: 1fr 1fr;
   }
+  /* Whole phones one under another would be six screens long: swipe through them instead, the
+     next one peeking in. The row runs to the screen's edges, with room for the shadows. */
   .gallery {
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(70%, 280px);
+    gap: 24px;
+    max-width: none;
+    margin: 40px -20px 0;
+    padding: 4px 20px 32px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    scrollbar-width: none;
+  }
+  .gallery > li {
+    scroll-snap-align: start;
   }
   .float.hex {
     width: 64px;
