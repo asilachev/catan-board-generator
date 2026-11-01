@@ -2,11 +2,13 @@ import { useEffect, useEffectEvent } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useToasts } from '../components/toast.ts'
 import { useT } from '../i18n/index.ts'
+import { watchForUpdates } from './watchForUpdates.ts'
 
 /**
  * Service-worker toasts (design: Feedback): "Works offline" after the first full cache, "A new
  * version is ready · Reload" in prompt mode (the board lives in the address and in storage, so
- * reloading loses nothing), and a note when the network drops.
+ * reloading loses nothing), and a note when the network drops. New versions are looked for on
+ * load, when the app comes back to the foreground and hourly (watchForUpdates).
  */
 export function usePwaToasts(): void {
   const toasts = useToasts()
@@ -15,7 +17,11 @@ export function usePwaToasts(): void {
     needRefresh: [needRefresh],
     offlineReady: [offlineReady],
     updateServiceWorker,
-  } = useRegisterSW()
+  } = useRegisterSW({
+    onRegisteredSW(_url, registration) {
+      if (registration) watchForUpdates(registration)
+    },
+  })
 
   // Each toast is pushed when its event happens, in the language of that moment; switching the
   // language later doesn't push it again.
