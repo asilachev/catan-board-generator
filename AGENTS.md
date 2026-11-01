@@ -81,6 +81,7 @@ You need Node 22 or later (see `.nvmrc`). Use npm.
 | `npm run icons` | Redraw `public/favicon.svg`, `docs/assets/logo.svg` and the PWA PNGs (needs Google Chrome) |
 | `npm run screenshots` | Build, then capture the app in English into `.screenshots/en/` (needs Google Chrome; every phone shot must be 780×1688). Options after `--`: `--lang ru,de`, `--only board,setup`, `--out <dir>`, `--width 360` |
 | `npm run site:shots` | Build, then capture the app in all five languages for the landing page into `.screenshots/` (not committed) |
+| `npm run readme:shots` | Build, capture six English screens and frame them in the landing page's phone into `docs/screenshots/` (committed, every image the same size; needs Google Chrome). Rerun it when those screens change |
 | `npm run site` | Render the landing page in five languages into `_site/` from `site/index.html` and `site/locales/*.json`, with the screenshots, fonts and icons. `npx vite preview --outDir _site` serves it |
 | `npm run reference` | Download the rulebook PDFs into `docs/reference/` from the `reference-docs` release (needs `gh` auth) |
 | `docker build -t catan-boards .` | Build the production image (nginx on port 8080); `docker compose up -d` runs the published one |
@@ -108,7 +109,7 @@ src/
 public/     favicon and PWA icons (renders of scripts/gen-icons.mjs)
 site/       landing page: an HTML template, CSS and locales/{en,es,de,ru,sr}.json, rendered by scripts/build-site.mjs
 scripts/    icons, screenshots, landing page build
-docs/       rules, design, the v1 app, reference PDFs (gitignored)
+docs/       rules, design, the v1 app, the README's screenshots, reference PDFs (gitignored)
 ```
 
 **Conventions**

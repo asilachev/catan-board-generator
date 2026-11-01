@@ -18,6 +18,19 @@ deals: which tile and number go where, which harbors go on the frame, and what t
 > [issues](https://github.com/asilachev/catan-board-generator/issues) and
 > [milestones](https://github.com/asilachev/catan-board-generator/milestones).
 
+<table>
+  <tr>
+    <td align="center"><img src="docs/screenshots/board.png" width="240" alt="A dealt base-game board with its code, anchor-4821"><br><b>A fair board</b><br>dealt with a code to share</td>
+    <td align="center"><img src="docs/screenshots/seaBoard.png" width="240" alt="Seafarers: Heading for New Shores on the rulebook's map"><br><b>Seafarers</b><br>on the rulebook's maps</td>
+    <td align="center"><img src="docs/screenshots/sheet.png" width="240" alt="The nine Seafarers scenarios to choose from"><br><b>Nine scenarios</b><br>each with its own rules</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screenshots/setup.png" width="240" alt="Board setup: game, scenario, board code and token rules"><br><b>Setup</b><br>game, scenario and rules</td>
+    <td align="center"><img src="docs/screenshots/scenario.png" width="240" alt="What to take from the box for the base game"><br><b>What to unpack</b><br>tiles, tokens and harbors</td>
+    <td align="center"><img src="docs/screenshots/share.png" width="240" alt="Sharing a board: copy the link, send, print or save a PNG"><br><b>Share</b><br>link, print or PNG</td>
+  </tr>
+</table>
+
 ## What it does
 
 - **Deals 11 boards:** the base game for 3–4 and 5–6 players, and Seafarers scenarios 1–9 with
@@ -97,8 +110,8 @@ To build from source instead, run `docker build -t catan-boards . && docker run 
 
 `.github/workflows/pages.yml` captures the app in five languages, builds `_site/` and deploys it
 from `master`. In the repo's *Settings → Pages*, the source is *GitHub Actions* and the custom domain
-is `catan.silachev.com`, with a DNS CNAME `catan` → `asilachev.github.io`. Until then the page is at
-<https://asilachev.github.io/catan-board-generator/>.
+is `catan.silachev.com`, with a DNS CNAME `catan` → `asilachev.github.io` and HTTPS enforced. A run
+can also be started by hand: `gh workflow run pages.yml`.
 
 ## Development
 

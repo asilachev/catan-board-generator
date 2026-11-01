@@ -19,6 +19,7 @@
     "icons": "node scripts/gen-icons.mjs",
     "screenshots": "vite build && node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/screenshots.mjs",
     "site:shots": "vite build && node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/screenshots.mjs --lang en,es,de,ru,sr --out .screenshots",
+    "readme:shots": "vite build && node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/screenshots.mjs --only board,seaBoard,sheet,setup,scenario,share && node scripts/readme-shots.mjs",
     "site": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/build-site.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
