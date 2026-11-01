@@ -1,24 +1,21 @@
 import { ChevronLeft, Info } from 'lucide-react'
 import { useState } from 'react'
-import { Button, Card, Eyebrow, RadioDot } from '../components/Kit.tsx'
-import { LogoMark } from '../components/Logo.tsx'
+import { Card, RadioDot } from '../components/Kit.tsx'
 import { LANGS, useI18n, type Lang } from '../i18n/index.ts'
 import styles from './screens.module.css'
 
 /**
- * 06 · Language. On first launch it starts on the browser's language and Continue saves the
- * choice; from Setup a pick applies at once (board codes stay valid in every language).
+ * 06 · Language, opened from Setup. The app starts in the browser's language; a pick here applies
+ * at once and is remembered (board codes stay valid in every language).
  */
 export function LanguageScreen({
-  firstLaunch,
   initial,
   onPick,
-  onDone,
+  onBack,
 }: {
-  firstLaunch: boolean
   initial: Lang
   onPick: (lang: Lang) => void
-  onDone: (lang: Lang) => void
+  onBack: () => void
 }) {
   const { t } = useI18n()
   const [picked, setPicked] = useState<Lang>(initial)
@@ -27,22 +24,13 @@ export function LanguageScreen({
     onPick(lang)
   }
   return (
-    <main className={`${styles.screen} ${styles.paper} ${firstLaunch ? '' : styles.pushed}`}>
-      {firstLaunch ? (
-        <LogoMark size={46} />
-      ) : (
-        <div className={styles.backRow}>
-          <button type="button" className={styles.backButton} onClick={() => onDone(picked)}>
-            <ChevronLeft size={22} aria-hidden="true" />
-            {t('common.back')}
-          </button>
-        </div>
-      )}
-      {firstLaunch ? (
-        <div style={{ marginTop: 26 }}>
-          <Eyebrow>{t('language.eyebrow')}</Eyebrow>
-        </div>
-      ) : null}
+    <main className={`${styles.screen} ${styles.paper} ${styles.pushed}`}>
+      <div className={styles.backRow}>
+        <button type="button" className={styles.backButton} onClick={onBack}>
+          <ChevronLeft size={22} aria-hidden="true" />
+          {t('common.back')}
+        </button>
+      </div>
       <h1 className={styles.screenTitle}>{t('language.title')}</h1>
       <p className={styles.lead}>{t('language.subtitle')}</p>
       <Card>
@@ -71,11 +59,6 @@ export function LanguageScreen({
         <Info size={18} aria-hidden="true" />
         {t('language.note')}
       </p>
-      {firstLaunch ? (
-        <div className={styles.cta} style={{ marginTop: 24 }}>
-          <Button onClick={() => onDone(picked)}>{t('language.continue')}</Button>
-        </div>
-      ) : null}
     </main>
   )
 }

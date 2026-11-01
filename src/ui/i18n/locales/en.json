@@ -152,11 +152,9 @@
     "pngFailed": "Couldn’t save the picture"
   },
   "language": {
-    "eyebrow": "First launch",
     "title": "Language",
-    "subtitle": "Choose the app language — you can change it later in Setup.",
-    "note": "Terrain, resource and scenario names are translated for each language.",
-    "continue": "Continue"
+    "subtitle": "The app starts in your phone's language. A board code works in any language.",
+    "note": "Terrain, resource and scenario names are translated for each language."
   },
   "pwa": {
     "installTitle": "Install as app",

@@ -24,7 +24,7 @@ This document records what the code follows and the decisions behind it.
 | 03 · Scenario | `ScenarioScreen` | Victory target, players, story; what's on the board; number tokens; harbors; extras; scenario rules; rulebooks |
 | 04 · Seafarers board | `BoardScreen` | The board in a rounded sea panel with open sea around the islands; wide boards scroll, ± zoom 0.6×–2×, pinch, double tap fits |
 | 05 · Splash | `Splash` | Only when launched from the home screen; 900 ms, then fades |
-| 06 · Language | `LanguageScreen` | First launch (preselects the browser's language; Continue saves it) and from Setup (applies at once) |
+| 06 · Language | `LanguageScreen` | Opens from Setup; a pick applies at once and is remembered. There is no first-launch picker: the app starts in the browser's language |
 | 07 · Setup (Seafarers) | `SetupScreen` | Scenario row opens the sheet; Players 3/4 where the rules print two layouts; Reveal fog in Scenario 3 |
 | 08 · Scenario sheet | `ScenarioSheet` | Bottom sheet over a 40% scrim; also opens from the board's title |
 | 09 · Generating | `BoardScreen` | The deal: progress pill, Rebuild disabled, New board shows "Dealing…" |
@@ -33,8 +33,9 @@ This document records what the code follows and the decisions behind it.
 | 12 · Install prompt | `InstallBanner` | From the second launch, while the browser offers to install (Android/desktop Chrome) or on iPhone Safari ("How" opens the steps); dismissing hides it for 30 days |
 
 Navigation: three tabs (Board, Setup, Scenario). Setup changes apply at once and are remembered;
-"Build board" goes to the board and deals. The first launch shows the language picker, then Setup,
-or the board when the app was opened from a shared link.
+"Build board" goes to the board and deals. Every launch opens on the board: the saved one, a shared
+link's, or on the first launch the base game for 3–4 players with a fresh code, in the browser's
+language. Setup opens only when someone asks for it.
 
 ## Determinism
 
@@ -105,8 +106,10 @@ drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors
 
 ## Languages
 
-English, Español, Deutsch, Русский, Српски (Cyrillic only), in the design's order. The browser's
-language on first launch, then the picked one. Russian text gets non-breaking spaces by
+English, Español, Deutsch, Русский, Српски (Cyrillic only), in the design's order. The app follows
+the browser: the first of its preferred languages the app speaks (Serbian in either script is
+Cyrillic), English otherwise. A language picked in Setup → Language, or `?lang=` from the landing
+page, is remembered and wins from then on. Russian text gets non-breaking spaces by
 `typography.ts`. Translations of Spanish, German and Serbian should get a native speaker's review.
 
 ## Tech and hosting

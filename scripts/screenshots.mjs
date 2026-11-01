@@ -28,6 +28,8 @@ const { values: opt } = parseArgs({
   },
 })
 const TAGS = { en: 'en-GB', es: 'es-ES', de: 'de-DE', ru: 'ru-RU', sr: 'sr-Cyrl-RS' }
+/** Each language's own name, as Setup's language row shows it. */
+const NAMES = { en: 'English', es: 'Español', de: 'Deutsch', ru: 'Русский', sr: 'Српски' }
 const LANGS = opt.lang.split(',').map((l) => l.trim())
 for (const lang of LANGS) if (!(lang in TAGS)) throw new Error(`Unknown language ${lang}`)
 const VIEWPORT = { width: Number(opt.width ?? 390), height: 844 }
@@ -119,7 +121,15 @@ function shotsFor(lang, T) {
       null,
       (page) => page.getByRole('button', { name: T('board.share') }).click(),
     ],
-    language: ['', null, null, null, { locale: TAGS[lang] }],
+    language: [
+      board(lang),
+      prefs,
+      null,
+      async (page) => {
+        await tab('setup')(page)
+        await page.getByRole('button', { name: new RegExp(`^${NAMES[lang]}`) }).click()
+      },
+    ],
     generating: deal(410, null),
     splash: [
       board(lang),

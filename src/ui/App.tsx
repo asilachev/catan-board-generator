@@ -69,7 +69,7 @@ type UpdatePrefs = (change: Partial<Prefs>) => void
 
 /**
  * Device preferences live here, above everything else, because the language is one of them: the
- * browser's language until the first-launch picker or a link sets it.
+ * browser's language until someone picks one in Setup (or the landing page's `?lang=` sets it).
  */
 export function App() {
   const [prefs, setPrefs] = useState<Prefs>(loadPrefs)
@@ -82,9 +82,7 @@ export function App() {
       }),
     [],
   )
-  // On first launch the picker previews languages before one is saved.
-  const [preview, setPreview] = useState<Lang | null>(null)
-  const preferred = preview ?? prefs.language ?? detectLang(browserLanguages())
+  const preferred = prefs.language ?? detectLang(browserLanguages())
   // A language's file is loaded before it goes on screen, so text never flashes in English.
   const [lang, setLang] = useState<Lang>(() => (loadedCatalog(preferred) ? preferred : 'en'))
   useEffect(() => {
@@ -109,37 +107,26 @@ export function App() {
 
   return (
     <I18nContext.Provider value={i18n}>
-      <Toaster raised={prefs.language !== null}>
-        <Shell prefs={prefs} updatePrefs={updatePrefs} onPreview={setPreview} />
+      <Toaster>
+        <Shell prefs={prefs} updatePrefs={updatePrefs} />
       </Toaster>
     </I18nContext.Provider>
   )
 }
 
-function Shell({
-  prefs,
-  updatePrefs,
-  onPreview,
-}: {
-  prefs: Prefs
-  updatePrefs: UpdatePrefs
-  onPreview: (lang: Lang | null) => void
-}) {
+function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs }) {
   const t = useT()
   const toasts = useToasts()
-  const [opened] = useState(() => ({ fromLink: refFromLocation(location.hash) !== null }))
   const [settings, setSettings] = useState<Settings>(() => {
     const fresh = makeCode(t.list('codeWords'), cryptoRandom)
     const ref = refFromLocation(location.hash)
     const saved = loadSettings(fresh)
     return ref ? applyRef(saved, ref) : saved
   })
-  const [tab, setTab] = useState<Tab>(
-    opened.fromLink ? 'board' : prefs.language === null ? 'setup' : 'board',
-  )
-  const [languageScreen, setLanguageScreen] = useState<'first' | 'setup' | null>(
-    prefs.language === null ? 'first' : null,
-  )
+  // Every launch opens on the board: the saved one, a shared link's, or on the first launch the
+  // base game with a fresh code. Setup opens only when asked for.
+  const [tab, setTab] = useState<Tab>('board')
+  const [languageOpen, setLanguageOpen] = useState(false)
   const [overlay, setOverlay] = useState<'sheet' | 'share' | 'ios' | null>(null)
   const [nonce, setNonce] = useState(0)
   const [dealing, setDealing] = useState<string | null>(null)
@@ -159,7 +146,7 @@ function Shell({
     [variant.id, settings.code, settings.options],
   )
   const url = shareUrl(settings)
-  const surface = languageScreen === null && tab === 'board' ? 'sea' : 'paper'
+  const surface = !languageOpen && tab === 'board' ? 'sea' : 'paper'
 
   const change = useCallback(
     (next: Partial<Settings>) => setSettings((s) => ({ ...s, ...next })),
@@ -193,7 +180,7 @@ function Shell({
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0)
-  }, [tab, languageScreen])
+  }, [tab, languageOpen])
 
   useWakeLock(surface === 'sea')
 
@@ -310,21 +297,12 @@ function Shell({
     launchedAt > prefs.installHiddenUntil
 
   let view
-  if (languageScreen) {
+  if (languageOpen) {
     view = (
       <LanguageScreen
-        firstLaunch={languageScreen === 'first'}
         initial={prefs.language ?? detectLang(browserLanguages())}
-        onPick={(lang) =>
-          languageScreen === 'first' ? onPreview(lang) : updatePrefs({ language: lang })
-        }
-        onDone={(lang) => {
-          if (languageScreen === 'first') {
-            updatePrefs({ language: lang })
-            onPreview(null)
-          }
-          setLanguageScreen(null)
-        }}
+        onPick={(lang) => updatePrefs({ language: lang })}
+        onBack={() => setLanguageOpen(false)}
       />
     )
   } else if (tab === 'setup') {
@@ -334,7 +312,7 @@ function Shell({
         onChange={change}
         onNewCode={newBoard}
         onPickScenario={() => setOverlay('sheet')}
-        onLanguage={() => setLanguageScreen('setup')}
+        onLanguage={() => setLanguageOpen(true)}
         onBuild={() => {
           requestPersistentStorage()
           setNonce((n) => n + 1)
@@ -376,7 +354,7 @@ function Shell({
   return (
     <>
       <div className="screen-only">{view}</div>
-      {languageScreen === null ? <TabBar active={tab} onChange={setTab} /> : null}
+      {languageOpen ? null : <TabBar active={tab} onChange={setTab} />}
       {overlay === 'sheet' ? (
         <ScenarioSheet
           game={settings.game}

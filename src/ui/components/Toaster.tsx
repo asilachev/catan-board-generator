@@ -16,7 +16,7 @@ const ICONS = { success: Check, info: Info, warn: TriangleAlert } as const
  * Toasts rise 16 px and fade in, hold 2.4 s, then fade out (design: Transitions → Copy link). A
  * toast pushed again with the same key updates in place instead of rising again.
  */
-export function Toaster({ children, raised }: { children: ReactNode; raised: boolean }) {
+export function Toaster({ children }: { children: ReactNode }) {
   const t = useT()
   const [toasts, setToasts] = useState<Live[]>([])
   const next = useRef(1)
@@ -87,12 +87,7 @@ export function Toaster({ children, raised }: { children: ReactNode; raised: boo
   return (
     <ToastContext.Provider value={api}>
       {children}
-      <div
-        className={`${styles.toasts} screen-only`}
-        data-raised={raised}
-        role="status"
-        aria-live="polite"
-      >
+      <div className={`${styles.toasts} screen-only`} role="status" aria-live="polite">
         {toasts.map((toast) => {
           const Icon = toast.tone && toast.tone !== 'plain' ? ICONS[toast.tone] : null
           return (
