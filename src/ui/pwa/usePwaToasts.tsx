@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useEffectEvent } from 'react'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 import { useToasts } from '../components/toast.ts'
 import { useT } from '../i18n/index.ts'
@@ -17,37 +17,47 @@ export function usePwaToasts(): void {
     updateServiceWorker,
   } = useRegisterSW()
 
-  useEffect(() => {
-    if (!needRefresh) return
+  // Each toast is pushed when its event happens, in the language of that moment; switching the
+  // language later doesn't push it again.
+  const showUpdate = useEffectEvent(() =>
     toasts.push({
       key: 'update',
       tone: 'info',
       title: t('toasts.update'),
       duration: 0,
       action: { label: t('toasts.reload'), run: () => void updateServiceWorker(true) },
-    })
-  }, [needRefresh, toasts, updateServiceWorker, t])
-
-  useEffect(() => {
-    if (!offlineReady) return
+    }),
+  )
+  const showOfflineReady = useEffectEvent(() =>
     toasts.push({
       key: 'offline-ready',
       tone: 'info',
       title: t('toasts.offlineReady'),
       sub: t('toasts.offlineReadySub'),
       duration: 4000,
-    })
-  }, [offlineReady, toasts, t])
+    }),
+  )
+  const showOffline = useEffectEvent(() =>
+    toasts.push({ key: 'network', tone: 'plain', title: t('toasts.offline'), duration: 4000 }),
+  )
+  const hideOffline = useEffectEvent(() => toasts.dismiss('network'))
 
   useEffect(() => {
-    const offline = () =>
-      toasts.push({ key: 'network', tone: 'plain', title: t('toasts.offline'), duration: 4000 })
-    const online = () => toasts.dismiss('network')
+    if (needRefresh) showUpdate()
+  }, [needRefresh])
+
+  useEffect(() => {
+    if (offlineReady) showOfflineReady()
+  }, [offlineReady])
+
+  useEffect(() => {
+    const offline = () => showOffline()
+    const online = () => hideOffline()
     window.addEventListener('offline', offline)
     window.addEventListener('online', online)
     return () => {
       window.removeEventListener('offline', offline)
       window.removeEventListener('online', online)
     }
-  }, [toasts, t])
+  }, [])
 }

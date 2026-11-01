@@ -1,5 +1,5 @@
 import { Eye } from 'lucide-react'
-import { forwardRef, type CSSProperties } from 'react'
+import { forwardRef, useMemo, type CSSProperties } from 'react'
 import { pips, type Board, type Cell } from '../../engine/index.ts'
 import type { Translate } from '../i18n/index.ts'
 import { boardGeometry, HARBOR_R, hexPoints, R, SAND, TILE, TOKEN_R, TOKEN_Y } from './geometry.ts'
@@ -178,8 +178,8 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
   { board, t, fogRevealed, animate, width, height, label, className },
   ref,
 ) {
-  const geometry = boardGeometry(board)
-  const timing = dealTiming(geometry)
+  const geometry = useMemo(() => boardGeometry(board), [board])
+  const timing = useMemo(() => dealTiming(geometry, fogRevealed), [geometry, fogRevealed])
   const stagger = tileStagger(geometry.cells.length)
   const { viewBox: vb } = geometry
   let tokenIndex = 0

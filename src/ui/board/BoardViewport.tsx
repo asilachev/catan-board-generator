@@ -1,5 +1,5 @@
 import { Minus, MoveHorizontal, Plus } from 'lucide-react'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type Ref } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type Ref } from 'react'
 import type { Board } from '../../engine/index.ts'
 import { IconButton } from '../components/Kit.tsx'
 import type { Translate } from '../i18n/index.ts'
@@ -48,7 +48,17 @@ export function BoardViewport({
     [board.variant.id],
   )
   const [scroll, setScroll] = useState({ left: 0, max: 0, client: 1, total: 1 })
-  const vb = boardGeometry(board).viewBox
+  const vb = useMemo(() => boardGeometry(board).viewBox, [board])
+  // Where zooming is heading. Touch events can come faster than renders, so each pinch step
+  // starts from the zoom and scroll the last step asked for, not from the last render.
+  const live = useRef<{
+    zoom: number
+    target: { left: number; top: number } | null
+    frame: number
+  }>({ zoom, target: null, frame: 0 })
+  useLayoutEffect(() => {
+    live.current.zoom = zoom
+  }, [zoom])
 
   useLayoutEffect(() => {
     const el = box.current
@@ -89,19 +99,25 @@ export function BoardViewport({
     (next: number, at?: { x: number; y: number }) => {
       const el = box.current
       const clamped = Math.min(ZOOM_MAX, Math.max(minZoom, next))
-      if (!el) return setZoom(clamped)
+      const state = live.current
+      const ratio = clamped / state.zoom
+      state.zoom = clamped
+      setZoom(clamped)
+      if (!el) return
       const px = at?.x ?? el.clientWidth / 2
       const py = at?.y ?? el.clientHeight / 2
-      const ratio = clamped / zoom
-      const left = (el.scrollLeft + px) * ratio - px
-      const top = (el.scrollTop + py) * ratio - py
-      setZoom(clamped)
-      requestAnimationFrame(() => {
-        el.scrollLeft = left
-        el.scrollTop = top
+      const from = state.target ?? { left: el.scrollLeft, top: el.scrollTop }
+      state.target = { left: (from.left + px) * ratio - px, top: (from.top + py) * ratio - py }
+      cancelAnimationFrame(state.frame)
+      state.frame = requestAnimationFrame(() => {
+        if (state.target) {
+          el.scrollLeft = state.target.left
+          el.scrollTop = state.target.top
+        }
+        state.target = null
       })
     },
-    [minZoom, zoom, setZoom],
+    [minZoom, setZoom],
   )
 
   // Pinch with two fingers; one finger scrolls natively.
@@ -115,7 +131,7 @@ export function BoardViewport({
       return a && b ? Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) : 0
     }
     const onStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) pinch.current = { distance: distance(e), zoom }
+      if (e.touches.length === 2) pinch.current = { distance: distance(e), zoom: live.current.zoom }
     }
     const onMove = (e: TouchEvent) => {
       if (!pinch.current || e.touches.length !== 2) return
@@ -142,7 +158,7 @@ export function BoardViewport({
       el.removeEventListener('touchmove', onMove)
       el.removeEventListener('touchend', onEnd)
     }
-  }, [framed, zoom, zoomTo])
+  }, [framed, zoomTo])
 
   const onPointerUp = (e: React.PointerEvent) => {
     if (!framed || e.pointerType === 'mouse') return

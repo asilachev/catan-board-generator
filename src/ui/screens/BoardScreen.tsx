@@ -4,7 +4,7 @@ import type { Board } from '../../engine/index.ts'
 import { BoardViewport } from '../board/BoardViewport.tsx'
 import { boardGeometry } from '../board/geometry.ts'
 import { Legend } from '../board/Legend.tsx'
-import { dealTiming, tileStagger } from '../board/timing.ts'
+import { dealtTokens, dealTiming, tileStagger } from '../board/timing.ts'
 import { useDealProgress } from '../board/useDeal.ts'
 import boardStyles from '../board/board.module.css'
 import { Button, IconButton } from '../components/Kit.tsx'
@@ -45,15 +45,15 @@ export function BoardScreen({
   const clock = useRef<HTMLSpanElement>(null)
   const [nudging, setNudging] = useState(false)
   const geometry = useMemo(() => boardGeometry(board), [board])
-  const timing = useMemo(() => dealTiming(geometry), [geometry])
+  const timing = useMemo(() => dealTiming(geometry, fogRevealed), [geometry, fogRevealed])
   const counts = useMemo(
     () => ({
       tiles: geometry.cells.length,
-      tokens: geometry.cells.filter((c) => c.cell.num !== null).length,
+      tokens: dealtTokens(geometry, fogRevealed),
       stagger: tileStagger(geometry.cells.length),
       tokenStagger: timing.tokenStagger,
     }),
-    [geometry, timing],
+    [geometry, fogRevealed, timing],
   )
   const progress = useDealProgress(clock, dealKey, animate, timing, counts, onDealEnd)
   const dealing = animate

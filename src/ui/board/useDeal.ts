@@ -29,7 +29,8 @@ export function useDealProgress(
   },
   onEnd: () => void,
 ): DealProgress | null {
-  const [progress, setProgress] = useState<DealProgress | null>(null)
+  // Tagged with its deal, so a new deal never shows the previous one's last step.
+  const [progress, setProgress] = useState<{ key: string; value: DealProgress } | null>(null)
   const ended = useEffectEvent(onEnd)
 
   useEffect(() => {
@@ -41,11 +42,12 @@ export function useDealProgress(
       ended()
       return
     }
+    const show = (value: DealProgress) => setProgress({ key: dealKey, value })
     let frame = 0
     const tick = () => {
       const now = Number(animation.currentTime ?? 0)
       if (now < timing.tokensStart) {
-        setProgress({
+        show({
           phase: 'tiles',
           done: Math.min(
             counts.tiles,
@@ -55,13 +57,13 @@ export function useDealProgress(
         })
       } else if (now < timing.harborsStart || timing.harborsStart >= timing.total) {
         const placed = Math.floor((now - timing.tokensStart) / Math.max(1, counts.tokenStagger)) + 1
-        setProgress({
+        show({
           phase: 'tokens',
           done: Math.min(counts.tokens, Math.max(1, placed)),
           of: counts.tokens,
         })
       } else {
-        setProgress({ phase: 'harbors', done: 1, of: 1 })
+        show({ phase: 'harbors', done: 1, of: 1 })
       }
       frame = requestAnimationFrame(tick)
     }
@@ -90,5 +92,5 @@ export function useDealProgress(
     counts.tokenStagger,
   ])
 
-  return running ? progress : null
+  return running && progress?.key === dealKey ? progress.value : null
 }

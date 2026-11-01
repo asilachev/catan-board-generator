@@ -225,8 +225,10 @@ function Shell({
 
   const onDealEnd = useCallback(() => {
     setDealing(null)
-    const { violations, options } = board
-    if (options.letters) return
+    const { violations, options, variant: dealt } = board
+    // Letters place the tokens in the rulebook's fixed order, so no rule can be relaxed. Only
+    // boards that have a letter layout use it (buildBoard ignores the option elsewhere).
+    if (options.letters && dealt.letters) return
     const relaxed =
       options.red && violations.red > 0
         ? t('toasts.relaxedRed')

@@ -20,11 +20,15 @@ export interface DealTiming {
   readonly total: number
 }
 
-export function dealTiming(geometry: Geometry): DealTiming {
+/** The number tokens a deal shows: none on hexes still under the fog (Scenario 3). */
+export const dealtTokens = (geometry: Geometry, fogRevealed: boolean): number =>
+  geometry.cells.filter((c) => c.cell.num !== null && (fogRevealed || c.cell.kind !== 'fog')).length
+
+export function dealTiming(geometry: Geometry, fogRevealed: boolean): DealTiming {
   const n = geometry.cells.length
   const tilesStart = COAST_MS
   const tilesEnd = tilesStart + (n - 1) * tileStagger(n) + TILE_MS
-  const tokens = geometry.cells.filter((c) => c.cell.num !== null).length
+  const tokens = dealtTokens(geometry, fogRevealed)
   const tokenStagger = Math.min(15, 200 / Math.max(1, tokens))
   const tokensStart = Math.max(0, tilesEnd - 220)
   const tokensEnd = tokensStart + Math.max(0, tokens - 1) * tokenStagger + TOKEN_MS

@@ -10,10 +10,13 @@ export function useWakeLock(active: boolean): void {
   useEffect(() => {
     if (!active || typeof navigator === 'undefined' || !('wakeLock' in navigator)) return
     let sentinel: WakeLockSentinel | null = null
+    let pending = false
     let cancelled = false
 
     const request = async () => {
-      if (sentinel || document.visibilityState !== 'visible') return
+      // One request at a time: a second one would overwrite the first lock, which then leaks.
+      if (sentinel || pending || document.visibilityState !== 'visible') return
+      pending = true
       try {
         const lock = await navigator.wakeLock.request('screen')
         if (cancelled) {
@@ -26,6 +29,8 @@ export function useWakeLock(active: boolean): void {
         })
       } catch {
         // Refused or unavailable: the app works fine without it.
+      } finally {
+        pending = false
       }
     }
 
