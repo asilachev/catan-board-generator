@@ -1,0 +1,13 @@
+dist/
+dev-dist/
+coverage/
+node_modules/
+package-lock.json
+docs/reference/
+docs/v1/
+_site/
+.screenshots/
+# Markdown is hand-formatted (wide tables); keep Prettier to code and config.
+*.md
+# nginx config is not a Prettier language (it reflowed .inc files as prose)
+docker/

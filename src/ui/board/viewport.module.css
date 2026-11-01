@@ -1,0 +1,100 @@
+.wrap {
+  position: relative;
+}
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+.viewport[data-framed='true'] {
+  min-height: 300px;
+  max-height: min(62dvh, 560px);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgb(58 143 194 / 22%), transparent 70%), rgb(9 46 71 / 55%);
+  box-shadow: inset 0 0 0 1px rgb(246 236 214 / 12%);
+  align-items: center;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.viewport[data-framed='true']::-webkit-scrollbar {
+  display: none;
+}
+
+/* Wide boards start at their left edge and scroll; narrow ones stay centred. */
+.viewport[data-wide='true'] {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.canvas {
+  flex: none;
+  margin: auto;
+  padding: 0;
+}
+
+.viewport[data-framed='true'] .canvas {
+  padding: 8px;
+  box-sizing: content-box;
+}
+
+.zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: rgb(9 46 71 / 80%);
+  box-shadow: inset 0 0 0 1px rgb(246 236 214 / 20%);
+  overflow: hidden;
+}
+
+.zoom button {
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.zoom button + button {
+  border-top: 1px solid rgb(246 236 214 / 20%);
+}
+
+.track {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 72px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(246 236 214 / 18%);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.track span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 2px;
+  background: rgb(246 236 214 / 85%);
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 0;
+  color: var(--on-sea-soft);
+  font-size: 14.5px;
+}

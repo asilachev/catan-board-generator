@@ -48,8 +48,10 @@ or the board when the app was opened from a shared link.
 
 ## Board codes
 
-- A code is any text. It's normalised before hashing: trimmed, lower case, inner spaces as one
-  hyphen, at most 40 characters. v1's codes are already in that form.
+- A code is any text, hashed the way v1 hashed it: trimmed, and otherwise exactly as typed. Case
+  and inner spaces count (`Anchor` and `anchor` are different boards), so every code and link v1
+  made still builds the same board. The input turns off auto-capitalisation and takes up to 40
+  characters; a link may carry up to 200 (v1 had no limit).
 - Codes are words of each language (`anchor-4821`, `ancla-4821`, `якорь-4821`…), but any code builds
   the same board in every language.
 
@@ -63,9 +65,10 @@ or the board when the app was opened from a shared link.
 
 ## The deal
 
-The storyboard (design 13): coast and empty sand slots → tiles dealt in a spiral from the centre
-(scale 0.6 → 1 and fade, 220 ms each, 25 ms apart, tighter on big boards) → number tokens drop in
-(−12 px, 160 ms, 15 ms apart) → harbors and piers. About 0.9 s for the base game.
+The storyboard (design 13): coast and empty sand slots (80 ms) → tiles dealt in a spiral from the
+centre (scale 0.6 → 1 and fade, 220 ms each, 25 ms apart, tighter on big boards) → number tokens
+drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors and piers. About
+1.1 s for the base game.
 
 - It plays whenever a board appears that hasn't been dealt on screen yet: a new code, a new
   scenario, new token rules, Build board, Rebuild (after a 180 ms nudge).
@@ -130,7 +133,7 @@ language on first launch, then the picked one. Russian text gets non-breaking sp
   notice.
 - **Each page shows the app in its own language.** `npm run site:shots` captures the app with
   Playwright and Google Chrome in every language: 11 phone screens and the 4 deal frames (the board
-  paused at 0, 300, 700 and 950 ms). They aren't committed; the Pages workflow captures them on every
+  alone, paused at 80, 380, 760 and 1000 ms: coast, spiral, tokens, harbors). They aren't committed; the Pages workflow captures them on every
   build.
 - **One source of truth.** Scenario names, victory targets, button labels and sample codes come from
   the app's translations and engine; the page's own copy is in `site/locales/<lang>.json`.

@@ -1,0 +1,111 @@
+.toasts {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--safe-bottom) + 24px);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(100% - 32px, 480px);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Above the tab bar and the board's buttons. */
+.toasts[data-raised='true'] {
+  bottom: calc(var(--safe-bottom) + 160px);
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 60px;
+  padding: 10px 12px 10px 14px;
+  border-radius: 16px;
+  background: #2f2415;
+  color: var(--on-sea);
+  box-shadow:
+    inset 0 0 0 1px rgb(246 236 214 / 12%),
+    0 10px 24px rgb(0 0 0 / 30%);
+  pointer-events: auto;
+  animation: toast-in 220ms var(--ease-out);
+  transition:
+    opacity 180ms ease-in,
+    transform 180ms ease-in;
+}
+
+.toast[data-leaving='true'] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.icon[data-tone='success'] {
+  background: var(--ok);
+}
+
+.icon[data-tone='info'] {
+  background: #3a8fc2;
+}
+
+.icon[data-tone='warn'] {
+  background: var(--warn);
+  color: #2f2415;
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.text strong {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.text span {
+  font-size: 13.5px;
+  color: rgb(246 236 214 / 70%);
+}
+
+.action {
+  flex: none;
+  min-height: 44px;
+  padding: 0 6px;
+  border: 0;
+  background: none;
+  color: var(--tab-active);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--on-sea);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}

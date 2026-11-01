@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "title": "Board Generator for CATAN — fair boards for the base game and Seafarers",
+    "description": "Free, unofficial app that deals fair, shareable boards for the CATAN base game and all nine Seafarers scenarios. Works offline, in five languages.",
+    "ogDescription": "Random boards for the base game and all nine Seafarers scenarios, balanced by the official rules and shareable with a code."
+  },
+  "brand": {
+    "name": "Board Generator",
+    "sub": "for CATAN · unofficial"
+  },
+  "nav": {
+    "sections": "Sections",
+    "features": "Features",
+    "how": "How it works",
+    "scenarios": "Scenarios",
+    "install": "Install",
+    "open": "Open app",
+    "language": "Language"
+  },
+  "hero": {
+    "free": "Free",
+    "offline": "Works offline",
+    "title": "A fair new island for every game",
+    "lead": "Random boards for the Catan base game and all nine Seafarers scenarios — balanced by the official rules, shareable with a code, and easy to read on your phone at the table.",
+    "open": "Open the app",
+    "install": "Install on your phone",
+    "checks": ["No sign-up", "No ads", "Same code, same board"],
+    "alt": "The app showing a base-game board, its code and the legend"
+  },
+  "need": {
+    "title": "You’ll need the board game",
+    "text": "This app only lays out the board. To play, you need your own copy of the CATAN base game; Seafarers scenarios also need the Seafarers expansion.",
+    "required": "Required",
+    "optional": "Optional",
+    "base": "CATAN — base game",
+    "baseSub": "Every board",
+    "sea": "Seafarers expansion",
+    "seaSub": "Scenarios 1–9",
+    "ext": "5–6 player extension",
+    "extSub": "5–6 player board"
+  },
+  "stats": {
+    "boards": "boards",
+    "boardsText": "Base game for 3–4 and 5–6 players, plus all 9 Seafarers scenarios",
+    "rules": "fairness rules",
+    "rulesText": "6 & 8 apart, equal numbers apart, terrain spread out",
+    "langs": "languages",
+    "langsText": "English, Español, Deutsch, Русский and Српски",
+    "signups": "sign-ups",
+    "signupsText": "Opens in the browser, installs like an app, works offline"
+  },
+  "features": {
+    "eyebrow": "Why players use it",
+    "title": "Built for the table, not the screen",
+    "lead": "Setting up Catan should take a minute, not a debate about whose corner is too good.",
+    "items": [
+      {
+        "title": "Fair by the rules",
+        "text": "6 and 8 never touch, equal numbers stay apart and terrain is spread out, so no one starts on an unbeatable spot."
+      },
+      {
+        "title": "Base game & Seafarers",
+        "text": "Every Seafarers scenario with its own islands, fog, gold fields and player counts, not just the classic island."
+      },
+      {
+        "title": "Share with a code",
+        "text": "Each board gets a short code like anchor-4821. Send it and the whole table sees the same island."
+      },
+      {
+        "title": "Readable at arm’s length",
+        "text": "Big tiles, clear numbers and probability dots, so you can set up straight from the phone."
+      },
+      {
+        "title": "What to take from the box",
+        "text": "Terrain, token and harbor counts for every scenario, and where to look in the rulebook."
+      },
+      {
+        "title": "Works offline",
+        "text": "Install it from the browser. It opens instantly at the table, even without signal."
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "A look inside",
+    "title": "Every screen, made for the table",
+    "lead": "From picking a scenario to sharing the code: big type, clear tiles and nothing you don’t need mid-game.",
+    "items": [
+      {
+        "title": "Set up in seconds",
+        "text": "Game, scenario, player count and token rules on one screen."
+      },
+      {
+        "title": "Know what to unpack",
+        "text": "Tile, token and harbor counts plus the scenario’s own rules."
+      },
+      {
+        "title": "Share with one code",
+        "text": "Copy a link or send the code; everyone sees the same board."
+      },
+      {
+        "title": "Five languages",
+        "text": "English, Spanish, German, Russian and Serbian from the first launch."
+      },
+      {
+        "title": "Dealt fairly",
+        "text": "Tiles and tokens follow the rules you pick, in under a second."
+      },
+      {
+        "title": "Opens instantly",
+        "text": "Installed from the browser, it starts fast and works offline."
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "Three taps to a new island",
+    "steps": [
+      {
+        "title": "Choose your game",
+        "text": "Base game or Seafarers, the scenario and how many people are playing."
+      },
+      {
+        "title": "Tap “New board”",
+        "text": "Tiles, number tokens and harbors are dealt to the rules you picked."
+      },
+      {
+        "title": "Lay it out & share",
+        "text": "Copy the board onto the table and send the code so everyone can check it."
+      }
+    ]
+  },
+  "deal": {
+    "eyebrow": "The deal",
+    "title": "Dealt the way you’d deal it",
+    "lead": "Coast first, then tiles in a spiral from the centre, then tokens and harbors. Under a second, and you can see exactly what changed.",
+    "frames": [
+      "Coast and empty sand slots",
+      "Tiles deal in a spiral",
+      "Number tokens drop in",
+      "Harbors and piers appear"
+    ]
+  },
+  "math": {
+    "eyebrow": "The math",
+    "title": "Why 6 and 8 never touch",
+    "text": "Five of the 36 dice combinations roll a 6, and five more roll an 8. Put them side by side and a single crossing pays out on 10 rolls in 36. The generator keeps them apart, and also keeps equal numbers and identical terrain from clumping.",
+    "checks": [
+      "6 and 8 never on neighbouring hexes",
+      "Equal numbers never side by side",
+      "Identical terrain spread across the island"
+    ],
+    "chart": "Chance of each roll with two dice",
+    "outOf": "out of 36",
+    "legendRed": "6 and 8: 5 combinations each",
+    "legendSeven": "7 moves the robber, no token",
+    "legendOther": "Everything else"
+  },
+  "sea": {
+    "eyebrow": "Seafarers expansion",
+    "title": "Set sail with all nine scenarios",
+    "lead": "Islands, gold fields, fog and pirates. Pick a scenario and player count; wide archipelagos scroll and zoom on your phone.",
+    "checks": [
+      "Every scenario with its own tiles, tokens and victory points",
+      "3- or 4-player layouts where the rules differ",
+      "Fog hexes stay hidden until you choose to reveal them"
+    ],
+    "requires": "Requires the CATAN – Seafarers expansion",
+    "alts": [
+      "Picking one of the nine Seafarers scenarios",
+      "A Seafarers archipelago board with zoom controls",
+      "Setup with Seafarers selected"
+    ]
+  },
+  "scenarios": {
+    "eyebrow": "Scenarios",
+    "title": "Eleven ways to set sail",
+    "lead": "The classic island for 3–4 or 5–6 players, plus every Seafarers scenario, each with its own tile counts, harbors and victory target.",
+    "base": "Base game",
+    "seafarers": "Seafarers",
+    "cta": "Deal your first island",
+    "ctaLink": "Open the app",
+    "texts": {
+      "base34": "The standard island, laid out at random.",
+      "base56": "The extension: 30 hexes and two deserts.",
+      "s1": "A main island and small isles, some with gold.",
+      "s2": "Four islands; everyone wants a foothold on each.",
+      "s3": "Two islands with a fog-covered sea between.",
+      "s4": "A desert splits the main island in two.",
+      "s5": "A long island ringed by a lost tribe’s islets.",
+      "s6": "Weaving villages between two main islands.",
+      "s7": "Home in the east, pirates hold the west.",
+      "s8": "Build great wonders on the northern isles.",
+      "s9": "Free play: every hex, even the sea, is random."
+    }
+  },
+  "langs": {
+    "eyebrow": "Languages",
+    "title": "Speaks your table’s language",
+    "lead": "English, Spanish, German, Russian and Serbian, with terrain, resource and scenario names translated for each.",
+    "names": {
+      "en": "English",
+      "es": "Spanish",
+      "de": "German",
+      "ru": "Russian",
+      "sr": "Serbian"
+    }
+  },
+  "install": {
+    "eyebrow": "Install",
+    "title": "Install in two taps, no app store",
+    "lead": "It runs in the browser and installs as an app, so it opens instantly at the table and keeps working without signal.",
+    "ios": "iPhone & iPad",
+    "iosSteps": "Safari → Share → Add to Home Screen",
+    "android": "Android",
+    "androidSteps": "Chrome → ⋮ menu → Install app",
+    "open": "Open the app",
+    "alt": "The app offering to install itself"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Good to know",
+    "lead": "Still unsure? Open the app — it’s free and takes no setup.",
+    "items": [
+      {
+        "q": "Is it free?",
+        "a": "Yes. No accounts, no ads and nothing to buy."
+      },
+      {
+        "q": "Do I still need the board game?",
+        "a": "Yes. The app only lays out the board: you play with your own copy of CATAN, plus the Seafarers expansion for its scenarios and the 5–6 player extension for the bigger island."
+      },
+      {
+        "q": "Is this an official CATAN app?",
+        "a": "No. It’s a free, unofficial fan project, not affiliated with or endorsed by CATAN GmbH or its publishers."
+      },
+      {
+        "q": "Can my friends see the same board?",
+        "a": "Yes. Every board has a code: send the link or just the code, and everyone sees the same island on any device and in any language."
+      },
+      {
+        "q": "Which rules does it follow?",
+        "a": "Tile, token and harbor counts and the victory targets come from the base game and Seafarers rulebooks. 6 and 8 stay apart as the Seafarers rules ask; keeping equal numbers apart and spreading terrain are house rules you can switch off."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Fair, shareable boards for the Catan base game and Seafarers. Made for game night.",
+    "app": "App",
+    "rules": "Rules",
+    "language": "Language",
+    "official": "Official rules · catan.com",
+    "source": "Source code · GitHub",
+    "copyright": "© 2026 Board Generator — an unofficial, free and non-commercial fan project.",
+    "trademarks": "CATAN®, CATAN – Seafarers and the CATAN logo are trademarks of CATAN GmbH. Rules, scenario names and game content © CATAN GmbH and its licensed publishers. This site is not affiliated with, sponsored or endorsed by CATAN GmbH or its publishers. You need your own copy of the game to play.",
+    "licenses": "Icons: Lucide (ISC) and our own drawings. Fonts: Alegreya SC, PT Sans, PT Mono and Spectral (SIL Open Font License).",
+    "privacy": "No cookies and no accounts. The app on app.catan.silachev.com counts anonymous page views with Vercel Web Analytics."
+  }
+}

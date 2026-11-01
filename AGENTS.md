@@ -23,7 +23,7 @@ owner's copy of the app runs at <https://app.catan.silachev.com/> (Vercel).
 | [`docs/rules.md`](docs/rules.md) | Every board's tiles, tokens, harbors and victory target with its rulebook source, and the **rulings table** (how the app fills gaps in the rules) |
 | [`docs/design.md`](docs/design.md) | Screens, navigation, determinism and board codes, share links, the deal animation, visual language, languages, PWA, hosting, landing page |
 | [`docs/v1/`](docs/v1/) | The original single-file app. Its generator is the reference: `src/engine/v1.test.ts` runs it next to the port |
-| [`docs/reference/`](docs/reference/) | The rulebook PDFs the data was checked against. They are gitignored; `npm run reference` downloads them from the `reference-docs` release |
+| [`docs/reference/`](docs/reference/) | The rulebook PDFs the data was checked against. They are gitignored; `npm run reference` is meant to download them from a `reference-docs` release (where they live is #6) |
 | Pencil file `catan.pen` | The design: components, screens 01–12, states, user journey and motion, strings, landing page. It lives in the owner's pen.dev workspace |
 
 When behaviour depends on a rule, cite the doc section in code comments or tests. If the code needs a
@@ -53,8 +53,9 @@ change to a rule or ruling updates the docs in the same PR.
   CATAN GmbH; this is an unofficial fan project, not affiliated with or endorsed by CATAN GmbH or its
   publishers, and you need your own copy of the game.
 - **Languages.** English, Español, Deutsch, Русский and Српски. **Serbian is Cyrillic only.**
-- **Visibility.** The repo is public, and so is the landing page. The app sends `noindex`: the
-  landing page is its public face.
+- **Visibility.** The landing page is public; the app sends `noindex`, because the landing page is
+  its public face. The repository is private for now: whether it goes public like
+  splendor-marvel-automa is #8 (GitHub Pages on a free plan needs it).
 - **No secrets.** There is no backend. Don't add analytics, accounts or network calls without an
   issue that approves them.
   - The one approved analytics is Vercel Web Analytics: anonymous, cookieless page views, only in
@@ -84,8 +85,9 @@ You need Node 22 or later (see `.nvmrc`). Use npm.
 
 CI (`.github/workflows/ci.yml`) runs `lint`, `format:check`, `typecheck`, `test` and `build` on every
 PR and on every push to `master`. Run the same commands before pushing. `docker.yml` builds the
-image on PRs and publishes it to GHCR from `master`. `pages.yml` captures the screenshots, builds the
-landing page on PRs and deploys it to GitHub Pages from `master`. `vercel.ts` configures the other
+image on PRs and publishes it to GHCR from `master`. `pages.yml` captures the screenshots and builds
+the landing page on every run, and deploys it to GitHub Pages from `master` once the repository is
+public (#8). `vercel.ts` configures the other
 way to host the app, Vercel's Git integration; keep its caching and security headers in step with
 `docker/nginx.conf` and `docker/security-headers.inc`.
 

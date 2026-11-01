@@ -1,0 +1,76 @@
+name: Pages
+
+# The landing page (site/) on GitHub Pages, in five languages: https://catan.silachev.com/
+# Each language's page shows the app in that language, so the screenshots are captured here from
+# the app's source. Pull requests build the site to prove it; master deploys it.
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'site/**'
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'vite.config.ts'
+      - 'package-lock.json'
+      - 'scripts/build-site.mjs'
+      - 'scripts/screenshots.mjs'
+      - '.github/workflows/pages.yml'
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'vite.config.ts'
+      - 'package-lock.json'
+      - 'scripts/build-site.mjs'
+      - 'scripts/screenshots.mjs'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      # The app in all five languages, with the runner's Google Chrome.
+      - run: npm run site:shots
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+      - run: npm run site
+      # Deploys only from a public repository: Pages on a free plan needs one (#8).
+      - if: github.event_name != 'pull_request' && !github.event.repository.private
+        uses: actions/configure-pages@v6
+      - if: github.event_name != 'pull_request' && !github.event.repository.private
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request' && !github.event.repository.private
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

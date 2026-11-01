@@ -1,0 +1,388 @@
+{
+  "app": {
+    "name": "Spielplan-Generator",
+    "tagline": "Basisspiel und Seefahrer – alle 9 Szenarien",
+    "loading": "Die Insel wird gelegt…"
+  },
+  "tabs": {
+    "label": "Bereiche",
+    "board": "Spielplan",
+    "setup": "Aufbau",
+    "scenario": "Szenario"
+  },
+  "common": {
+    "close": "Schließen",
+    "back": "Zurück",
+    "dismiss": "Ausblenden",
+    "playersRange": "{min}–{max} Spieler",
+    "players": "{n, plural, one {# Spieler} other {# Spieler}}",
+    "times": "×{n}",
+    "opensInNewTab": "öffnet in einem neuen Tab"
+  },
+  "game": {
+    "base": "Basisspiel",
+    "seafarers": "Seefahrer"
+  },
+  "terrain": {
+    "forest": "Wald",
+    "pasture": "Weideland",
+    "fields": "Ackerland",
+    "hills": "Hügelland",
+    "mountains": "Gebirge",
+    "desert": "Wüste",
+    "gold": "Gold",
+    "sea": "Meer",
+    "fog": "Nebel"
+  },
+  "resource": {
+    "forest": "Holz",
+    "pasture": "Wolle",
+    "fields": "Getreide",
+    "hills": "Lehm",
+    "mountains": "Erz",
+    "desert": "kein Rohstoff",
+    "gold": "beliebig",
+    "sea": "Meerengen",
+    "fog": "verdeckt"
+  },
+  "board": {
+    "codeLabel": "Plan-Code",
+    "copyLink": "Link kopieren",
+    "share": "Spielplan teilen",
+    "rebuild": "Erneut",
+    "newBoard": "Neu mischen",
+    "dealing": "Verteilen…",
+    "dealingHexes": "Felder werden gelegt · {n} von {total}",
+    "dealingTokens": "Zahlenchips · {n} von {total}",
+    "dealingHarbors": "Häfen und Stege",
+    "wide": "Breiter als der Bildschirm – wischen",
+    "zoomIn": "Vergrößern",
+    "zoomOut": "Verkleinern",
+    "changeScenario": "Szenario wechseln: {scenario}",
+    "legend": "Legende",
+    "label": "{scenario}, Plan-Code {code}",
+    "harbor": "Hafen {ratio}",
+    "harborFor": "Hafen 2:1, {resource}",
+    "hiddenFog": "Nebel, verdeckt",
+    "revealedFog": "Unter dem Nebel: {terrain}",
+    "villages": "Dörfer {a} und {b}",
+    "letter": "Buchstabe {letter}"
+  },
+  "setup": {
+    "title": "Spielplan-Aufbau",
+    "subtitle": "Spiel, Szenario und Regeln für die Zahlenchips",
+    "game": "Spiel",
+    "baseMeta": "{n, plural, one {# Aufbau} other {# Aufbauten}}",
+    "seafarersMeta": "{n, plural, one {# Szenario} other {# Szenarien}}",
+    "scenario": "Szenario",
+    "players": "Spielerzahl",
+    "baseCounts": "{hexes, plural, one {# Feld} other {# Felder}} · {tokens, plural, one {# Chip} other {# Chips}} · {harbors, plural, one {# Hafen} other {# Häfen}}",
+    "code": "Plan-Code",
+    "codePlaceholder": "z. B. anker-4821",
+    "codeHelp": "Derselbe Code ergibt immer denselben Spielplan – so lässt er sich leicht teilen.",
+    "newCode": "Neuer Zufallscode",
+    "tokens": "Zahlenchips verteilen",
+    "red": "6 und 8 nie benachbart",
+    "redHint": "Pflicht laut Seefahrer-Regeln",
+    "same": "Keine gleichen Zahlen nebeneinander",
+    "sameHint": "Hausregel, nicht im Regelheft",
+    "spread": "Landschaften mischen",
+    "spreadHint": "Weniger gleiche Felder nebeneinander",
+    "letters": "Chips nach Buchstaben A–R",
+    "lettersHint": "Die feste Reihenfolge aus dem Regelheft, rund um die Insel",
+    "fog": "Nebel aufdecken",
+    "fogHint": "Nur zum Prüfen; im Spiel bleibt der Nebel verdeckt",
+    "language": "Sprache",
+    "build": "Plan erstellen"
+  },
+  "scenario": {
+    "eyebrow": "Szenario",
+    "onBoard": "Spielplan-Inhalt",
+    "totalHexes": "Felder gesamt",
+    "robber": "Räuber",
+    "seaNote": "Meerfelder umgeben die Inseln; der Plan zeigt nur das Land.",
+    "tokens": "Zahlenchips",
+    "tokensNote": "{n, plural, one {# Chip} other {# Chips}}. Die Punkte zeigen die Wahrscheinlichkeit: 6 und 8 fallen am häufigsten.",
+    "spare": "Bleiben in der Schachtel: {list}.",
+    "villageTokens": "Die Zahlen der Dörfer kommen aus diesem Vorrat.",
+    "harbors": "Häfen",
+    "any": "beliebig",
+    "harborsBase": "{n} Häfen am Meeresrahmen: {generic} allgemeine 3:1 und je ein 2:1 pro Rohstoff. Die Arten werden zufällig verteilt.",
+    "harborsSea": "{special} Spezialhäfen 2:1 und {generic, plural, one {# allgemeiner Hafen 3:1} other {# allgemeine Häfen 3:1}}, gelegt wie auf der Szenariokarte. Sie sind auf diesem Plan nicht eingezeichnet.",
+    "extras": "Außerdem aus der Schachtel",
+    "rules": "Szenario-Regeln",
+    "rulebooks": "Regelhefte",
+    "inBase": "Regelheft Basisspiel",
+    "inSeafarers": "Regelheft Seefahrer",
+    "baseSection": "Abschnitt: variabler Aufbau",
+    "seaSection": "Abschnitt: Szenario {n} · {name}",
+    "official": "Offizielle Regeln",
+    "officialSub": "catan.com · Regelhefte zum Herunterladen"
+  },
+  "sheet": {
+    "baseEyebrow": "Basisspiel · 2 Aufbauten",
+    "seaEyebrow": "Seefahrer · 9 Szenarien",
+    "title": "Szenario"
+  },
+  "share": {
+    "title": "Spielplan teilen",
+    "codeLabel": "Plan-Code",
+    "note": "Ein Code, derselbe Spielplan – auf jedem Gerät, in jeder Sprache.",
+    "copy": "Link kopieren",
+    "send": "Senden…",
+    "print": "Drucken",
+    "png": "PNG speichern",
+    "sendText": "Ein Catan-Spielplan für heute Abend: {code}",
+    "printTitle": "{scenario} · Plan-Code {code}"
+  },
+  "toasts": {
+    "copied": "Link kopiert",
+    "copiedSub": "Code {code} · an Freunde schicken",
+    "copyFailed": "Link konnte nicht kopiert werden",
+    "send": "Senden",
+    "offlineReady": "Funktioniert offline",
+    "offlineReadySub": "Der Spielplan öffnet auch ohne Internet",
+    "offline": "Offline – die App funktioniert weiter",
+    "update": "Eine neue Version ist bereit",
+    "reload": "Neu laden",
+    "relaxed": "Regel gelockert",
+    "relaxedSame": "Nicht alle gleichen Zahlen ließen sich trennen",
+    "relaxedRed": "Nicht alle 6 und 8 ließen sich trennen",
+    "again": "Nochmal",
+    "pngFailed": "Bild konnte nicht gespeichert werden"
+  },
+  "language": {
+    "eyebrow": "Erster Start",
+    "title": "Sprache",
+    "subtitle": "Wähle die Sprache der App – du kannst sie später im Aufbau ändern.",
+    "note": "Namen von Landschaften, Rohstoffen und Szenarien sind übersetzt.",
+    "continue": "Weiter"
+  },
+  "pwa": {
+    "installTitle": "Als App installieren",
+    "installSub": "Dein Spielplan, auch offline",
+    "install": "Installieren",
+    "how": "Wie",
+    "notNow": "Nicht jetzt",
+    "iosTitle": "Auf dem iPhone installieren",
+    "iosSteps": [
+      "Tippe in Safari unten auf Teilen",
+      "Wähle „Zum Home-Bildschirm“",
+      "Öffne den Spielplan vom Home-Bildschirm"
+    ],
+    "gotIt": "Verstanden"
+  },
+  "victory": {
+    "points": "{n} Siegpunkte",
+    "pointsShort": "{n} SP",
+    "fortress": "Erobere deine Piratenfestung und erreiche {n} SP",
+    "fortressShort": "Festung + {n} SP",
+    "wonder": "Vollende ein Wunder oder erreiche {n} SP mit den meisten Wunder-Stufen",
+    "wonderShort": "Wunder oder {n} SP"
+  },
+  "extras": {
+    "vpTokens": "{n, plural, one {# Siegpunkt-Chip} other {# Siegpunkt-Chips}}",
+    "devCards": "{n, plural, one {# Entwicklungskarte} other {# Entwicklungskarten}}",
+    "cloth": "{n, plural, one {# Stoff-Chip} other {# Stoff-Chips}}",
+    "fortresses": "{n, plural, one {# Piratenfestung-Chip} other {# Piratenfestung-Chips}}",
+    "playerTokens": "{n, plural, one {# Spielermarker} other {# Spielermarker}}",
+    "wonderCards": "{n, plural, one {# Wunderkarte} other {# Wunderkarten}}",
+    "wallTokens": "{n, plural, one {# Chip „Große Mauer“} other {# Chips „Große Mauer“}}",
+    "bridgeTokens": "{n, plural, one {# Chip „Große Brücke“} other {# Chips „Große Brücke“}}"
+  },
+  "codeWords": [
+    "anker",
+    "brandung",
+    "brise",
+    "kompass",
+    "leuchtturm",
+    "sturm",
+    "riff",
+    "lagune",
+    "segel",
+    "mast",
+    "hafen",
+    "bucht",
+    "flaute",
+    "kap",
+    "insel",
+    "welle",
+    "kurs",
+    "ebbe",
+    "flut",
+    "boje"
+  ],
+  "scenarios": {
+    "base34": {
+      "name": "Basisspiel",
+      "short": "Basisspiel",
+      "tagline": "",
+      "story": "Aufbau für Fortgeschrittene: Felder und Chips werden zufällig gelegt.",
+      "rules": [
+        "Der Räuber beginnt in der Wüste; dort liegt kein Zahlenchip.",
+        "Setzt den Meeresrahmen aus seinen sechs Teilen beliebig zusammen, Häfen nach außen.",
+        "Gründung: erste Runde im Uhrzeigersinn, zweite dagegen; die zweite Siedlung bringt sofort Startrohstoffe.",
+        "Zu dritt kommen die weißen Figuren zurück in die Schachtel."
+      ]
+    },
+    "base56": {
+      "name": "Basisspiel",
+      "short": "Basisspiel",
+      "tagline": "",
+      "story": "Die Ergänzung für 5–6 Spieler: mehr Felder, Chips und Häfen und eine zweite Wüste.",
+      "rules": [
+        "Zwei Wüsten: Der Räuber beginnt in einer davon.",
+        "Nach jedem Zug folgt eine Sonderbauphase.",
+        "Der Umriss des Rahmens ist hier nur ungefähr; die Zahl der Felder und Chips ist die übliche."
+      ]
+    },
+    "s1": {
+      "name": "Neue Ufer",
+      "short": "Neue Ufer",
+      "tagline": "Hauptinsel und Archipel",
+      "story": "Eine Hauptinsel und ein Archipel kleiner Inseln; auf manchen wurde Gold gefunden."
+    },
+    "s1_3": {
+      "rules": [
+        "Die ersten 2 Siedlungen kommen nur auf die Hauptinsel; statt einer Straße an der Küste darfst du gleich ein Schiff setzen.",
+        "Für die erste Siedlung auf jeder kleinen Insel gibt es 2 Siegpunkt-Chips, sie zählt also 3 SP.",
+        "Der Räuber beginnt auf dem Hügelland mit der 12, der Pirat auf dem Meerfeld mit dem X.",
+        "Ein Goldfluss gibt einer Siedlung 1 Rohstoffkarte nach Wahl, einer Stadt 2."
+      ]
+    },
+    "s1_4": {
+      "rules": [
+        "Die ersten 2 Siedlungen kommen nur auf die Hauptinsel; statt einer Straße an der Küste darfst du gleich ein Schiff setzen.",
+        "Für die erste Siedlung auf jeder kleinen Insel gibt es 2 Siegpunkt-Chips, sie zählt also 3 SP.",
+        "Der Räuber beginnt in der Wüste, der Pirat auf dem Meerfeld mit dem X.",
+        "Die Felder der Hauptinsel und der kleinen Inseln werden zufällig gelegt; rote Zahlen dürfen sich nicht berühren."
+      ]
+    },
+    "s2": {
+      "name": "Die vier Inseln",
+      "short": "Vier Inseln",
+      "tagline": "Archipel aus vier Inseln",
+      "story": "Ein Archipel aus vier Inseln: Jeder Seefahrer will auf allen Fuß fassen."
+    },
+    "s2_3": {
+      "rules": [
+        "Die ersten 2 Siedlungen dürfen auf einer Insel oder auf zwei verschiedenen stehen – das sind deine Heimatinseln.",
+        "Die erste Siedlung auf jeder fremden Insel bringt 2 Siegpunkt-Chips, insgesamt 3 SP.",
+        "Der Räuber beginnt auf dem Feld mit der 12, der Pirat auf dem Meerfeld mit dem X.",
+        "Achte darauf, dass Wald und Weideland nicht nur schlechte Zahlen bekommen: 2, 3, 11 und 12."
+      ]
+    },
+    "s2_4": {
+      "rules": [
+        "Die ersten 2 Siedlungen dürfen auf einer Insel oder auf zwei verschiedenen stehen – das sind deine Heimatinseln.",
+        "Die erste Siedlung auf jeder fremden Insel bringt 2 Siegpunkt-Chips, insgesamt 3 SP.",
+        "Der Räuber beginnt auf dem Feld mit der 12, der Pirat auf dem Meerfeld mit dem X.",
+        "Die Umrisse der Inseln bleiben fest; Felder und Chips innerhalb einer Insel dürfen wechseln."
+      ]
+    },
+    "s3": {
+      "name": "Die Nebelinseln",
+      "short": "Nebelinseln",
+      "tagline": "Zwei Inseln, dazwischen Nebel",
+      "story": "Zwei Inseln, dazwischen ein Meer unter dichtem Nebel."
+    },
+    "s3_3": {
+      "rules": [
+        "Nebelfelder liegen verdeckt. Erreicht eine Straße oder ein Schiff eine Ecke eines verdeckten Feldes, wird es umgedreht.",
+        "Liegt Land unter dem Nebel, bekommt es den obersten Chip vom verdeckten Stapel, und wer es aufgedeckt hat, nimmt 1 Karte seines Rohstoffs. Meer bringt nichts.",
+        "Der Räuber beginnt auf dem Feld mit der 12, der Pirat auf dem Meerfeld mit dem X.",
+        "Keine besonderen Siegpunkte. Diese Regeln erlauben zwei rote Zahlen nebeneinander: Schalte „6 und 8 nie benachbart“ im Aufbau aus, wenn ihr so spielen wollt."
+      ]
+    },
+    "s3_4": {
+      "rules": [
+        "Nebelfelder liegen verdeckt und werden umgedreht, sobald eine Straße oder ein Schiff eine ihrer Ecken erreicht.",
+        "Aufgedecktes Land: obersten Chip vom Stapel und 1 Karte seines Rohstoffs. Aufgedecktes Meer: nichts.",
+        "Der Räuber beginnt auf dem Feld mit der 12, der Pirat auf dem Meerfeld mit dem X.",
+        "Dieses Szenario hat keine besonderen Siegpunkte."
+      ]
+    },
+    "s4": {
+      "name": "Durch die Wüste",
+      "short": "Durch die Wüste",
+      "tagline": "Eine Wüste teilt die Insel",
+      "story": "Eine Wüste teilt die Hauptinsel in zwei, im Osten liegen kleine Inseln."
+    },
+    "s4_3": {
+      "rules": [
+        "Bei der Gründung kommen Siedlungen nur auf den größeren Teil der Hauptinsel, diesseits der Wüste.",
+        "Die kleinen Inseln und der Landstreifen jenseits der Wüste gelten als fremd: Die erste Siedlung dort bringt 2 zusätzliche SP.",
+        "Wüsten bekommen keine Chips. Der Räuber beginnt in einer beliebigen Wüste, der Pirat auf dem Meerfeld mit dem X.",
+        "Rote Zahlen dürfen sich nicht berühren und nicht auf Goldflüssen liegen."
+      ]
+    },
+    "s4_4": {
+      "rules": [
+        "Bei der Gründung kommen Siedlungen nur auf den größeren Teil der Hauptinsel, diesseits der Wüste.",
+        "Die kleinen Inseln und der Landstreifen jenseits der Wüste gelten als fremd: Die erste Siedlung dort bringt 2 zusätzliche SP.",
+        "Wüsten bekommen keine Chips. Der Räuber beginnt in einer beliebigen Wüste, der Pirat auf dem Meerfeld mit dem X.",
+        "Rote Zahlen dürfen sich nicht berühren und nicht auf Goldflüssen liegen."
+      ]
+    },
+    "s5": {
+      "name": "Das vergessene Volk",
+      "short": "Vergessenes Volk",
+      "tagline": "Insel und Inselchen des Volkes",
+      "story": "Eine lange, schmale Insel, umringt von bewohnten Inselchen eines vergessenen Volkes.",
+      "rules": [
+        "Die kleinen Inseln haben keine Zahlenchips, bringen keine Rohstoffe und dürfen nicht besiedelt werden.",
+        "Die Geschenke des Volkes liegen auf den Wegen an den Inselchen: Siegpunkt-Chips, Entwicklungskarten und freie Häfen bekommt, wer dort ein Schiff einsetzt oder hinzieht.",
+        "Der Räuber beginnt in einer beliebigen Wüste; er darf weder auf die kleinen Inseln noch zurück auf sein Startfeld.",
+        "Achte darauf, dass die drei äußersten Felder der Hauptinsel nicht die besten Zahlen bekommen: 5, 6, 8 und 9."
+      ]
+    },
+    "s6": {
+      "name": "Stoffe für Catan",
+      "short": "Stoffe für Catan",
+      "tagline": "Weberdörfer",
+      "story": "Zwei Hauptinseln, dazwischen Dörfer, in denen der feinste Stoff gewebt wird.",
+      "rules": [
+        "Jede kleine Insel bekommt 2 Zahlenchips direkt auf ihre Ecken: Das sind Dörfer. Neben jedes Dorf kommen 5 Stoff-Chips.",
+        "Erreichst du ein Dorf mit einer Schiffslinie, nimm sofort 1 Stoff und dann 1 weiteren, wann immer seine Zahl fällt.",
+        "2 Stoffe ergeben 1 SP; ein einzelner zählt nichts. Die Karte „Längste Handelsstraße“ wird nicht verwendet.",
+        "Das Spiel endet auch, wenn nur noch 3 Dörfer Stoff haben: Es gewinnt, wer die meisten SP hat."
+      ]
+    },
+    "s7": {
+      "name": "Die Pirateninseln",
+      "short": "Pirateninseln",
+      "tagline": "",
+      "story": "Die Ostinsel ist eure Heimat. Piraten halten die Westinseln – Zeit für eine Antwort.",
+      "rules": [
+        "Alle beginnen auf der Ostinsel: 1 Siedlung mit Schiff laut Karte plus 2 normale Siedlungen.",
+        "Drei Felder auf den Westinseln bekommen keinen Zahlenchip und bringen nichts.",
+        "Die Piratenflotte segelt im Uhrzeigersinn um die mittleren Inseln, so viele Felder, wie der kleinere Würfel zeigt.",
+        "Die Karten „Längste Handelsstraße“ und „Größte Rittermacht“ werden nicht verwendet; Ritterkarten machen Schiffe zu Kriegsschiffen."
+      ]
+    },
+    "s8": {
+      "name": "Die Wunder Catans",
+      "short": "Wunder Catans",
+      "tagline": "",
+      "story": "Nach dem Sieg über die Piraten entstehen auf den Nordinseln große Wunder.",
+      "rules": [
+        "Die ersten 2 Siedlungen kommen nur auf die große Insel.",
+        "Jeder baut eines von fünf Wundern in 4 Stufen und zahlt je Stufe 5 der angegebenen Rohstoffe.",
+        "Die erste Siedlung auf jeder kleinen Insel bringt 1 Siegpunkt-Chip.",
+        "Felder neben einer Wüste dürfen keine 6 und keine 8 bekommen."
+      ]
+    },
+    "s9": {
+      "name": "Neue Welt",
+      "short": "Neue Welt",
+      "tagline": "Alles zufällig, sogar das Meer",
+      "story": "Ein freies Szenario: Alle Felder, auch das Meer, werden zufällig gelegt.",
+      "rules": [
+        "Die Felder werden verdeckt gemischt und zufällig innerhalb des Rahmens ausgelegt – genau das macht der Generator.",
+        "Reihum legen die Spieler Häfen an beliebige Landfelder, der Älteste beginnt.",
+        "Die ersten 2 Siedlungen dürfen überallhin; die erste Siedlung auf jeder fremden Insel bringt 1 SP.",
+        "Der Räuber beginnt auf dem Feld mit der 12, der Pirat auf einem beliebigen Feld des Rahmens."
+      ]
+    }
+  }
+}

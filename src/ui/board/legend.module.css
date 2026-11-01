@@ -1,0 +1,40 @@
+.legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+}
+
+.legend svg {
+  flex: none;
+  margin-top: 3px;
+}
+
+.legend span {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.legend strong {
+  color: var(--on-sea);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.legend small {
+  color: var(--on-sea-soft);
+  font-size: 14px;
+  line-height: 1.25;
+}

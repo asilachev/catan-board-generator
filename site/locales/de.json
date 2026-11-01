@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "title": "Spielplan-Generator für CATAN – faire Spielpläne für Basisspiel und Seefahrer",
+    "description": "Kostenlose, inoffizielle App für faire, teilbare Spielpläne für das CATAN-Basisspiel und alle neun Seefahrer-Szenarien. Funktioniert offline, in fünf Sprachen.",
+    "ogDescription": "Zufällige Spielpläne für das Basisspiel und alle neun Seefahrer-Szenarien, ausgewogen nach den offiziellen Regeln und per Code teilbar."
+  },
+  "brand": {
+    "name": "Spielplan-Generator",
+    "sub": "für CATAN · inoffiziell"
+  },
+  "nav": {
+    "sections": "Bereiche",
+    "features": "Funktionen",
+    "how": "So funktioniert’s",
+    "scenarios": "Szenarien",
+    "install": "Installieren",
+    "open": "App öffnen",
+    "language": "Sprache"
+  },
+  "hero": {
+    "free": "Kostenlos",
+    "offline": "Funktioniert offline",
+    "title": "Eine faire neue Insel für jede Partie",
+    "lead": "Zufällige Spielpläne für das Catan-Basisspiel und alle neun Seefahrer-Szenarien – ausgewogen nach den offiziellen Regeln, per Code teilbar und am Tisch gut auf dem Handy lesbar.",
+    "open": "App öffnen",
+    "install": "Aufs Handy installieren",
+    "checks": ["Ohne Anmeldung", "Keine Werbung", "Gleicher Code, gleicher Plan"],
+    "alt": "Die App mit einem Basisspiel-Spielplan, seinem Code und der Legende"
+  },
+  "need": {
+    "title": "Du brauchst das Brettspiel",
+    "text": "Die App legt nur den Spielplan aus. Zum Spielen brauchst du ein eigenes CATAN-Basisspiel; für die Seefahrer-Szenarien zusätzlich die Erweiterung Seefahrer.",
+    "required": "Erforderlich",
+    "optional": "Optional",
+    "base": "CATAN – Basisspiel",
+    "baseSub": "Jeder Spielplan",
+    "sea": "Erweiterung Seefahrer",
+    "seaSub": "Szenarien 1–9",
+    "ext": "Ergänzung 5–6 Spieler",
+    "extSub": "Plan für 5–6 Spieler"
+  },
+  "stats": {
+    "boards": "Spielpläne",
+    "boardsText": "Basisspiel für 3–4 und 5–6 Spieler plus alle 9 Seefahrer-Szenarien",
+    "rules": "faire Regeln",
+    "rulesText": "6 und 8 getrennt, gleiche Zahlen getrennt, Landschaften verteilt",
+    "langs": "Sprachen",
+    "langsText": "English, Español, Deutsch, Русский und Српски",
+    "signups": "Anmeldungen",
+    "signupsText": "Läuft im Browser, installiert sich wie eine App, funktioniert offline"
+  },
+  "features": {
+    "eyebrow": "Warum Spieler es nutzen",
+    "title": "Gemacht für den Tisch, nicht für den Bildschirm",
+    "lead": "Der Aufbau sollte eine Minute dauern – keine Debatte darüber, wessen Ecke zu gut ist.",
+    "items": [
+      {
+        "title": "Fair nach den Regeln",
+        "text": "6 und 8 berühren sich nie, gleiche Zahlen bleiben getrennt, Landschaften verteilt – niemand startet auf einem unschlagbaren Platz."
+      },
+      {
+        "title": "Basisspiel & Seefahrer",
+        "text": "Jedes Seefahrer-Szenario mit eigenen Inseln, Nebel, Goldflüssen und Spielerzahlen – nicht nur die klassische Insel."
+      },
+      {
+        "title": "Per Code teilen",
+        "text": "Jeder Spielplan bekommt einen kurzen Code wie anker-4821. Schick ihn, und alle sehen dieselbe Insel."
+      },
+      {
+        "title": "Lesbar auf Armlänge",
+        "text": "Große Felder, klare Zahlen und Wahrscheinlichkeitspunkte – aufbauen direkt vom Handy."
+      },
+      {
+        "title": "Was aus der Schachtel muss",
+        "text": "Anzahl von Landschaften, Chips und Häfen je Szenario – und wo es im Regelheft steht."
+      },
+      {
+        "title": "Funktioniert offline",
+        "text": "Installiere sie aus dem Browser. Sie startet sofort am Tisch, auch ohne Empfang."
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "Ein Blick hinein",
+    "title": "Jeder Screen für den Tisch gemacht",
+    "lead": "Vom Szenario bis zum geteilten Code: große Schrift, klare Felder und nichts, was mitten im Spiel stört.",
+    "items": [
+      {
+        "title": "In Sekunden bereit",
+        "text": "Spiel, Szenario, Spielerzahl und Chip-Regeln auf einem Screen."
+      },
+      {
+        "title": "Wissen, was raus muss",
+        "text": "Felder, Chips und Häfen plus die Regeln des Szenarios."
+      },
+      {
+        "title": "Mit einem Code teilen",
+        "text": "Link kopieren oder Code senden – alle sehen denselben Plan."
+      },
+      {
+        "title": "Fünf Sprachen",
+        "text": "Englisch, Spanisch, Deutsch, Russisch und Serbisch ab dem ersten Start."
+      },
+      {
+        "title": "Fair verteilt",
+        "text": "Felder und Chips folgen deinen Regeln – in unter einer Sekunde."
+      },
+      {
+        "title": "Startet sofort",
+        "text": "Aus dem Browser installiert, startet schnell und läuft offline."
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "So funktioniert’s",
+    "title": "Drei Tipps zur neuen Insel",
+    "steps": [
+      {
+        "title": "Spiel wählen",
+        "text": "Basisspiel oder Seefahrer, das Szenario und wie viele mitspielen."
+      },
+      {
+        "title": "„Neu mischen“ tippen",
+        "text": "Felder, Zahlenchips und Häfen werden nach deinen Regeln verteilt."
+      },
+      {
+        "title": "Auslegen & teilen",
+        "text": "Übertrag den Plan auf den Tisch und schick den Code, damit alle prüfen können."
+      }
+    ]
+  },
+  "deal": {
+    "eyebrow": "Das Austeilen",
+    "title": "Verteilt, wie du es tun würdest",
+    "lead": "Erst die Küste, dann Felder spiralförmig von der Mitte, dann Chips und Häfen. Unter einer Sekunde – und du siehst, was sich geändert hat.",
+    "frames": [
+      "Küste und leere Sandplätze",
+      "Felder in Spiralform",
+      "Zahlenchips fallen",
+      "Häfen erscheinen"
+    ]
+  },
+  "math": {
+    "eyebrow": "Die Mathematik",
+    "title": "Warum 6 und 8 nie benachbart sind",
+    "text": "Fünf der 36 Würfelkombinationen ergeben eine 6, fünf weitere eine 8. Nebeneinander bringt eine einzige Kreuzung bei 10 von 36 Würfen Ertrag. Der Generator trennt sie und verhindert auch Klumpen gleicher Zahlen und Landschaften.",
+    "checks": [
+      "6 und 8 nie auf Nachbarfeldern",
+      "Gleiche Zahlen nie nebeneinander",
+      "Gleiche Landschaften über die Insel verteilt"
+    ],
+    "chart": "Chance jedes Wurfs mit zwei Würfeln",
+    "outOf": "von 36",
+    "legendRed": "6 und 8: je 5 Kombinationen",
+    "legendSeven": "7 bewegt den Räuber, kein Chip",
+    "legendOther": "Alles andere"
+  },
+  "sea": {
+    "eyebrow": "Erweiterung Seefahrer",
+    "title": "In See stechen mit allen neun Szenarien",
+    "lead": "Inseln, Goldflüsse, Nebel und Piraten. Szenario und Spielerzahl wählen; breite Archipele lassen sich am Handy scrollen und zoomen.",
+    "checks": [
+      "Jedes Szenario mit eigenen Feldern, Chips und Siegpunkten",
+      "Aufbauten für 3 oder 4 Spieler, wo die Regeln abweichen",
+      "Nebelfelder bleiben verdeckt, bis du sie aufdeckst"
+    ],
+    "requires": "Erfordert die Erweiterung CATAN – Seefahrer",
+    "alts": [
+      "Eines der neun Seefahrer-Szenarien wählen",
+      "Ein Seefahrer-Archipel mit Zoom",
+      "Aufbau mit Seefahrer ausgewählt"
+    ]
+  },
+  "scenarios": {
+    "eyebrow": "Szenarien",
+    "title": "Elf Wege, in See zu stechen",
+    "lead": "Die klassische Insel für 3–4 oder 5–6 Spieler plus jedes Seefahrer-Szenario – jeweils mit eigenen Feldern, Häfen und Siegziel.",
+    "base": "Basisspiel",
+    "seafarers": "Seefahrer",
+    "cta": "Leg deine erste Insel",
+    "ctaLink": "App öffnen",
+    "texts": {
+      "base34": "Die Standardinsel, zufällig gelegt.",
+      "base56": "Die Ergänzung: 30 Felder und zwei Wüsten.",
+      "s1": "Eine Hauptinsel und kleine Inseln, manche mit Gold.",
+      "s2": "Vier Inseln; jeder will auf jeder Fuß fassen.",
+      "s3": "Zwei Inseln, dazwischen ein Meer im Nebel.",
+      "s4": "Eine Wüste teilt die Hauptinsel in zwei.",
+      "s5": "Eine lange Insel, umringt von Inselchen eines verlorenen Volkes.",
+      "s6": "Weberdörfer zwischen zwei Hauptinseln.",
+      "s7": "Zuhause im Osten, die Piraten halten den Westen.",
+      "s8": "Baut große Wunder auf den Nordinseln.",
+      "s9": "Freies Spiel: alles zufällig, sogar das Meer."
+    }
+  },
+  "langs": {
+    "eyebrow": "Sprachen",
+    "title": "Spricht die Sprache deiner Runde",
+    "lead": "Englisch, Spanisch, Deutsch, Russisch und Serbisch – mit übersetzten Namen für Landschaften, Rohstoffe und Szenarien.",
+    "names": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "de": "Deutsch",
+      "ru": "Russisch",
+      "sr": "Serbisch"
+    }
+  },
+  "install": {
+    "eyebrow": "Installieren",
+    "title": "In zwei Tipps installiert, ohne App-Store",
+    "lead": "Läuft im Browser und installiert sich als App – startet sofort am Tisch und funktioniert auch ohne Empfang.",
+    "ios": "iPhone & iPad",
+    "iosSteps": "Safari → Teilen → Zum Home-Bildschirm",
+    "android": "Android",
+    "androidSteps": "Chrome → ⋮-Menü → App installieren",
+    "open": "App öffnen",
+    "alt": "Die App bietet an, sich zu installieren"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Gut zu wissen",
+    "lead": "Noch unsicher? Öffne die App – kostenlos und ohne Einrichtung.",
+    "items": [
+      {
+        "q": "Ist es kostenlos?",
+        "a": "Ja. Keine Konten, keine Werbung, nichts zu kaufen."
+      },
+      {
+        "q": "Brauche ich das Brettspiel trotzdem?",
+        "a": "Ja. Die App legt nur den Spielplan aus: Gespielt wird mit deinem eigenen CATAN, für die Szenarien mit der Erweiterung Seefahrer und für die große Insel mit der Ergänzung für 5–6 Spieler."
+      },
+      {
+        "q": "Ist das eine offizielle CATAN-App?",
+        "a": "Nein. Es ist ein kostenloses, inoffizielles Fanprojekt ohne Verbindung zur CATAN GmbH oder ihren Verlagen, die es auch nicht unterstützen."
+      },
+      {
+        "q": "Sehen meine Freunde denselben Plan?",
+        "a": "Ja. Jeder Spielplan hat einen Code: Schick den Link oder nur den Code, und alle sehen dieselbe Insel – auf jedem Gerät und in jeder Sprache."
+      },
+      {
+        "q": "Welchen Regeln folgt es?",
+        "a": "Die Zahl der Felder, Chips und Häfen und die Siegziele stammen aus den Regelheften von Basisspiel und Seefahrer. 6 und 8 bleiben getrennt, wie es die Seefahrer-Regeln verlangen; gleiche Zahlen trennen und Landschaften mischen sind Hausregeln, die du ausschalten kannst."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Faire, teilbare Spielpläne für das Catan-Basisspiel und Seefahrer. Gemacht für den Spieleabend.",
+    "app": "App",
+    "rules": "Regeln",
+    "language": "Sprache",
+    "official": "Offizielle Regeln · catan.com",
+    "source": "Quellcode · GitHub",
+    "copyright": "© 2026 Spielplan-Generator – ein inoffizielles, kostenloses und nicht kommerzielles Fanprojekt.",
+    "trademarks": "CATAN®, CATAN – Seefahrer und das CATAN-Logo sind Marken der CATAN GmbH. Regeln, Szenarionamen und Spielinhalte © CATAN GmbH und ihre lizenzierten Verlage. Diese Seite steht in keiner Verbindung zur CATAN GmbH oder ihren Verlagen und wird von ihnen weder gesponsert noch unterstützt. Zum Spielen brauchst du ein eigenes Exemplar.",
+    "licenses": "Icons: Lucide (ISC) und eigene Zeichnungen. Schriften: Alegreya SC, PT Sans, PT Mono und Spectral (SIL Open Font License).",
+    "privacy": "Keine Cookies, keine Konten. Die App auf app.catan.silachev.com zählt anonyme Seitenaufrufe mit Vercel Web Analytics."
+  }
+}

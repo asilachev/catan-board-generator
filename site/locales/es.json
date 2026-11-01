@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "title": "Generador de tableros para CATAN — tableros justos para el juego base y Navegantes",
+    "description": "App gratuita y no oficial que genera tableros justos y fáciles de compartir para el juego base de CATAN y los nueve escenarios de Navegantes. Funciona sin conexión, en cinco idiomas.",
+    "ogDescription": "Tableros aleatorios para el juego base y los nueve escenarios de Navegantes, equilibrados según las reglas oficiales y fáciles de compartir con un código."
+  },
+  "brand": {
+    "name": "Generador de tableros",
+    "sub": "para CATAN · no oficial"
+  },
+  "nav": {
+    "sections": "Secciones",
+    "features": "Funciones",
+    "how": "Cómo funciona",
+    "scenarios": "Escenarios",
+    "install": "Instalar",
+    "open": "Abrir app",
+    "language": "Idioma"
+  },
+  "hero": {
+    "free": "Gratis",
+    "offline": "Funciona sin conexión",
+    "title": "Una isla nueva y justa en cada partida",
+    "lead": "Tableros aleatorios para el juego base de Catan y los nueve escenarios de Navegantes: equilibrados según las reglas oficiales, fáciles de compartir con un código y de leer en el móvil durante la partida.",
+    "open": "Abrir la app",
+    "install": "Instalar en el móvil",
+    "checks": ["Sin registro", "Sin anuncios", "Mismo código, mismo tablero"],
+    "alt": "La app con un tablero del juego base, su código y la leyenda"
+  },
+  "need": {
+    "title": "Necesitas el juego de mesa",
+    "text": "La app solo genera el tablero. Para jugar necesitas tu propio ejemplar del juego base CATAN; los escenarios de Navegantes también requieren la expansión Navegantes.",
+    "required": "Obligatorio",
+    "optional": "Opcional",
+    "base": "CATAN — juego base",
+    "baseSub": "Todos los tableros",
+    "sea": "Expansión Navegantes",
+    "seaSub": "Escenarios 1–9",
+    "ext": "Ampliación 5–6 jugadores",
+    "extSub": "Tablero para 5–6"
+  },
+  "stats": {
+    "boards": "tableros",
+    "boardsText": "Juego base para 3–4 y 5–6 jugadores, más los 9 escenarios de Navegantes",
+    "rules": "reglas justas",
+    "rulesText": "6 y 8 separados, números iguales separados, terrenos repartidos",
+    "langs": "idiomas",
+    "langsText": "English, Español, Deutsch, Русский y Српски",
+    "signups": "registros",
+    "signupsText": "Se abre en el navegador, se instala como app y funciona sin conexión"
+  },
+  "features": {
+    "eyebrow": "Por qué lo usan",
+    "title": "Hecho para la mesa, no para la pantalla",
+    "lead": "Preparar Catan debería llevar un minuto, no una discusión sobre qué esquina es demasiado buena.",
+    "items": [
+      {
+        "title": "Justo según las reglas",
+        "text": "El 6 y el 8 nunca se tocan, los números iguales quedan separados y los terrenos se reparten: nadie empieza en un sitio imbatible."
+      },
+      {
+        "title": "Juego base y Navegantes",
+        "text": "Todos los escenarios de Navegantes con sus islas, niebla, ríos de oro y número de jugadores, no solo la isla clásica."
+      },
+      {
+        "title": "Comparte con un código",
+        "text": "Cada tablero tiene un código corto como ancla-4821. Envíalo y toda la mesa verá la misma isla."
+      },
+      {
+        "title": "Se lee a un brazo de distancia",
+        "text": "Hexágonos grandes, números claros y puntos de probabilidad: prepara la partida desde el móvil."
+      },
+      {
+        "title": "Qué sacar de la caja",
+        "text": "Cantidad de terrenos, fichas y puertos de cada escenario, y dónde buscar en el reglamento."
+      },
+      {
+        "title": "Funciona sin conexión",
+        "text": "Instálala desde el navegador. Se abre al instante en la mesa, incluso sin cobertura."
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "Un vistazo",
+    "title": "Cada pantalla, hecha para la mesa",
+    "lead": "Desde elegir el escenario hasta compartir el código: letra grande, hexágonos claros y nada que sobre en mitad de la partida.",
+    "items": [
+      {
+        "title": "Listo en segundos",
+        "text": "Juego, escenario, jugadores y reglas de fichas en una sola pantalla."
+      },
+      {
+        "title": "Qué sacar de la caja",
+        "text": "Hexágonos, fichas y puertos, más las reglas del escenario."
+      },
+      {
+        "title": "Comparte con un código",
+        "text": "Copia el enlace o envía el código: todos verán el mismo tablero."
+      },
+      {
+        "title": "Cinco idiomas",
+        "text": "Inglés, español, alemán, ruso y serbio desde el primer inicio."
+      },
+      {
+        "title": "Reparto justo",
+        "text": "Hexágonos y fichas siguen las reglas que elijas, en menos de un segundo."
+      },
+      {
+        "title": "Abre al instante",
+        "text": "Instalada desde el navegador, arranca rápido y funciona sin conexión."
+      }
+    ]
+  },
+  "how": {
+    "eyebrow": "Cómo funciona",
+    "title": "Tres toques para una isla nueva",
+    "steps": [
+      {
+        "title": "Elige tu juego",
+        "text": "Juego base o Navegantes, el escenario y cuántas personas juegan."
+      },
+      {
+        "title": "Toca «Nuevo tablero»",
+        "text": "Hexágonos, fichas numeradas y puertos se reparten según tus reglas."
+      },
+      {
+        "title": "Colócalo y comparte",
+        "text": "Copia el tablero en la mesa y envía el código para que todos lo comprueben."
+      }
+    ]
+  },
+  "deal": {
+    "eyebrow": "El reparto",
+    "title": "Repartido como lo harías tú",
+    "lead": "Primero la costa, luego los hexágonos en espiral desde el centro y después fichas y puertos. Menos de un segundo, y ves qué cambió.",
+    "frames": [
+      "Costa y huecos de arena",
+      "Hexágonos en espiral",
+      "Caen las fichas",
+      "Aparecen los puertos"
+    ]
+  },
+  "math": {
+    "eyebrow": "Las matemáticas",
+    "title": "Por qué el 6 y el 8 nunca se tocan",
+    "text": "Cinco de las 36 combinaciones de dados dan 6 y otras cinco dan 8. Juntos, un solo cruce cobra en 10 de cada 36 tiradas. El generador los separa y evita que se agrupen números iguales y terrenos idénticos.",
+    "checks": [
+      "6 y 8 nunca en hexágonos vecinos",
+      "Números iguales nunca juntos",
+      "Terrenos iguales repartidos por la isla"
+    ],
+    "chart": "Probabilidad de cada tirada con dos dados",
+    "outOf": "de 36",
+    "legendRed": "6 y 8: 5 combinaciones cada uno",
+    "legendSeven": "El 7 mueve al ladrón, sin ficha",
+    "legendOther": "Todo lo demás"
+  },
+  "sea": {
+    "eyebrow": "Expansión Navegantes",
+    "title": "Zarpa con los nueve escenarios",
+    "lead": "Islas, ríos de oro, niebla y piratas. Elige escenario y jugadores; los archipiélagos anchos se desplazan y amplían en el móvil.",
+    "checks": [
+      "Cada escenario con sus hexágonos, fichas y puntos de victoria",
+      "Variantes para 3 o 4 jugadores donde cambian las reglas",
+      "Los hexágonos de niebla siguen ocultos hasta que los reveles"
+    ],
+    "requires": "Requiere la expansión CATAN – Navegantes",
+    "alts": [
+      "Elegir uno de los nueve escenarios de Navegantes",
+      "Un archipiélago de Navegantes con controles de zoom",
+      "Ajustes con Navegantes seleccionado"
+    ]
+  },
+  "scenarios": {
+    "eyebrow": "Escenarios",
+    "title": "Once formas de zarpar",
+    "lead": "La isla clásica para 3–4 o 5–6 jugadores y todos los escenarios de Navegantes, cada uno con sus hexágonos, puertos y objetivo de victoria.",
+    "base": "Juego base",
+    "seafarers": "Navegantes",
+    "cta": "Reparte tu primera isla",
+    "ctaLink": "Abrir la app",
+    "texts": {
+      "base34": "La isla estándar, colocada al azar.",
+      "base56": "La ampliación: 30 hexágonos y dos desiertos.",
+      "s1": "Una isla principal e islotes, algunos con oro.",
+      "s2": "Cuatro islas; todos quieren pisar cada una.",
+      "s3": "Dos islas con un mar de niebla entre ellas.",
+      "s4": "Un desierto parte en dos la isla principal.",
+      "s5": "Una isla larga rodeada por los islotes de una tribu perdida.",
+      "s6": "Aldeas tejedoras entre dos islas principales.",
+      "s7": "Tu hogar al este; los piratas dominan el oeste.",
+      "s8": "Construye grandes maravillas en las islas del norte.",
+      "s9": "Juego libre: todo es aleatorio, incluso el mar."
+    }
+  },
+  "langs": {
+    "eyebrow": "Idiomas",
+    "title": "Habla el idioma de tu mesa",
+    "lead": "Inglés, español, alemán, ruso y serbio, con nombres de terrenos, recursos y escenarios traducidos.",
+    "names": {
+      "en": "Inglés",
+      "es": "Español",
+      "de": "Alemán",
+      "ru": "Ruso",
+      "sr": "Serbio"
+    }
+  },
+  "install": {
+    "eyebrow": "Instalar",
+    "title": "Instálala en dos toques, sin tienda",
+    "lead": "Funciona en el navegador y se instala como app: abre al instante en la mesa y sigue funcionando sin cobertura.",
+    "ios": "iPhone y iPad",
+    "iosSteps": "Safari → Compartir → Añadir a pantalla de inicio",
+    "android": "Android",
+    "androidSteps": "Chrome → menú ⋮ → Instalar aplicación",
+    "open": "Abrir la app",
+    "alt": "La app ofreciendo instalarse"
+  },
+  "faq": {
+    "eyebrow": "Preguntas",
+    "title": "Conviene saber",
+    "lead": "¿Aún dudas? Abre la app: es gratis y no requiere configuración.",
+    "items": [
+      {
+        "q": "¿Es gratis?",
+        "a": "Sí. Sin cuentas, sin anuncios y sin nada que comprar."
+      },
+      {
+        "q": "¿Necesito el juego de mesa?",
+        "a": "Sí. La app solo genera el tablero: juegas con tu propio ejemplar de CATAN, más la expansión Navegantes para sus escenarios y la ampliación para 5–6 jugadores para la isla grande."
+      },
+      {
+        "q": "¿Es una app oficial de CATAN?",
+        "a": "No. Es un proyecto de fans gratuito y no oficial, sin relación con CATAN GmbH ni sus editoriales, que tampoco lo respaldan."
+      },
+      {
+        "q": "¿Mis amigos pueden ver el mismo tablero?",
+        "a": "Sí. Cada tablero tiene un código: envía el enlace o solo el código y todos verán la misma isla, en cualquier dispositivo e idioma."
+      },
+      {
+        "q": "¿Qué reglas sigue?",
+        "a": "La cantidad de hexágonos, fichas y puertos y los objetivos de victoria salen de los reglamentos del juego base y de Navegantes. El 6 y el 8 se separan como piden las reglas de Navegantes; separar números iguales y repartir terrenos son reglas de la casa que puedes desactivar."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Tableros justos y fáciles de compartir para el juego base de Catan y Navegantes. Hecho para la noche de juegos.",
+    "app": "App",
+    "rules": "Reglas",
+    "language": "Idioma",
+    "official": "Reglas oficiales · catan.com",
+    "source": "Código fuente · GitHub",
+    "copyright": "© 2026 Generador de tableros — un proyecto de fans no oficial, gratuito y sin ánimo de lucro.",
+    "trademarks": "CATAN®, CATAN – Navegantes y el logotipo de CATAN son marcas de CATAN GmbH. Reglas, nombres de escenarios y contenido del juego © CATAN GmbH y sus editoriales autorizadas. Este sitio no está afiliado, patrocinado ni respaldado por CATAN GmbH ni sus editoriales. Necesitas tu propio ejemplar del juego para jugar.",
+    "licenses": "Iconos: Lucide (ISC) y dibujos propios. Fuentes: Alegreya SC, PT Sans, PT Mono y Spectral (SIL Open Font License).",
+    "privacy": "Sin cookies ni cuentas. La app en app.catan.silachev.com cuenta visitas anónimas con Vercel Web Analytics."
+  }
+}
