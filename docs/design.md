@@ -19,7 +19,7 @@ This document records what the code follows and the decisions behind it.
 
 | Design | Screen | Notes |
 | --- | --- | --- |
-| 01 · Board | `BoardScreen` | Header (logo, title, scenario picker, share), the board, code card (deal again, copy link), legend, New game / New board |
+| 01 · Board | `BoardScreen` | Header (logo, title, scenario picker, share), the board, code card (code, copy link), legend, New game / New board |
 | 02 · Setup | `SetupScreen` | Game tiles, scenario (radio list for the base game), board code with dice, token rules, language, Build board |
 | 03 · Scenario | `ScenarioScreen` | Victory target, players, story; what's on the board; number tokens; harbors; extras; scenario rules; rulebooks |
 | 04 · Seafarers board | `BoardScreen` | The board in a rounded sea panel with open sea around the islands; wide boards scroll, ± zoom 0.6×–2×, pinch, double tap fits |
@@ -27,7 +27,7 @@ This document records what the code follows and the decisions behind it.
 | 06 · Language | `LanguageScreen` | Opens from Setup; a pick applies at once and is remembered. There is no first-launch picker: the app starts in the browser's language |
 | 07 · Setup (Seafarers) | `SetupScreen` | Scenario row opens the sheet; Players 3/4 where the rules print two layouts; Reveal fog in Scenario 3 |
 | 08 · Scenario sheet | `ScenarioSheet` | Bottom sheet over a 40% scrim. From the board's title it also switches the game (Base game / Seafarers on top), so any board is two taps away |
-| 09 · Generating | `BoardScreen` | The deal: progress pill, deal again disabled, New board shows "Dealing…" |
+| 09 · Generating | `BoardScreen` | The deal: progress pill, New board shows "Dealing…" |
 | 10 · Share sheet | `ShareSheet` | Code and link; Copy link, Send… (Web Share), Print, Save PNG |
 | 11 · Toast | `Toaster` | Link copied (with Send), works offline, rule relaxed (with Again), new version (with Reload) |
 | 12 · Install prompt | `InstallBanner` | From the second launch, while the browser offers to install (Android/desktop Chrome) or on iPhone Safari ("How" opens the steps); dismissing hides it for 30 days |
@@ -37,7 +37,7 @@ Navigation: three tabs (Board, Setup, Scenario). Setup changes apply at once and
 link's, or on the first launch the base game for 3–4 players with a fresh code, in the browser's
 language. Setup opens only when someone asks for it: its tab, or New game on the board, which ends
 this game with a fresh code and opens Setup for the next one. New board deals another board of the
-same scenario; the code card's deal again replays the deal of this one.
+same scenario. The code card shows the code and copies the link, nothing else (#17).
 
 ## Determinism
 
@@ -87,7 +87,7 @@ drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors
 1.1 s for the base game.
 
 - It plays whenever a board appears that hasn't been dealt on screen yet: a new code, a new
-  scenario, new token rules, Build board, deal again (after a 180 ms nudge).
+  scenario, new token rules, As printed, Build board (which replays it for the same board).
 - The pieces animate in CSS. An invisible clock animation runs for the whole deal; the progress pill
   reads its time, so a paused animation (the landing page's frames) shows the matching step.
 - Reduced motion: every animation is one instant frame, so the board simply appears.

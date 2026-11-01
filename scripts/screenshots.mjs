@@ -73,9 +73,10 @@ const freezeAt = (page, ms) =>
     }
   }, ms)
 
-/** Deals the board again (same code) and waits until the deal is running. */
+/** Deals the board again (same code) from Setup's Build board, and waits until it runs. */
 async function startDeal(page, T) {
-  await page.getByRole('button', { name: T('board.rebuild') }).click()
+  await page.getByRole('button', { name: T('tabs.setup'), exact: true }).click()
+  await page.getByRole('button', { name: T('setup.build') }).click()
   await page.evaluate(() => window.scrollTo(0, 0))
   await page.waitForFunction(() =>
     document
