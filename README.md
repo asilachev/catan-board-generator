@@ -47,6 +47,9 @@ design is in [`docs/design.md`](docs/design.md).
 
 ## Credits and legal
 
+- **License:** the code and docs are under the [MIT License](LICENSE). It covers this project only:
+  it grants nothing in the CATAN trademarks or game content, and the fonts and icons below keep
+  their own licenses.
 - **CATAN®**, **CATAN – Seafarers** and the CATAN logo are trademarks of CATAN GmbH. Rules, scenario
   names and game content © CATAN GmbH and its licensed publishers.
 - This is an **unofficial, free, non-commercial fan project**. It is not affiliated with, sponsored
