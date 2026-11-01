@@ -1,0 +1,10 @@
+# Example deployment. Put it behind a reverse proxy that terminates HTTPS:
+# PWA install, offline mode, the clipboard and the screen wake lock need a secure context.
+services:
+  catan-boards:
+    image: ghcr.io/asilachev/catan-board-generator:latest
+    # To build from a checkout instead of pulling the published image:
+    # build: .
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
