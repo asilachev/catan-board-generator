@@ -29,6 +29,13 @@ export const config: VercelConfig = {
     // Content-hashed build output never changes.
     routes.cacheControl('/assets/(.*)', { public: true, maxAge: '1year', immutable: true }),
   ],
-  // Unknown paths fall back to the single-page app (files that exist are served first).
-  rewrites: [routes.rewrite('/(.*)', '/index.html')],
+  // Unknown paths fall back to the single-page app (files that exist are served first). A missing
+  // build or service-worker file stays a 404, as in docker/nginx.conf: served as the page, it
+  // would be cached for a year under /assets/.
+  rewrites: [
+    routes.rewrite(
+      '/((?!assets/|sw\\.js|registerSW\\.js|workbox-|manifest\\.webmanifest).*)',
+      '/index.html',
+    ),
+  ],
 }
