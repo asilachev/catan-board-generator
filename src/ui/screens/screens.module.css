@@ -597,7 +597,8 @@
   border-top: 1px solid var(--border);
 }
 
-.bookRow svg:last-child {
+/* The trailing icon only: the one in .rowIcon is a last child too. */
+.bookRow > svg:last-child {
   margin-left: auto;
   color: var(--ink-soft);
 }
