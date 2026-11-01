@@ -147,7 +147,10 @@ export function ScenarioDetails({
             <span className={styles.count}>{total(variant.hexes)}</span>
           </div>
         </Card>
-        {variant.game === 'seafarers' && !variant.pools?.random ? (
+        {/* Boards from v1 links draw only the land; printed maps draw their sea too. */}
+        {variant.game === 'seafarers' &&
+        !variant.pools?.random &&
+        !board?.cells.some((c) => c.kind === 'sea') ? (
           <p className={styles.note}>
             <Info size={18} aria-hidden="true" />
             {t('scenario.seaNote')}

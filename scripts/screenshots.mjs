@@ -45,9 +45,10 @@ const WORDS = {
   ru: ['якорь', 'прибой'],
   sr: ['сидро', 'талас'],
 }
+// Version 2 boards (a link without `v=` is dealt as v1 dealt it, docs/design.md → Share links).
 const board = (lang, s = 'base34', p = 4) =>
-  `#s=${s}&p=${p}&c=${encodeURIComponent(`${WORDS[lang][0]}-4821`)}`
-const seaBoard = (lang) => `#s=s1&p=4&c=${encodeURIComponent(`${WORDS[lang][1]}-3170`)}`
+  `#s=${s}&p=${p}&c=${encodeURIComponent(`${WORDS[lang][0]}-4821`)}&v=2`
+const seaBoard = (lang) => `#s=s1&p=4&c=${encodeURIComponent(`${WORDS[lang][1]}-3170`)}&v=2`
 
 async function translator(lang) {
   const catalog = JSON.parse(
@@ -94,8 +95,9 @@ function shotsFor(lang, T) {
     sea: 's1',
     seats: 4,
     code: `${WORDS[lang][1]}-3170`,
-    options: { red: true, same: true, spread: true, letters: false },
+    options: { red: true, same: true, spread: true, letters: false, printed: false },
     fog: false,
+    version: 2,
   }
   // The board alone, without the progress pill (the storyboard frames).
   const deal = (ms, crop = 'main section > div') => [
