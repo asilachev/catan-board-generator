@@ -1,0 +1,578 @@
+<!doctype html>
+<!--
+  The landing page template. scripts/build-site.mjs renders it once per language: {{key}} is a
+  text from site/locales/<lang>.json; {{base}}, {{shots}}, {{links.*}} and {{gen.*}} come from the
+  build (generated blocks use the app's own translations, engine and icons).
+-->
+<html lang="{{lang}}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{meta.title}}</title>
+    <meta name="description" content="{{meta.description}}" />
+    <meta name="theme-color" content="#0d3f5e" />
+    <meta name="color-scheme" content="light" />
+    <link rel="canonical" href="{{pageUrl}}" />
+    {{alternates}}
+    <link rel="icon" type="image/svg+xml" href="{{base}}favicon.svg" />
+    <link rel="apple-touch-icon" href="{{base}}icon-512.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="{{ogLocale}}" />
+    <meta property="og:url" content="{{pageUrl}}" />
+    <meta property="og:title" content="{{meta.title}}" />
+    <meta property="og:description" content="{{meta.ogDescription}}" />
+    <meta property="og:image" content="{{siteUrl}}screenshots/{{code}}/board.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="{{base}}styles.css?v={{cssVersion}}" />
+    {{redirect}}
+  </head>
+  <body>
+    {{gen.sprite}}
+
+    <header class="nav">
+      <div class="wrap nav-row">
+        <a class="brand" href="#top">
+          <img src="{{base}}favicon.svg" width="40" height="40" alt="" />
+          <span>
+            <strong>{{brand.name}}</strong>
+            <small>{{brand.sub}}</small>
+          </span>
+        </a>
+        <nav class="nav-links" aria-label="{{nav.sections}}">
+          <a href="#features">{{nav.features}}</a>
+          <a href="#how">{{nav.how}}</a>
+          <a href="#scenarios">{{nav.scenarios}}</a>
+          <a href="#install">{{nav.install}}</a>
+        </nav>
+        <details class="lang">
+          <summary aria-label="{{nav.language}}: {{langName}}">
+            <svg class="icon" aria-hidden="true"><use href="#i-globe" /></svg>
+            <span>{{langCode}}</span>
+            <svg class="icon chevron" aria-hidden="true"><use href="#i-chevron-down" /></svg>
+          </summary>
+          <ul aria-label="{{nav.language}}">
+            {{langMenu}}
+          </ul>
+        </details>
+        <a class="button small" href="{{links.app}}">{{nav.open}}</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero sea">
+        <div class="wrap hero-grid">
+          <div class="hero-text">
+            <ul class="badges">
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-gift" /></svg>{{hero.free}}
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-wifi-off" /></svg
+                >{{hero.offline}}
+              </li>
+              <li>
+                <svg class="icon" aria-hidden="true"><use href="#i-languages" /></svg>EN · ES · DE ·
+                RU · SR
+              </li>
+            </ul>
+            <h1>{{hero.title}}</h1>
+            <p class="lead">{{hero.lead}}</p>
+            <div class="actions">
+              <a class="button" href="{{links.app}}">
+                <svg class="icon" aria-hidden="true"><use href="#i-dices" /></svg>{{hero.open}}
+              </a>
+              <a class="button ghost" href="#install">
+                <svg class="icon" aria-hidden="true"><use href="#i-smartphone" /></svg
+                >{{hero.install}}
+              </a>
+            </div>
+            <ul class="checks">
+              <li>{{hero.checks.0}}</li>
+              <li>{{hero.checks.1}}</li>
+              <li>{{hero.checks.2}}</li>
+            </ul>
+          </div>
+          <div class="hero-art">
+            {{gen.heroDecor}}
+            <figure class="phone">
+              <img src="{{shots}}board.png" width="780" height="1688" alt="{{hero.alt}}" />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="need" aria-labelledby="need-title">
+        <div class="wrap need-row">
+          <span class="hex-badge accent" aria-hidden="true">
+            <svg class="icon"><use href="#i-package" /></svg>
+          </span>
+          <div class="need-text">
+            <h2 id="need-title">{{need.title}}</h2>
+            <p>{{need.text}}</p>
+          </div>
+          <ul class="need-cards">
+            <li>
+              <span class="tag required">{{need.required}}</span>
+              <strong>{{need.base}}</strong>
+              <small>{{need.baseSub}}</small>
+            </li>
+            <li>
+              <span class="tag required">{{need.required}}</span>
+              <strong>{{need.sea}}</strong>
+              <small>{{need.seaSub}}</small>
+            </li>
+            <li>
+              <span class="tag optional">{{need.optional}}</span>
+              <strong>{{need.ext}}</strong>
+              <small>{{need.extSub}}</small>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="stats">
+        <ul class="wrap stats-row">
+          <li><b>11</b><strong>{{stats.boards}}</strong><span>{{stats.boardsText}}</span></li>
+          <li><b>3</b><strong>{{stats.rules}}</strong><span>{{stats.rulesText}}</span></li>
+          <li><b>5</b><strong>{{stats.langs}}</strong><span>{{stats.langsText}}</span></li>
+          <li><b>0</b><strong>{{stats.signups}}</strong><span>{{stats.signupsText}}</span></li>
+        </ul>
+      </section>
+
+      <section id="features" class="section">
+        <div class="wrap">
+          <p class="eyebrow">{{features.eyebrow}}</p>
+          <h2>{{features.title}}</h2>
+          <p class="section-lead">{{features.lead}}</p>
+          <ul class="cards three">
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-scale" /></svg
+              ></span>
+              <h3>{{features.items.0.title}}</h3>
+              <p>{{features.items.0.text}}</p>
+            </li>
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-sailboat" /></svg
+              ></span>
+              <h3>{{features.items.1.title}}</h3>
+              <p>{{features.items.1.text}}</p>
+            </li>
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-link" /></svg
+              ></span>
+              <h3>{{features.items.2.title}}</h3>
+              <p>{{features.items.2.text}}</p>
+            </li>
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-eye" /></svg
+              ></span>
+              <h3>{{features.items.3.title}}</h3>
+              <p>{{features.items.3.text}}</p>
+            </li>
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-package-open" /></svg
+              ></span>
+              <h3>{{features.items.4.title}}</h3>
+              <p>{{features.items.4.text}}</p>
+            </li>
+            <li class="card">
+              <span class="hex-badge" aria-hidden="true"
+                ><svg class="icon"><use href="#i-wifi-off" /></svg
+              ></span>
+              <h3>{{features.items.5.title}}</h3>
+              <p>{{features.items.5.text}}</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section tinted" aria-labelledby="gallery-title">
+        <div class="wrap center">
+          <p class="eyebrow">{{gallery.eyebrow}}</p>
+          <h2 id="gallery-title">{{gallery.title}}</h2>
+          <p class="section-lead">{{gallery.lead}}</p>
+          <ul class="gallery">
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}setup.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.0.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.0.title}}</h3>
+              <p>{{gallery.items.0.text}}</p>
+            </li>
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}scenario.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.1.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.1.title}}</h3>
+              <p>{{gallery.items.1.text}}</p>
+            </li>
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}share.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.2.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.2.title}}</h3>
+              <p>{{gallery.items.2.text}}</p>
+            </li>
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}language.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.3.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.3.title}}</h3>
+              <p>{{gallery.items.3.text}}</p>
+            </li>
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}generating.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.4.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.4.title}}</h3>
+              <p>{{gallery.items.4.text}}</p>
+            </li>
+            <li>
+              <figure class="phone crop">
+                <img
+                  src="{{shots}}splash.png"
+                  width="780"
+                  height="1688"
+                  alt="{{gallery.items.5.title}}"
+                  loading="lazy"
+                />
+              </figure>
+              <h3>{{gallery.items.5.title}}</h3>
+              <p>{{gallery.items.5.text}}</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="how" class="section">
+        <div class="wrap">
+          <p class="eyebrow">{{how.eyebrow}}</p>
+          <h2>{{how.title}}</h2>
+          <ol class="steps">
+            <li>
+              <div class="step-head">
+                <span class="hex-num">1</span>
+                <h3>{{how.steps.0.title}}</h3>
+              </div>
+              <p>{{how.steps.0.text}}</p>
+              <div class="demo">{{gen.howTiles}}</div>
+            </li>
+            <li>
+              <div class="step-head">
+                <span class="hex-num">2</span>
+                <h3>{{how.steps.1.title}}</h3>
+              </div>
+              <p>{{how.steps.1.text}}</p>
+              <div class="demo">{{gen.howButtons}}</div>
+            </li>
+            <li>
+              <div class="step-head">
+                <span class="hex-num">3</span>
+                <h3>{{how.steps.2.title}}</h3>
+              </div>
+              <p>{{how.steps.2.text}}</p>
+              <div class="demo">
+                <div class="mini-code">
+                  <span aria-hidden="true">#</span><code>{{gen.code}}</code
+                  ><svg class="icon" aria-hidden="true"><use href="#i-dices" /></svg>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section tinted" aria-labelledby="deal-title">
+        <div class="wrap">
+          <p class="eyebrow">{{deal.eyebrow}}</p>
+          <h2 id="deal-title">{{deal.title}}</h2>
+          <p class="section-lead">{{deal.lead}}</p>
+          <ol class="frames">
+            <li>
+              <p><time>0 ms</time>{{deal.frames.0}}</p>
+              <img src="{{shots}}deal-0.png" alt="{{deal.frames.0}}" loading="lazy" />
+            </li>
+            <li>
+              <p><time>≈ 300 ms</time>{{deal.frames.1}}</p>
+              <img src="{{shots}}deal-300.png" alt="{{deal.frames.1}}" loading="lazy" />
+            </li>
+            <li>
+              <p><time>≈ 700 ms</time>{{deal.frames.2}}</p>
+              <img src="{{shots}}deal-700.png" alt="{{deal.frames.2}}" loading="lazy" />
+            </li>
+            <li>
+              <p><time>≈ 900 ms</time>{{deal.frames.3}}</p>
+              <img src="{{shots}}deal-900.png" alt="{{deal.frames.3}}" loading="lazy" />
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="math-title">
+        <div class="wrap math">
+          <div>
+            <p class="eyebrow">{{math.eyebrow}}</p>
+            <h2 id="math-title">{{math.title}}</h2>
+            <p class="section-lead">{{math.text}}</p>
+            <ul class="ticks">
+              <li>{{math.checks.0}}</li>
+              <li>{{math.checks.1}}</li>
+              <li>{{math.checks.2}}</li>
+            </ul>
+          </div>
+          <figure class="chart">
+            <figcaption><strong>{{math.chart}}</strong><small>{{math.outOf}}</small></figcaption>
+            {{gen.chart}}
+            <ul class="chart-legend">
+              <li class="red">{{math.legendRed}}</li>
+              <li class="seven">{{math.legendSeven}}</li>
+              <li>{{math.legendOther}}</li>
+            </ul>
+          </figure>
+        </div>
+      </section>
+
+      <section class="seafarers sea" aria-labelledby="sea-title">
+        <div class="wrap sea-grid">
+          <div class="sea-text">
+            <p class="eyebrow gold">{{sea.eyebrow}}</p>
+            <h2 id="sea-title">{{sea.title}}</h2>
+            <p class="lead">{{sea.lead}}</p>
+            <ul class="ticks sea-ticks">
+              <li>{{sea.checks.0}}</li>
+              <li>{{sea.checks.1}}</li>
+              <li>{{sea.checks.2}}</li>
+            </ul>
+            <p class="requires">
+              <svg class="icon" aria-hidden="true"><use href="#i-package" /></svg>{{sea.requires}}
+            </p>
+          </div>
+          <div class="sea-phones">
+            <figure class="phone back left">
+              <img
+                src="{{shots}}sheet.png"
+                width="780"
+                height="1688"
+                alt="{{sea.alts.0}}"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="phone back right">
+              <img
+                src="{{shots}}seaSetup.png"
+                width="780"
+                height="1688"
+                alt="{{sea.alts.2}}"
+                loading="lazy"
+              />
+            </figure>
+            <figure class="phone front">
+              <img
+                src="{{shots}}seaBoard.png"
+                width="780"
+                height="1688"
+                alt="{{sea.alts.1}}"
+                loading="lazy"
+              />
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="scenarios" class="section">
+        <div class="wrap center">
+          <p class="eyebrow">{{scenarios.eyebrow}}</p>
+          <h2>{{scenarios.title}}</h2>
+          <p class="section-lead">{{scenarios.lead}}</p>
+          <ul class="scenario-grid">
+            {{gen.scenarioCards}}
+            <li class="scenario cta-card sea">
+              <strong>{{scenarios.cta}}</strong>
+              <a href="{{links.app}}"
+                >{{scenarios.ctaLink}}
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg
+              ></a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="languages" class="section tinted">
+        <div class="wrap center">
+          <p class="eyebrow">{{langs.eyebrow}}</p>
+          <h2>{{langs.title}}</h2>
+          <p class="section-lead">{{langs.lead}}</p>
+          <ul class="lang-cards">
+            {{gen.languageCards}}
+          </ul>
+        </div>
+      </section>
+
+      <section id="install" class="install sea" aria-labelledby="install-title">
+        <div class="wrap install-grid">
+          <div>
+            <p class="eyebrow gold">{{install.eyebrow}}</p>
+            <h2 id="install-title">{{install.title}}</h2>
+            <p class="lead">{{install.lead}}</p>
+            <div class="platforms">
+              <div>
+                <strong
+                  ><svg class="icon" aria-hidden="true"><use href="#i-smartphone" /></svg
+                  >{{install.ios}}</strong
+                ><span>{{install.iosSteps}}</span>
+              </div>
+              <div>
+                <strong
+                  ><svg class="icon" aria-hidden="true"><use href="#i-tablet-smartphone" /></svg
+                  >{{install.android}}</strong
+                ><span>{{install.androidSteps}}</span>
+              </div>
+            </div>
+            <a class="button" href="{{links.app}}"
+              ><svg class="icon" aria-hidden="true"><use href="#i-dices" /></svg>{{install.open}}</a
+            >
+          </div>
+          <figure class="phone install-phone">
+            <img
+              src="{{shots}}install.png"
+              width="780"
+              height="1688"
+              alt="{{install.alt}}"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="faq-title">
+        <div class="wrap faq">
+          <div>
+            <p class="eyebrow">{{faq.eyebrow}}</p>
+            <h2 id="faq-title">{{faq.title}}</h2>
+            <p class="section-lead">{{faq.lead}}</p>
+          </div>
+          <div class="accordion">
+            <details open>
+              <summary>{{faq.items.0.q}}</summary>
+              <p>{{faq.items.0.a}}</p>
+            </details>
+            <details>
+              <summary>{{faq.items.1.q}}</summary>
+              <p>{{faq.items.1.a}}</p>
+            </details>
+            <details>
+              <summary>{{faq.items.2.q}}</summary>
+              <p>{{faq.items.2.a}}</p>
+            </details>
+            <details>
+              <summary>{{faq.items.3.q}}</summary>
+              <p>{{faq.items.3.a}}</p>
+            </details>
+            <details>
+              <summary>{{faq.items.4.q}}</summary>
+              <p>{{faq.items.4.a}}</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="#top">
+            <img src="{{base}}favicon.svg" width="40" height="40" alt="" />
+            <span><strong>{{brand.name}}</strong></span>
+          </a>
+          <p>{{footer.tagline}}</p>
+        </div>
+        <div>
+          <h2>{{footer.app}}</h2>
+          <ul>
+            <li><a href="{{links.app}}">{{hero.open}}</a></li>
+            <li><a href="#install">{{nav.install}}</a></li>
+            <li><a href="#scenarios">{{nav.scenarios}}</a></li>
+            <li><a href="#how">{{nav.how}}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>{{footer.rules}}</h2>
+          <ul>
+            <li><a href="{{links.rules}}">{{footer.official}}</a></li>
+            <li><a href="{{links.github}}">{{footer.source}}</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>{{footer.language}}</h2>
+          <ul class="chips">
+            {{langChips}}
+          </ul>
+        </div>
+      </div>
+      <div class="wrap legal">
+        <p><strong>{{footer.copyright}}</strong></p>
+        <p>{{footer.trademarks}}</p>
+        <p>{{footer.privacy}}</p>
+        <p class="faint">{{footer.licenses}}</p>
+      </div>
+    </footer>
+    <script>
+      // Remember a language picked here, so the root page stops sending you elsewhere.
+      for (const link of document.querySelectorAll('a[data-lang]')) {
+        link.addEventListener('click', () => {
+          try {
+            localStorage.setItem('catan-site:lang', link.dataset.lang)
+          } catch {
+            // Storage blocked: the choice just isn't remembered.
+          }
+        })
+      }
+      // The language menu closes on Escape or a click elsewhere.
+      const menu = document.querySelector('details.lang')
+      document.addEventListener('click', (event) => {
+        if (menu.open && !menu.contains(event.target)) menu.open = false
+      })
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.open) {
+          menu.open = false
+          menu.querySelector('summary').focus()
+        }
+      })
+    </script>
+  </body>
+</html>
