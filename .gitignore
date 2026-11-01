@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+
+# build & test output
+dist/
+_site/
+dev-dist/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# logs
+*.log
+npm-debug.log*
+
+# env & local
+.env
+.env.*
+!.env.example
+*.local
+
+# editors & OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# reference PDFs: download with `npm run reference` (GitHub release "reference-docs")
+docs/reference/*.pdf
+.screenshots/

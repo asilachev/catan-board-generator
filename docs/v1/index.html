@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d3f5e">
+<meta name="color-scheme" content="light dark">
+<title>Генератор полей CATAN</title>
+<style>
+  :root{
+    --sea-deep:#0d3f5e;
+    --sea:#1d6b99;
+    --sand:#f2e4c6;
+    --sand-dark:#e0cda4;
+    --parch:#faf1de;
+    --ink:#2f2415;
+    --ink-soft:#6b5a3e;
+    --accent:#c4352b;          /* базовая игра — красный */
+    --accent-dark:#9c2820;
+    --line:rgba(47,36,21,.14);
+    --display:"Inter","Segoe UI Variable",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  body.mode-sea{ --accent:#1b7fc4; --accent-dark:#12608f; }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 50% -15%, #1a6c9c 0%, transparent 60%),
+      var(--sea-deep);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1220px;margin:0 auto;padding:22px 16px 56px}
+
+  /* ---------- шапка ---------- */
+  header.top{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    margin-bottom:18px;color:#eef6fb;
+  }
+  header.top .mark{
+    width:42px;height:48px;flex:none;
+  }
+  header.top h1{
+    font-family:var(--display);font-weight:800;
+    font-size:clamp(22px,3.4vw,32px);letter-spacing:.04em;
+    margin:0;text-transform:uppercase;
+  }
+  header.top .sub{font-size:13px;color:#a9cbe0;margin-top:2px}
+
+  .grid{display:grid;grid-template-columns:290px minmax(0,1fr);gap:18px;align-items:start}
+  @media (max-width:920px){.grid{grid-template-columns:1fr}}
+
+  /* ---------- карточки ---------- */
+  .card{
+    background:var(--parch);
+    border-radius:14px;
+    border:1px solid rgba(0,0,0,.16);
+    box-shadow:0 10px 30px rgba(0,0,0,.32);
+    padding:16px 16px 18px;
+  }
+  .card h2{
+    font-family:var(--display);font-size:15px;margin:0 0 12px;
+    color:var(--accent);letter-spacing:.02em;
+  }
+  .card h2 + .field{margin-top:0}
+
+  .field{margin-bottom:12px}
+  .field > label{
+    display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:5px;font-weight:600;
+  }
+  select,input[type=text]{
+    width:100%;padding:9px 10px;border-radius:8px;
+    border:1px solid rgba(47,36,21,.28);
+    background:#fffaf0;color:var(--ink);
+    font-family:var(--sans);font-size:14px;
+  }
+  input[type=text]{font-family:var(--mono);letter-spacing:.04em}
+  select:focus,input:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .seg{display:flex;gap:6px}
+  .seg button{
+    flex:1;padding:8px 6px;font-size:13.5px;font-weight:600;border-radius:8px;
+    border:1px solid rgba(47,36,21,.25);background:#fffaf0;color:var(--ink-soft);cursor:pointer;
+  }
+  .seg button[aria-pressed=true]{
+    background:var(--accent);border-color:var(--accent-dark);color:#fff;
+  }
+
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  button.act{
+    font-family:var(--sans);font-size:14px;font-weight:600;
+    padding:10px 14px;border-radius:8px;cursor:pointer;
+    border:1px solid rgba(47,36,21,.25);background:#fffaf0;color:var(--ink);
+  }
+  button.act:hover{background:#fff}
+  button.act.primary{
+    flex:1 1 130px;
+    background:linear-gradient(180deg,var(--accent),var(--accent-dark));
+    border-color:var(--accent-dark);color:#fff;
+  }
+  button.act.primary:hover{filter:brightness(1.07)}
+
+  .check{display:flex;gap:9px;align-items:flex-start;margin-bottom:9px;font-size:13.5px;cursor:pointer}
+  .check input{margin-top:3px;flex:none;accent-color:var(--accent);width:16px;height:16px}
+  .check small{display:block;color:var(--ink-soft);font-size:12px;line-height:1.35}
+
+  .hint{font-size:12.5px;color:var(--ink-soft);margin:10px 0 0}
+
+  .toplinks{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+  .toplinks a{
+    display:inline-flex;align-items:center;gap:7px;
+    color:#d3e9f6;font-size:12.5px;font-weight:600;text-decoration:none;
+    border:1px solid rgba(255,255,255,.24);border-radius:9px;padding:8px 11px;
+    background:rgba(255,255,255,.06);
+  }
+  .toplinks a:hover{background:rgba(255,255,255,.14)}
+  .toplinks a::after,a.doclink::after{content:"↗";font-size:11px;opacity:.65}
+
+  .doclinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  a.doclink{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:13px;font-weight:600;text-decoration:none;
+    color:var(--accent-dark);background:rgba(47,36,21,.05);
+    border:1px solid var(--line);border-radius:9px;padding:9px 12px;
+  }
+  a.doclink:hover{background:#fff}
+  a.doclink.plain{color:var(--ink-soft);font-weight:500}
+
+  details.opts{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
+  details.opts summary{
+    font-family:var(--display);font-size:15px;color:var(--accent);font-weight:600;
+    cursor:pointer;list-style:none;display:flex;align-items:center;
+    padding:6px 0 10px;user-select:none;
+  }
+  details.opts summary::-webkit-details-marker{display:none}
+  details.opts summary::after{content:"⌄";margin-left:auto;font-size:16px;line-height:1;color:var(--ink-soft)}
+  details.opts[open] summary::after{content:"⌃"}
+
+  /* ---------- поле ---------- */
+  .board-card{
+    background:linear-gradient(180deg,#2b7cab,#175f8a);
+    border:6px solid var(--sand-dark);
+    border-radius:16px;
+    box-shadow:0 14px 40px rgba(0,0,0,.4);
+    padding:14px;
+    overflow:hidden;
+  }
+  .board-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+    flex-wrap:wrap;margin-bottom:6px;color:#eaf5fc;
+  }
+  .board-head h3{font-family:var(--display);font-size:19px;margin:0;font-weight:700}
+  .board-head .code{font-family:var(--mono);font-size:12px;color:#bcdcef;letter-spacing:.06em}
+  .board-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;
+    margin:0 -4px;padding:0 4px;scrollbar-width:thin}
+  svg#board{display:block;width:100%;height:auto}
+  .swipe{
+    display:none;font-size:12px;color:#bcdcef;text-align:center;margin-top:6px;
+    letter-spacing:.02em;
+  }
+  .swipe.on{display:block}
+  svg#board text{font-family:var(--display)}
+  svg#board text.ui{font-family:var(--sans)}
+
+  .legend{
+    display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;
+    color:#e6f2fa;font-size:12.5px;
+  }
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:13px;height:13px;border-radius:3px;border:1px solid rgba(0,0,0,.3)}
+
+  /* ---------- инфо ---------- */
+  .info{margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .info .card{padding:14px 16px 16px}
+  table.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.tbl th{
+    text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:700;padding:0 0 6px;border-bottom:1px solid var(--line);
+  }
+  table.tbl td{padding:4px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+  table.tbl td:last-child,table.tbl th:last-child{text-align:right;font-family:var(--mono);font-size:12.5px}
+  table.tbl tr:last-child td{border-bottom:none}
+  table.tbl tr.total td{font-weight:700;border-top:2px solid var(--line);border-bottom:none;padding-top:6px}
+  .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:8px;
+      border:1px solid rgba(0,0,0,.28);vertical-align:-1px}
+  ul.rules{margin:0;padding-left:18px;font-size:13.5px}
+  ul.rules li{margin-bottom:6px}
+  .story{font-size:13.5px;font-style:italic;color:var(--ink-soft);margin:0 0 12px}
+  .vp{
+    display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:700;
+    background:var(--accent);color:#fff;padding:4px 11px;border-radius:999px;
+  }
+
+  footer{margin-top:22px;color:#a9cbe0;font-size:12.5px;line-height:1.6}
+  footer p{margin:0 0 8px}
+  footer code{background:rgba(255,255,255,.1);padding:1px 5px;border-radius:4px;font-size:12px}
+
+  /* ---------- телефоны ---------- */
+  @media (max-width:640px){
+    .wrap{padding:14px 10px 40px}
+    header.top{gap:10px;margin-bottom:14px}
+    .toplinks{margin-left:0;width:100%;gap:8px}
+    .toplinks a{flex:1 1 0;justify-content:center;padding:10px 8px;font-size:12px}
+    header.top .mark{width:34px;height:39px}
+    header.top .sub{font-size:12px}
+    .grid{gap:14px}
+    .card{padding:14px 13px 16px;border-radius:12px}
+    .card h2{font-size:14px}
+    .field{margin-bottom:14px}
+    select,input[type=text]{font-size:16px;padding:11px 10px}
+    .seg{gap:8px}
+    .seg button{padding:12px 6px;font-size:14px;min-height:44px}
+    button.act{padding:13px 14px;min-height:46px}
+    button.act.primary{flex:1 1 100%}
+    .check{margin-bottom:13px;font-size:14px}
+    .check input{width:19px;height:19px;margin-top:2px}
+    .check small{font-size:12.5px}
+    .board-card{padding:10px;border-width:4px;border-radius:12px}
+    .board-head h3{font-size:17px}
+    .board-head{gap:4px}
+    .legend{gap:5px 12px;font-size:12px}
+    .info{gap:12px;margin-top:14px}
+    table.tbl{font-size:14px}
+  }
+  @media (max-width:400px){
+    .seg button{font-size:13px;padding:12px 4px}
+    header.top h1{font-size:20px}
+  }
+
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    header.top,.noprint,footer{display:none !important}
+    .grid{display:block}
+    .board-card{box-shadow:none;background:#fff;border-color:#999}
+    .board-head{color:#000}
+    .board-head .code{color:#555}
+    .legend{color:#000}
+    .info{margin-top:12px}
+    .card{box-shadow:none;background:#fff}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body class="mode-land">
+<div class="wrap">
+
+  <header class="top">
+    <svg class="mark" viewBox="0 0 40 46" aria-hidden="true">
+      <polygon points="20,1 39,12 39,34 20,45 1,34 1,12" fill="#e8bb3f" stroke="#8a6a1a" stroke-width="2"/>
+      <circle cx="20" cy="23" r="10" fill="#faf1de" stroke="#8a6a1a" stroke-width="1.5"/>
+      <text x="20" y="28" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#c4352b">8</text>
+    </svg>
+    <div>
+      <h1>Генератор полей Catan</h1>
+      <div class="sub">Базовая игра и «Мореходы» — все 9 сценариев</div>
+    </div>
+    <nav class="toplinks noprint">
+      <a href="catan-rules.pdf" target="_blank" rel="noopener noreferrer">Правила базовой игры</a>
+      <a href="catan-morehodi-2025-rules.pdf" target="_blank" rel="noopener noreferrer">Правила «Мореходов»</a>
+    </nav>
+  </header>
+
+  <div class="grid">
+
+    <!-- ПАНЕЛЬ -->
+    <aside class="card noprint">
+      <h2>Настройка поля</h2>
+
+      <div class="field">
+        <label>Игра</label>
+        <div class="seg" id="modeSeg">
+          <button type="button" data-mode="land" aria-pressed="true">Базовая</button>
+          <button type="button" data-mode="sea" aria-pressed="false">Мореходы</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="scenario">Сценарий</label>
+        <select id="scenario"></select>
+      </div>
+
+      <div class="field" id="seatsField" hidden>
+        <label>Число игроков</label>
+        <div class="seg" id="seatsSeg">
+          <button type="button" data-seats="3" aria-pressed="false">3 игрока</button>
+          <button type="button" data-seats="4" aria-pressed="true">4 игрока</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="seed">Код поля</label>
+        <input type="text" id="seed" spellcheck="false" autocomplete="off">
+      </div>
+
+      <div class="btns">
+        <button class="act primary" id="roll">Новое поле</button>
+        <button class="act" id="again" title="Собрать заново по тому же коду">Заново</button>
+      </div>
+
+      <details class="opts" id="optsBox">
+        <summary>Раскладка жетонов</summary>
+        <label class="check"><input type="checkbox" id="optRed" checked>
+          <span>«6» и «8» не рядом<small>Требование правил «Мореходов»</small></span></label>
+        <label class="check"><input type="checkbox" id="optSame" checked>
+          <span>Одинаковые числа не рядом<small>Домашний вариант, в правилах нет</small></span></label>
+        <label class="check"><input type="checkbox" id="optSpread" checked>
+          <span>Разбавлять ландшафт<small>Меньше слипшихся одинаковых гексов</small></span></label>
+        <label class="check" id="fogRow" hidden><input type="checkbox" id="optFog">
+          <span>Открыть туман<small>Только для проверки раскладки</small></span></label>
+        <label class="check" id="letterRow" hidden><input type="checkbox" id="optLetters">
+          <span>Жетоны по буквам A–R<small>Расклад для продвинутых игроков, с. 12</small></span></label>
+      </details>
+
+      <div class="btns" style="margin-top:14px">
+        <button class="act" id="copy">Ссылка</button>
+        <button class="act" id="print">Печать</button>
+      </div>
+
+      <p class="hint" id="hint"></p>
+    </aside>
+
+    <!-- ПОЛЕ -->
+    <main>
+      <section class="board-card">
+        <div class="board-head">
+          <h3 id="boardTitle">&nbsp;</h3>
+          <div class="code" id="boardCode">&nbsp;</div>
+        </div>
+        <div class="board-scroll"><svg id="board" role="img" aria-label="Сгенерированное поле Catan"></svg></div>
+        <div class="swipe" id="swipe">← поле шире экрана, прокрутите вбок →</div>
+        <div class="legend" id="legend"></div>
+      </section>
+
+      <section class="info">
+        <div class="card">
+          <h2>Состав поля</h2>
+          <p class="story" id="story"></p>
+          <table class="tbl" id="hexTbl"></table>
+        </div>
+        <div class="card">
+          <h2>Номерные жетоны</h2>
+          <table class="tbl" id="tokTbl"></table>
+        </div>
+        <div class="card">
+          <h2>Правила сценария</h2>
+          <p style="margin:0 0 10px"><span class="vp" id="vp"></span></p>
+          <ul class="rules" id="rules"></ul>
+          <div class="doclinks noprint" id="doclinks"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="noprint">
+    <p>Ссылки на правила относительные, поэтому положите рядом с этим файлом
+    <code>catan-rules.pdf</code> (базовая игра, Мир Хобби, версия 1.1) и
+    <code>catan-morehodi-2025-rules.pdf</code> («Мореходы», версия 1.0) — имена должны совпадать.
+    Ссылка в карточке сценария открывает нужную страницу брошюры: номера страниц взяты из самих
+    правил, а переход по <code>#page=</code> работает в браузерном просмотрщике PDF.</p>
+    <p>Составы гексов, номерных жетонов, гаваней и условия победы взяты из этих же брошюр.
+    Очертания островов подобраны по смыслу сценария и не повторяют схемы гекс в гекс — в правилах
+    «Мореходов» раскладку внутри островов и так разрешено менять. Дополнение для 5–6 игроков
+    в брошюре не описано, для него взято стандартное распределение.</p>
+  </footer>
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   Псевдослучайность: один и тот же код поля даёт одно и то же поле
+   ============================================================ */
+function hashSeed(s){
+  let h = 1779033703 ^ s.length;
+  for (let i=0;i<s.length;i++){
+    h = Math.imul(h ^ s.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+}
+function mulberry32(a){
+  return function(){
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shuffled(arr, rng){
+  const a = arr.slice();
+  for (let i=a.length-1;i>0;i--){ const j = Math.floor(rng()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+const CODE_WORDS = ["якорь","прибой","бриз","компас","фарватер","маяк","отмель","шторм","рифы","лагуна",
+                    "парус","мачта","гавань","бухта","штиль","кливер","мыс","пролив","закат","остров"];
+function newCode(){
+  return CODE_WORDS[Math.floor(Math.random()*CODE_WORDS.length)] + "-" + (1000 + Math.floor(Math.random()*9000));
+}
+
+/* ============================================================
+   Ландшафт
+   ============================================================ */
+const T = {
+  forest:    {ru:"Лес",        res:"Древесина", sh:"ЛЕС",    fill:"#2f6b3c", ink:"#f2f7ef"},
+  pasture:   {ru:"Пастбище",   res:"Шерсть",    sh:"ШЕРСТЬ", fill:"#8dbe4d", ink:"#202c15"},
+  fields:    {ru:"Пашня",      res:"Зерно",     sh:"ЗЕРНО",  fill:"#e5b93d", ink:"#3a2c06"},
+  hills:     {ru:"Холмы",      res:"Глина",     sh:"ГЛИНА",  fill:"#b5542d", ink:"#fdf1e8"},
+  mountains: {ru:"Горы",       res:"Руда",      sh:"РУДА",   fill:"#7b8992", ink:"#f4f7f9"},
+  desert:    {ru:"Пустыня",    res:"—",         fill:"#e2d1a6", ink:"#4a3d22"},
+  gold:      {ru:"Зол. река",  res:"Любое",     fill:"#f2c81e", ink:"#4a3800"},
+  sea:       {ru:"Море",       res:"—",         fill:"#20699a", ink:"#eaf4fb"},
+  fog:       {ru:"Туман",      res:"?",         fill:"#93a9b6", ink:"#1c2a33"}
+};
+const DOCS = {
+  base: {url:"catan-rules.pdf",              name:"правила базовой игры"},
+  sea:  {url:"catan-morehodi-2025-rules.pdf", name:"правила «Мореходов»"}
+};
+const TERRAIN_ORDER = ["sea","desert","gold","hills","forest","pasture","fields","mountains"];
+
+function pool(spec){
+  const out = [];
+  for (const k in spec) for (let i=0;i<spec[k];i++) out.push(k);
+  return out;
+}
+function tokenList(spec){
+  const out = [];
+  for (const k in spec) for (let i=0;i<spec[k];i++) out.push(Number(k));
+  return out;
+}
+function countOf(spec){ let n=0; for (const k in spec) n += spec[k]; return n; }
+const PIPS = n => 6 - Math.abs(7 - n);
+
+/* Стандартное распределение: 18 жетонов = базовая игра, 28 = набор 5–6 игроков */
+function autoTokens(n){
+  const cycle = [6,8,5,9,4,10,3,11,2,12], out = [];
+  for (let i=0;i<n;i++) out.push(cycle[i % cycle.length]);
+  return out;
+}
+
+/* ============================================================
+   Сценарии. Числа гексов, жетонов, гаваней и ПО — из правил.
+   ============================================================ */
+const SC = {
+
+/* ---------- Базовая игра ---------- */
+base34:{
+  group:"Базовая игра", name:"Базовая игра, 3–4 игрока", players:"3–4",
+  doc:{file:"base", page:12, title:"Расклад для продвинутых игроков"},
+  story:"Стартовый расклад для продвинутых игроков: гексы и жетоны раскладываются случайно.",
+  hexes:{forest:4,pasture:4,fields:4,hills:3,mountains:3,desert:1},
+  tokens:{2:1,3:2,4:2,5:2,6:2,8:2,9:2,10:2,11:2,12:1},
+  harborTypes:["any","any","any","any","forest","pasture","fields","hills","mountains"],
+  harborText:"9 гаваней на морской рамке: 4 «3:1» и по одной «2:1» на каждое сырьё",
+  drawHarbors:true, letters:true,
+  vp:"10 победных очков",
+  shape:[{kind:"main",size:19}],
+  rules:[
+    "Разбойник начинает на гексе пустыни, номерной жетон на неё не кладётся.",
+    "Морскую рамку соберите из шести элементов в любом порядке, символами гаваней наружу.",
+    "Этап основания: первый круг по часовой стрелке, второй — против; за второе поселение сразу берётся стартовый доход.",
+    "При игре втроём уберите в коробку фигурки белого цвета."
+  ]
+},
+base56:{
+  group:"Базовая игра", name:"Базовая игра, 5–6 игроков", players:"5–6",
+  doc:{file:"base", page:3, title:"Состав и правила базовой игры"},
+  story:"Дополнение для 5–6 игроков. В присланных правилах его нет, распределение взято стандартное.",
+  hexes:{forest:6,pasture:6,fields:6,hills:5,mountains:5,desert:2},
+  tokens:{2:2,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:2},
+  harborTypes:["any","any","any","any","any","any","forest","pasture","fields","hills","mountains"],
+  harborText:"11 гаваней: 6 «3:1» и по одной «2:1» на каждое сырьё",
+  drawHarbors:true,
+  vp:"10 победных очков",
+  shape:[{kind:"main",size:30}],
+  rules:[
+    "Два гекса пустыни: разбойник начинает на любом из них.",
+    "После хода каждого игрока идёт особая фаза строительства.",
+    "Очертания рамки здесь приблизительные, состав гексов и жетонов — стандартный."
+  ]
+},
+
+/* ---------- Мореходы ---------- */
+s1_3:{
+  group:"Мореходы", scen:1, seats:3, name:"1. К новым берегам", players:"3",
+  doc:{file:"sea", page:8, title:"Сценарий 1, схема на 3 игроков"},
+  story:"Главный остров и архипелаг мелких островов, на некоторых нашли золото.",
+  hexes:{sea:13,gold:2,hills:4,forest:3,pasture:5,fields:4,mountains:4},
+  tokens:{2:1,3:2,4:3,5:3,6:2,8:3,9:2,10:3,11:2,12:1},
+  harborText:"5 особых гаваней и 3 гавани «3:1»",
+  extras:"18 жетонов ПО",
+  vp:"14 победных очков",
+  pools:{land:{gold:2,hills:4,forest:3,pasture:5,fields:4,mountains:4}},
+  shape:[{kind:"main",size:14},
+         {kind:"isle",size:3,at:[8.5,-30]},{kind:"isle",size:3,at:[9,2]},{kind:"isle",size:2,at:[8.5,32]}],
+  rules:[
+    "Первые 2 поселения основываются только на главном острове; вместо дороги на побережье можно сразу поставить корабль.",
+    "За первое поселение на каждом малом острове игрок берёт 2 жетона ПО, то есть поселение приносит 3 ПО.",
+    "Разбойник начинает на гексе холмов с жетоном «12», пират — на гексе моря с буквой X.",
+    "Гекс золотоносной реки даёт поселению 1 карту сырья на выбор, городу — 2."
+  ]
+},
+s1_4:{
+  group:"Мореходы", scen:1, seats:4, name:"1. К новым берегам", players:"4",
+  doc:{file:"sea", page:9, title:"Сценарий 1, схема на 4 игроков"},
+  story:"Главный остров и архипелаг мелких островов, на некоторых нашли золото.",
+  hexes:{sea:14,desert:1,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:2,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:1},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"24 жетона ПО",
+  vp:"14 победных очков",
+  desertOnMain:true,
+  pools:{land:{desert:1,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5}},
+  shape:[{kind:"main",size:19},
+         {kind:"isle",size:4,at:[9,-30]},{kind:"isle",size:3,at:[9.5,2]},{kind:"isle",size:2,at:[9,33]}],
+  rules:[
+    "Первые 2 поселения основываются только на главном острове; вместо дороги на побережье можно сразу поставить корабль.",
+    "За первое поселение на каждом малом острове игрок берёт 2 жетона ПО, то есть поселение приносит 3 ПО.",
+    "Разбойник начинает в пустыне, пират — на гексе моря с буквой X.",
+    "Гексы главного острова и малых островов раскладываются случайно; красные числа не должны стоять рядом."
+  ]
+},
+
+s2_3:{
+  group:"Мореходы", scen:2, seats:3, name:"2. Четыре острова", players:"3",
+  doc:{file:"sea", page:10, title:"Сценарий 2, схема на 3 игроков"},
+  story:"Архипелаг из четырёх островов: каждый мореход хочет закрепиться на всех.",
+  hexes:{sea:15,hills:4,forest:4,pasture:4,fields:4,mountains:4},
+  tokens:{2:1,3:2,4:2,5:3,6:2,8:2,9:3,10:2,11:2,12:1},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"18 жетонов ПО",
+  vp:"13 победных очков",
+  pools:{land:{hills:4,forest:4,pasture:4,fields:4,mountains:4}},
+  shape:[{kind:"main",size:5,at:[6,-145]},{kind:"main",size:5,at:[6,-35]},
+         {kind:"main",size:5,at:[6,35]},{kind:"main",size:5,at:[6,145]}],
+  rules:[
+    "Первые 2 поселения можно основать на одном острове или на двух разных — они становятся «своими».",
+    "За первое поселение на каждом «чужом» острове берётся 2 жетона ПО, всего такое поселение приносит 3 ПО.",
+    "Разбойник начинает на гексе с жетоном «12», пират — на гексе моря с буквой X.",
+    "Следите, чтобы лес и пастбища не получили слишком плохие числа: «2», «3», «11», «12»."
+  ]
+},
+s2_4:{
+  group:"Мореходы", scen:2, seats:4, name:"2. Четыре острова", players:"4",
+  doc:{file:"sea", page:11, title:"Сценарий 2, схема на 4 игроков"},
+  story:"Архипелаг из четырёх островов: каждый мореход хочет закрепиться на всех.",
+  hexes:{sea:12,hills:4,forest:5,pasture:5,fields:5,mountains:4},
+  tokens:{2:1,3:2,4:3,5:3,6:2,8:2,9:3,10:3,11:3,12:1},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"24 жетона ПО",
+  vp:"13 победных очков",
+  pools:{land:{hills:4,forest:5,pasture:5,fields:5,mountains:4}},
+  shape:[{kind:"main",size:6,at:[6.5,-145]},{kind:"main",size:6,at:[6.5,-35]},
+         {kind:"main",size:6,at:[6.5,35]},{kind:"main",size:5,at:[6.5,145]}],
+  rules:[
+    "Первые 2 поселения можно основать на одном острове или на двух разных — они становятся «своими».",
+    "За первое поселение на каждом «чужом» острове берётся 2 жетона ПО, всего такое поселение приносит 3 ПО.",
+    "Разбойник начинает на гексе с жетоном «12», пират — на гексе моря с буквой X.",
+    "Очертания островов менять нельзя, а гексы и жетоны внутри острова — можно."
+  ]
+},
+
+s3_3:{
+  group:"Мореходы", scen:3, seats:3, name:"3. Океания", players:"3",
+  doc:{file:"sea", page:12, title:"Сценарий 3, схема на 3 игроков"},
+  story:"Два острова, между ними — море, укрытое густым туманом.",
+  hexes:{sea:18,gold:2,hills:4,forest:5,pasture:5,fields:4,mountains:4},
+  tokens:{3:3,4:2,5:3,6:3,8:3,9:3,10:2,11:3,12:2},
+  harborText:"5 особых гаваней и 3 гавани «3:1»",
+  vp:"12 победных очков",
+  pools:{
+    land:{gold:1,hills:3,forest:4,pasture:4,fields:3,mountains:3},
+    fog:{sea:6,gold:1,hills:1,forest:1,pasture:1,fields:1,mountains:1}
+  },
+  shape:[{kind:"main",size:9,at:[6,170]},{kind:"main",size:9,at:[6,-10]},
+         {kind:"fog",size:12,at:[0,0],touch:true}],
+  rules:[
+    "Туманные гексы лежат рубашкой вверх. Как только к перекрёстку закрытого гекса подходит дорога или корабль, гекс открывается.",
+    "Если под туманом суша — на неё кладётся верхний жетон из закрытой стопки, а открывший получает 1 карту этого сырья. Если море — не получает ничего.",
+    "Разбойник начинает на гексе с жетоном «12», пират — на гексе моря с буквой X.",
+    "Особых победных очков нет. Правила этого сценария разрешают класть два красных жетона рядом — снимите галочку в панели, если хотите именно так."
+  ]
+},
+s3_4:{
+  group:"Мореходы", scen:3, seats:4, name:"3. Океания", players:"4",
+  doc:{file:"sea", page:13, title:"Сценарий 3, схема на 4 игроков"},
+  story:"Два острова, между ними — море, укрытое густым туманом.",
+  hexes:{sea:15,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:1,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:2},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  vp:"12 победных очков",
+  pools:{
+    land:{gold:1,hills:4,forest:4,pasture:4,fields:4,mountains:3},
+    fog:{sea:5,gold:1,hills:1,forest:1,pasture:1,fields:1,mountains:2}
+  },
+  shape:[{kind:"main",size:10,at:[6.5,170]},{kind:"main",size:10,at:[6.5,-10]},
+         {kind:"fog",size:12,at:[0,0],touch:true}],
+  rules:[
+    "Туманные гексы лежат рубашкой вверх и открываются, когда к их перекрёстку подходит дорога или корабль.",
+    "Открыли сушу — берите верхний жетон из стопки и 1 карту сырья этого гекса. Открыли море — ничего.",
+    "Разбойник начинает на гексе с жетоном «12», пират — на гексе моря с буквой X.",
+    "Особых победных очков в сценарии нет."
+  ]
+},
+
+s4_3:{
+  group:"Мореходы", scen:4, seats:3, name:"4. Через пустыню", players:"3",
+  doc:{file:"sea", page:14, title:"Сценарий 4, схема на 3 игроков"},
+  story:"Пустыня рассекает главный остров надвое, а на востоке лежат мелкие острова.",
+  hexes:{sea:10,desert:3,gold:2,hills:3,forest:5,pasture:4,fields:4,mountains:4},
+  tokens:{2:1,3:2,4:3,5:3,6:3,8:3,9:3,10:2,11:1,12:1},
+  harborText:"5 особых гаваней и 3 гавани «3:1»",
+  extras:"24 жетона ПО",
+  vp:"14 победных очков",
+  noRedOnGold:true,
+  pools:{land:{desert:3,gold:2,hills:3,forest:5,pasture:4,fields:4,mountains:4}},
+  desertWall:3,
+  shape:[{kind:"main",size:19},{kind:"isle",size:3,at:[8.5,-22]},{kind:"isle",size:3,at:[8.5,22]}],
+  rules:[
+    "Поселения на этапе основания ставятся только на большей части главного острова, по эту сторону пустыни.",
+    "Малые острова и полоса земли за пустыней считаются «чужими»: первое поселение там приносит 2 дополнительных ПО.",
+    "На гексы пустыни жетоны не кладутся. Разбойник начинает на любом гексе пустыни, пират — на гексе моря с буквой X.",
+    "Красные числа нельзя ставить рядом друг с другом и на гексы золотоносной реки."
+  ]
+},
+s4_4:{
+  group:"Мореходы", scen:4, seats:4, name:"4. Через пустыню", players:"4",
+  doc:{file:"sea", page:15, title:"Сценарий 4, схема на 4 игроков"},
+  story:"Пустыня рассекает главный остров надвое, а на востоке лежат мелкие острова.",
+  hexes:{sea:12,desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:1,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:2},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"32 жетона ПО",
+  vp:"14 победных очков",
+  noRedOnGold:true,
+  pools:{land:{desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5}},
+  desertWall:3,
+  shape:[{kind:"main",size:22},{kind:"isle",size:4,at:[9,-28]},{kind:"isle",size:2,at:[9.5,2]},{kind:"isle",size:2,at:[9,30]}],
+  rules:[
+    "Поселения на этапе основания ставятся только на большей части главного острова, по эту сторону пустыни.",
+    "Малые острова и полоса земли за пустыней считаются «чужими»: первое поселение там приносит 2 дополнительных ПО.",
+    "На гексы пустыни жетоны не кладутся. Разбойник начинает на любом гексе пустыни, пират — на гексе моря с буквой X.",
+    "Красные числа нельзя ставить рядом друг с другом и на гексы золотоносной реки."
+  ]
+},
+
+s5:{
+  group:"Мореходы", scen:5, name:"5. Затерянное племя", players:"3–4",
+  doc:{file:"sea", page:16, title:"Сценарий 5"},
+  story:"Длинный узкий остров, а вокруг — обитаемые островки затерянного племени.",
+  hexes:{sea:19,desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:1,3:2,4:2,5:2,6:2,8:2,9:2,10:2,11:2,12:1},
+  harborText:"5 особых гаваней и 1 гавань «3:1»",
+  extras:"4 карты развития, 8 жетонов ПО",
+  vp:"13 победных очков",
+  pools:{
+    land:{desert:3,gold:2,hills:4,forest:4,pasture:3,fields:3,mountains:2},
+    notoken:{hills:1,forest:1,pasture:2,fields:2,mountains:3}
+  },
+  shape:[{kind:"main",size:21},
+         {kind:"notoken",size:3,at:[8,-25]},{kind:"notoken",size:2,at:[8,25]},
+         {kind:"notoken",size:2,at:[8,155]},{kind:"notoken",size:2,at:[8,-155]}],
+  rules:[
+    "На малых островах нет номерных жетонов, они не приносят сырья, и поселения там основывать нельзя.",
+    "Подарки племени лежат на путях у островков: жетоны ПО, карты развития и свободные гавани — их забирает тот, кто поставил или передвинул туда корабль.",
+    "Разбойник начинает на любом гексе пустыни и не может ни попадать на малые острова, ни возвращаться на стартовый гекс.",
+    "Следите, чтобы три крайних гекса главного острова не получили слишком хорошие числа «5», «6», «8», «9»."
+  ]
+},
+
+s6:{
+  group:"Мореходы", scen:6, name:"6. Ткань для Катана", players:"3–4",
+  doc:{file:"sea", page:18, title:"Сценарий 6"},
+  story:"Два главных острова, а между ними — деревни, где ткут превосходную ткань.",
+  hexes:{sea:18,desert:2,gold:2,hills:3,forest:4,pasture:4,fields:5,mountains:4},
+  tokens:{2:2,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:2},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"50 жетонов ткани",
+  vp:"14 победных очков",
+  villages:2,
+  pools:{
+    land:{desert:2,gold:2,hills:3,forest:3,pasture:3,fields:4,mountains:3},
+    notoken:{forest:1,pasture:1,fields:1,mountains:1}
+  },
+  shape:[{kind:"main",size:10,at:[6.5,178]},{kind:"main",size:10,at:[6.5,-2]},
+         {kind:"notoken",size:1,at:[3.6,-120]},{kind:"notoken",size:1,at:[3.6,-60]},
+         {kind:"notoken",size:1,at:[3.6,60]},{kind:"notoken",size:1,at:[3.6,120]}],
+  rules:[
+    "На каждый малый остров кладутся 2 номерных жетона прямо на перекрёстки — это деревни. Рядом с каждой деревней 5 жетонов ткани.",
+    "Довели строй кораблей до деревни — сразу берёте 1 рулон, а дальше по 1 рулону каждый раз, когда выпадает её число.",
+    "2 рулона ткани = 1 ПО, один рулон не даёт ничего. Карта «Самый длинный тракт» в сценарии не используется.",
+    "Партия также заканчивается, если ткань осталась лишь в 3 деревнях: выигрывает тот, у кого больше ПО."
+  ]
+},
+
+s7:{
+  group:"Мореходы", scen:7, name:"7. Острова пиратов", players:"3–4",
+  doc:{file:"sea", page:20, title:"Сценарий 7"},
+  story:"Восточный остров — ваш дом. Западные захватили пираты, и им нужен ответ.",
+  hexes:{sea:19,desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:1,3:2,4:3,5:3,6:3,8:3,9:3,10:3,11:2,12:1},
+  harborText:"5 особых гаваней и 3 гавани «3:1»",
+  extras:"12 жетонов пиратских крепостей, 4 жетона игроков",
+  vp:"Захватить свою крепость и набрать 10 ПО",
+  noTokenIsles:3,
+  pools:{land:{desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5}},
+  shape:[{kind:"main",size:12,at:[6.5,0]},
+         {kind:"isle",size:6,at:[7,-138]},{kind:"isle",size:6,at:[7.5,180]},{kind:"isle",size:6,at:[7,138]}],
+  rules:[
+    "Все игроки начинают на восточном острове: 1 стартовое поселение с кораблём по схеме плюс 2 обычных.",
+    "Три гекса на западных островах не получают номерных жетонов и не приносят сырья.",
+    "Пиратский флот ходит вокруг центральных островов по часовой стрелке на число, выпавшее на меньшем кубике.",
+    "Карты «Самый длинный тракт» и «Самое большое войско» не используются; карты рыцарей превращают корабли в боевые."
+  ]
+},
+
+s8:{
+  group:"Мореходы", scen:8, name:"8. Чудеса Катана", players:"3–4",
+  doc:{file:"sea", page:22, title:"Сценарий 8"},
+  story:"Мир после победы над пиратами: северные острова украшают великими сооружениями.",
+  hexes:{sea:19,desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5},
+  tokens:{2:2,3:3,4:3,5:3,6:3,8:3,9:3,10:3,11:3,12:1},
+  harborText:"5 особых гаваней и 4 гавани «3:1»",
+  extras:"5 карт чудес, 5 жетонов Великой стены, 2 жетона Великого моста, 4 жетона игроков",
+  vp:"Достроить чудо или 10 ПО и больше этапов чуда",
+  noRedNearDesert:true, desertOnMain:true,
+  pools:{land:{desert:3,gold:2,hills:5,forest:5,pasture:5,fields:5,mountains:5}},
+  shape:[{kind:"main",size:22},{kind:"isle",size:4,at:[8.5,-30]},{kind:"isle",size:2,at:[9,26]},{kind:"isle",size:2,at:[8.5,180]}],
+  rules:[
+    "Первые 2 поселения ставятся только на большом острове.",
+    "Каждый игрок строит одно чудо из пяти в 4 этапа, по 5 единиц указанного сырья за этап.",
+    "За первое поселение на каждом малом острове — 1 жетон ПО.",
+    "Гексы, граничащие с пустыней, не должны получать «6» и «8»."
+  ]
+},
+
+s9:{
+  group:"Мореходы", scen:9, name:"9. Новый мир", players:"3–4",
+  doc:{file:"sea", page:24, title:"Сценарий 9"},
+  story:"Свободный сценарий: все гексы, включая море, раскладываются случайно.",
+  hexes:{sea:19,hills:4,forest:5,pasture:5,fields:5,mountains:4},
+  tokens:{2:1,3:3,4:3,5:3,6:2,8:2,9:3,10:3,11:2,12:1},
+  harborText:"5 особых гаваней и 5 гаваней «3:1»",
+  extras:"16 жетонов ПО",
+  vp:"12 победных очков",
+  pools:{random:{sea:19,hills:4,forest:5,pasture:5,fields:5,mountains:4}},
+  shape:[{kind:"random",size:42}],
+  rules:[
+    "Гексы перемешиваются рубашкой вверх и выкладываются внутрь рамки случайно — именно это и делает генератор.",
+    "Гавани игроки по очереди сами кладут у любого гекса суши, начиная с самого старшего.",
+    "Первые 2 поселения ставятся где угодно; первое поселение на «чужом» острове приносит 1 ПО.",
+    "Разбойник начинает на гексе с числом «12», пират — на любом гексе рамки."
+  ]
+}
+};
+
+/* ============================================================
+   Геометрия: аксиальные координаты, острова выращиваются из центра
+   ============================================================ */
+const AX = [[1,0],[0,1],[-1,1],[-1,0],[0,-1],[1,-1]];
+const key = (q,r) => q + "|" + r;
+function axDist(a,b){
+  const dq = a[0]-b[0], dr = a[1]-b[1];
+  return (Math.abs(dq) + Math.abs(dq+dr) + Math.abs(dr)) / 2;
+}
+function ringCells(cq,cr,k){
+  if (k === 0) return [[cq,cr]];
+  const out = [];
+  let q = cq + AX[4][0]*k, r = cr + AX[4][1]*k;
+  for (let d=0; d<6; d++) for (let i=0;i<k;i++){ out.push([q,r]); q += AX[d][0]; r += AX[d][1]; }
+  return out;
+}
+function spiralCells(cq,cr,maxK){
+  const o = [];
+  for (let k=0;k<=maxK;k++) o.push.apply(o, ringCells(cq,cr,k));
+  return o;
+}
+function cubeRound(q,r){
+  let x = q, z = r, y = -x - z;
+  let rx = Math.round(x), ry = Math.round(y), rz = Math.round(z);
+  const dx = Math.abs(rx-x), dy = Math.abs(ry-y), dz = Math.abs(rz-z);
+  if (dx > dy && dx > dz) rx = -ry - rz;
+  else if (dy > dz) ry = -rx - rz;
+  else rz = -rx - ry;
+  return [rx, rz];
+}
+function axFromPolar(d, deg){
+  const a = deg * Math.PI / 180;
+  const x = d * Math.cos(a), y = d * Math.sin(a);
+  const r = y / 1.5, q = x / Math.sqrt(3) - r/2;
+  return cubeRound(q, r);
+}
+/* Выращивает компактный остров нужного размера от заданного центра. */
+function growIsland(size, center, occupied, touch){
+  const inSet = new Set(), chosen = [];
+  const free = c => {
+    if (occupied.has(key(c[0],c[1])) || inSet.has(key(c[0],c[1]))) return false;
+    if (!touch){
+      for (let i=0;i<6;i++) if (occupied.has(key(c[0]+AX[i][0], c[1]+AX[i][1]))) return false;
+    }
+    return true;
+  };
+  let seed = null;
+  const near = spiralCells(center[0], center[1], 9);
+  for (let i=0;i<near.length;i++) if (free(near[i])) { seed = near[i]; break; }
+  if (!seed) return [];
+  chosen.push(seed); inSet.add(key(seed[0], seed[1]));
+  while (chosen.length < size){
+    let best = null, bestScore = Infinity;
+    for (let c=0;c<chosen.length;c++){
+      for (let i=0;i<6;i++){
+        const n = [chosen[c][0]+AX[i][0], chosen[c][1]+AX[i][1]];
+        if (!free(n)) continue;
+        const score = axDist(n, seed)*100 + n[1]*3 + n[0];
+        if (score < bestScore){ bestScore = score; best = n; }
+      }
+    }
+    if (!best) break;
+    chosen.push(best); inSet.add(key(best[0], best[1]));
+  }
+  return chosen;
+}
+
+function buildLayout(sc){
+  const occupied = new Set(), cells = [];
+  sc.shape.forEach((reg, ri) => {
+    const center = reg.at ? axFromPolar(reg.at[0], reg.at[1]) : [0,0];
+    const got = growIsland(reg.size, center, occupied, !!reg.touch);
+    got.forEach(c => {
+      cells.push({q:c[0], r:c[1], row:c[1], x:c[0] + c[1]/2, kind:reg.kind, region:ri,
+                  terrain:null, num:null, villages:null, adj:[]});
+      occupied.add(key(c[0], c[1]));
+    });
+  });
+  const index = new Map();
+  cells.forEach((c,i) => index.set(key(c.q,c.r), i));
+  cells.forEach((c,i) => {
+    for (let d=0; d<6; d++){
+      const j = index.get(key(c.q + AX[d][0], c.r + AX[d][1]));
+      if (j !== undefined) c.adj.push(j);
+    }
+  });
+  return cells;
+}
+
+/* ============================================================
+   Сборка поля
+   ============================================================ */
+function poolKeyFor(kind){
+  if (kind === "fog") return "fog";
+  if (kind === "notoken") return "notoken";
+  if (kind === "random") return "random";
+  return "land";
+}
+function localPairs(idxs, cells){
+  const map = new Map(); idxs.forEach((ci,k) => map.set(ci,k));
+  const pairs = [];
+  idxs.forEach((ci,k) => cells[ci].adj.forEach(nb => {
+    const o = map.get(nb);
+    if (o !== undefined && o > k) pairs.push([k,o]);
+  }));
+  return pairs;
+}
+function hillClimb(assign, costFn, rng, iters){
+  let cur = assign.slice(), cost = costFn(cur);
+  for (let it=0; it<iters && cost>0; it++){
+    const i = Math.floor(rng()*cur.length), j = Math.floor(rng()*cur.length);
+    if (i === j || cur[i] === cur[j]) continue;
+    const t = cur.slice(); const s = t[i]; t[i] = t[j]; t[j] = s;
+    const c = costFn(t);
+    if (c <= cost){ cur = t; cost = c; }
+  }
+  return cur;
+}
+
+function buildBoard(id, seed, opts){
+  const sc = SC[id];
+  const rng = mulberry32(hashSeed(id + "#" + seed));
+  const cells = buildLayout(sc);
+
+  const pools = sc.pools || {land: sc.hexes};
+
+  /* --- ландшафт --- */
+  const byPool = {};
+  cells.forEach((c,i) => {
+    const pk = poolKeyFor(c.kind);
+    (byPool[pk] = byPool[pk] || []).push(i);
+  });
+  for (const pk in byPool){
+    const idxs = byPool[pk];
+    const spec = pools[pk] || pools.land;
+    let deal = shuffled(pool(spec), rng);
+    while (deal.length < idxs.length) deal.push("pasture");
+    deal = deal.slice(0, idxs.length);
+    if (opts.spread && idxs.length > 3){
+      const pairs = localPairs(idxs, cells);
+      deal = hillClimb(deal, arr => {
+        let cost = 0;
+        for (let p=0;p<pairs.length;p++) if (arr[pairs[p][0]] === arr[pairs[p][1]]) cost++;
+        return cost;
+      }, rng, 4000);
+    }
+    idxs.forEach((ci,k) => cells[ci].terrain = deal[k]);
+  }
+
+  /* --- пустыня должна остаться на главном острове (там стартует разбойник) --- */
+  if (sc.desertOnMain){
+    const mainIdx = cells.map((c,i)=>i).filter(i => cells[i].kind === "main");
+    const stray = cells.map((c,i)=>i).filter(i => cells[i].terrain === "desert" && cells[i].kind !== "main");
+    const freeMain = shuffled(mainIdx.filter(i => cells[i].terrain !== "desert"), rng);
+    stray.forEach((sI,k) => {
+      if (k >= freeMain.length) return;
+      const f = freeMain[k];
+      const t = cells[f].terrain; cells[f].terrain = cells[sI].terrain; cells[sI].terrain = t;
+    });
+  }
+
+  /* --- пустынная стена: 3 гекса в один ряд поперёк главного острова --- */
+  if (sc.desertWall){
+    const main = cells.map((c,i)=>i).filter(i => cells[i].region === 0);
+    const cols = {};
+    main.forEach(i => { (cols[cells[i].q] = cols[cells[i].q] || []).push(i); });
+    const qs = Object.keys(cols).map(Number).sort((a,b)=>a-b);
+    let pick = null;
+    for (const q of qs) if (cols[q].length >= sc.desertWall && (pick === null || Math.abs(q) < Math.abs(pick))) pick = q;
+    if (pick !== null){
+      const col = cols[pick].slice().sort((a,b) => cells[a].r - cells[b].r);
+      const wall = [];
+      for (let k=0;k<sc.desertWall && k<col.length;k++){
+        wall.push(col[Math.floor(k * col.length / sc.desertWall)]);
+      }
+      wall.forEach(w => {
+        if (cells[w].terrain === "desert") return;
+        const d = cells.map((c,i)=>i)
+          .find(i => cells[i].terrain === "desert" && wall.indexOf(i) < 0);
+        if (d === undefined) return;
+        const t = cells[w].terrain; cells[w].terrain = cells[d].terrain; cells[d].terrain = t;
+      });
+    }
+  }
+
+  /* --- золото охотнее уходит на малые острова --- */
+  const isleIdx = cells.map((c,i)=>i).filter(i => cells[i].kind === "isle");
+  if (isleIdx.length){
+    const golds = cells.map((c,i)=>i).filter(i => cells[i].terrain === "gold" && cells[i].kind !== "isle");
+    const free = shuffled(isleIdx.filter(i => cells[i].terrain !== "gold"), rng);
+    golds.forEach((g,k) => {
+      if (k >= free.length) return;
+      const f = free[k];
+      const t = cells[f].terrain; cells[f].terrain = cells[g].terrain; cells[g].terrain = t;
+    });
+  }
+
+  /* --- гексы без жетонов (Острова пиратов) --- */
+  if (sc.noTokenIsles){
+    const cands = shuffled(cells.map((c,i)=>i)
+      .filter(i => cells[i].kind === "isle" && cells[i].terrain !== "desert" && cells[i].terrain !== "gold"), rng);
+    cands.slice(0, sc.noTokenIsles).forEach(i => cells[i].kind = "notokenPick");
+  }
+
+  /* --- номерные жетоны --- */
+  const needs = cells.map((c,i)=>i).filter(i => {
+    const c = cells[i];
+    if (c.kind === "notoken" || c.kind === "notokenPick") return false;
+    return c.terrain && c.terrain !== "sea" && c.terrain !== "desert";
+  });
+  let bag = tokenList(sc.tokens);
+  const leftover = [];
+  if (bag.length < needs.length) bag = bag.concat(autoTokens(needs.length - bag.length));
+  bag = shuffled(bag, rng);
+  let nums = bag.slice(0, needs.length);
+  for (let i=needs.length;i<bag.length;i++) leftover.push(bag[i]);
+
+  const pairs = localPairs(needs, cells);
+  const RED = n => n === 6 || n === 8;
+  const ONE = n => n === 2 || n === 12;
+  const isGold = k => cells[needs[k]].terrain === "gold";
+  const nearDesert = needs.map(i => cells[i].adj.some(j => cells[j].terrain === "desert"));
+  const wantRed = opts.red;
+  nums = hillClimb(nums, arr => {
+    let cost = 0;
+    for (let p=0;p<pairs.length;p++){
+      const a = arr[pairs[p][0]], b = arr[pairs[p][1]];
+      if (wantRed && RED(a) && RED(b)) cost += 6;
+      if (opts.same && a === b) cost += 3;
+      if (opts.same && ONE(a) && ONE(b)) cost += 1;
+    }
+    if (sc.noRedOnGold) for (let k=0;k<arr.length;k++) if (isGold(k) && RED(arr[k])) cost += 6;
+    if (sc.noRedNearDesert) for (let k=0;k<arr.length;k++) if (nearDesert[k] && RED(arr[k])) cost += 4;
+    return cost;
+  }, rng, 15000);
+  needs.forEach((ci,k) => cells[ci].num = nums[k]);
+
+  /* --- расклад по буквам A–R из правил базовой игры --- */
+  if (opts.letters && sc.letters){
+    const LETTER_NUMS = [5,2,6,3,8,10,9,12,11,4,8,10,9,4,5,6,3,11];
+    const ang = c => Math.atan2(1.5*c.r, Math.sqrt(3)*(c.q + c.r/2));
+    const order = cells.map((c,i)=>i).sort((a,b) => {
+      const ra = axDist([cells[a].q,cells[a].r],[0,0]);
+      const rb = axDist([cells[b].q,cells[b].r],[0,0]);
+      if (ra !== rb) return rb - ra;
+      return ang(cells[a]) - ang(cells[b]);
+    });
+    let k = 0;
+    order.forEach(i => {
+      cells[i].letter = null;
+      if (cells[i].terrain === "desert" || cells[i].terrain === "sea"){ cells[i].num = null; return; }
+      cells[i].num = LETTER_NUMS[k % LETTER_NUMS.length];
+      cells[i].letter = String.fromCharCode(65 + (k % 18));
+      k++;
+    });
+  }
+
+  /* --- деревни на островках («Ткань для Катана») --- */
+  if (sc.villages){
+    const vill = cells.map((c,i)=>i).filter(i => cells[i].kind === "notoken");
+    let src = leftover.slice();
+    while (src.length < vill.length * sc.villages) src.push(autoTokens(1)[0]);
+    src = shuffled(src, rng);
+    vill.forEach((i,k) => {
+      const pair = src.slice(k*sc.villages, (k+1)*sc.villages);
+      if (pair.length === 2 && pair[0] === pair[1]){
+        const swap = src.findIndex((v,j) => j >= (k+1)*sc.villages && v !== pair[0]);
+        if (swap >= 0){ const t = src[swap]; src[swap] = pair[1]; pair[1] = t; }
+      }
+      cells[i].villages = pair;
+    });
+  }
+
+  /* --- гавани базовой игры --- */
+  let harbors = [];
+  if (sc.drawHarbors){
+    const set = new Set(cells.map(c => key(c.q,c.r)));
+    const edges = [];
+    cells.forEach((c,i) => {
+      for (let d=0; d<6; d++){
+        if (set.has(key(c.q+AX[d][0], c.r+AX[d][1]))) continue;
+        const px = Math.sqrt(3)*(c.q + c.r/2) + Math.sqrt(3)*(AX[d][0] + AX[d][1]/2)/2;
+        const py = 1.5*c.r + 1.5*AX[d][1]/2;
+        edges.push({i, d, ang: Math.atan2(py, px)});
+      }
+    });
+    edges.sort((a,b) => a.ang - b.ang);
+    const types = shuffled(sc.harborTypes, rng);
+    const n = types.length;
+    for (let k=0;k<n;k++){
+      const e = edges[Math.floor(k * edges.length / n)];
+      harbors.push({cell:e.i, dir:e.d, type:types[k]});
+    }
+  }
+
+  return {sc, cells, harbors, leftover};
+}
+
+/* ============================================================
+   Отрисовка
+   ============================================================ */
+const NS = "http://www.w3.org/2000/svg";
+const S = 46, HW = Math.sqrt(3)*S, VS = 1.5*S, PAD = 26;
+function el(tag, attrs, text){
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (text !== undefined && text !== null) n.textContent = text;
+  return n;
+}
+function hexPoints(cx, cy, rad){
+  const p = [];
+  for (let k=0;k<6;k++){
+    const a = Math.PI/180 * (60*k - 90);
+    p.push((cx + rad*Math.cos(a)).toFixed(2) + "," + (cy + rad*Math.sin(a)).toFixed(2));
+  }
+  return p.join(" ");
+}
+
+/* Пиктограммы ландшафта. Рисуются в верхней части гекса,
+   жетон стоит ниже — они гарантированно не пересекаются. */
+const GLYPH = {
+  forest:   ["#dff0d5","#1b4523"],
+  pasture:  ["#fcfff7","#33421d"],
+  fields:   ["#fff6d2","#7a5a10"],
+  hills:    ["#f8e4d6","#682c12"],
+  mountains:["#f3f8fb","#57666f"],
+  desert:   ["#c8ab70","#7b6535"],
+  gold:     ["#fffbe0","#8a6a1a"],
+  sea:      ["#bfe0f2","#12507a"]
+};
+function glyph(kind, X, Y){
+  const pal = GLYPH[kind];
+  const g = el("g", {opacity:"0.92"});
+  if (!pal) return g;
+  const lt = pal[0], dk = pal[1];
+  const y = Y - 0.44*S;
+  const add = (t,a) => g.appendChild(el(t,a));
+
+  if (kind === "forest"){
+    [-13, 0, 13].forEach((dx,i) => {
+      const s2 = i === 1 ? 1 : 0.85;
+      add("rect",{x:X+dx-1.8, y:y+6*s2, width:3.6, height:5, rx:1.4, fill:dk});
+      add("polygon",{points:`${X+dx},${y-11*s2} ${X+dx-6.5*s2},${y-1*s2} ${X+dx+6.5*s2},${y-1*s2}`, fill:lt});
+      add("polygon",{points:`${X+dx},${y-5*s2} ${X+dx-7.5*s2},${y+6.5*s2} ${X+dx+7.5*s2},${y+6.5*s2}`, fill:lt});
+    });
+  }
+  else if (kind === "pasture"){
+    add("rect",{x:X-8, y:y+5, width:3.4, height:6, rx:1.5, fill:dk});
+    add("rect",{x:X+1, y:y+5, width:3.4, height:6, rx:1.5, fill:dk});
+    add("ellipse",{cx:X-3, cy:y+1, rx:12, ry:7.5, fill:lt});
+    add("circle",{cx:X-11.5, cy:y-2.5, r:4.6, fill:lt});
+    add("circle",{cx:X-4,   cy:y-6,   r:5.4, fill:lt});
+    add("circle",{cx:X+3.5, cy:y-3.5, r:4.6, fill:lt});
+    add("ellipse",{cx:X+11, cy:y-1, rx:5.2, ry:4.6, fill:dk});
+    add("path",{d:`M${X+8.5},${y-4.5} q-3,-2 -1,-4`, stroke:dk, "stroke-width":2.6, fill:"none", "stroke-linecap":"round"});
+    add("circle",{cx:X+13, cy:y-2, r:1.2, fill:lt});
+  }
+  else if (kind === "fields"){
+    [-12, 0, 12].forEach(dx => {
+      const bx = X + dx;
+      add("path",{d:`M${bx},${y+11} L${bx},${y-4}`, stroke:dk, "stroke-width":2.2,
+                  fill:"none", "stroke-linecap":"round"});
+      for (let k=0;k<3;k++){
+        const gy = y - 3 - k*4.2, w = 3.4 - k*0.35;
+        const lx = bx - 3.2 + k*0.5, rx2 = bx + 3.2 - k*0.5;
+        add("ellipse",{cx:lx, cy:gy, rx:w, ry:2, fill:lt, transform:`rotate(-42 ${lx} ${gy})`});
+        add("ellipse",{cx:rx2, cy:gy, rx:w, ry:2, fill:lt, transform:`rotate(42 ${rx2} ${gy})`});
+      }
+      add("ellipse",{cx:bx, cy:y-16.5, rx:1.9, ry:3.4, fill:lt});
+    });
+  }
+  else if (kind === "hills"){
+    const bw = 10.5, bh = 5.6, gapx = 12.2;
+    [[y-10.5, 0], [y-3.2, -6.1], [y+4.1, 0]].forEach(row => {
+      for (let i=-1;i<=1;i++){
+        add("rect",{x:X + row[1] + i*gapx - bw/2, y:row[0], width:bw, height:bh, rx:1.2, fill:lt});
+      }
+    });
+  }
+  else if (kind === "mountains"){
+    add("polygon",{points:`${X-2},${y+10} ${X+9},${y-7} ${X+20},${y+10}`, fill:dk});
+    add("polygon",{points:`${X-20},${y+10} ${X-6},${y-12} ${X+8},${y+10}`, fill:lt});
+    add("polygon",{points:`${X-6},${y-12} ${X-11.5},${y-3.5} ${X-0.5},${y-3.5}`, fill:"#ffffff"});
+  }
+  else if (kind === "desert"){
+    const cactus = "#6f8a3f";
+    add("path",{d:`M${X-19},${y+11} q9,-7 18,-1 q9,6 18,-2`, stroke:dk, "stroke-width":2.6,
+                fill:"none", "stroke-linecap":"round", opacity:".75"});
+    add("path",{d:`M${X-3},${y+7} V${y-12}`, stroke:cactus, "stroke-width":6,
+                fill:"none", "stroke-linecap":"round"});
+    add("path",{d:`M${X-9},${y-2} v-5`, stroke:cactus, "stroke-width":4.2, fill:"none", "stroke-linecap":"round"});
+    add("path",{d:`M${X-9},${y-1} h6`, stroke:cactus, "stroke-width":4.2, fill:"none", "stroke-linecap":"round"});
+    add("path",{d:`M${X+4},${y-6} v-6`, stroke:cactus, "stroke-width":4.2, fill:"none", "stroke-linecap":"round"});
+    add("path",{d:`M${X-3},${y-5} h7`, stroke:cactus, "stroke-width":4.2, fill:"none", "stroke-linecap":"round"});
+    add("circle",{cx:X+14, cy:y+5, r:3, fill:dk, opacity:".65"});
+    add("circle",{cx:X+18, cy:y+8, r:2, fill:dk, opacity:".5"});
+  }
+  else if (kind === "gold"){
+    add("path",{d:`M${X-19},${y+10} q6,-5 12,0 q6,5 12,0 q6,-5 12,0`, stroke:dk, "stroke-width":2.2,
+                fill:"none", "stroke-linecap":"round", opacity:".6"});
+    [[-11,2],[0,-5],[11,2]].forEach(pt => {
+      add("circle",{cx:X+pt[0], cy:y+pt[1], r:6.4, fill:lt, stroke:dk, "stroke-width":1.6});
+      add("circle",{cx:X+pt[0], cy:y+pt[1], r:2.6, fill:"none", stroke:dk, "stroke-width":1.2, opacity:".7"});
+    });
+  }
+  else if (kind === "sea"){
+    [-1, 8].forEach(dy => {
+      add("path",{d:`M${X-18},${y+dy} q6,-6 12,0 q6,6 12,0 q6,-6 12,0`, stroke:lt,
+                  "stroke-width":3, fill:"none", "stroke-linecap":"round"});
+    });
+  }
+  return g;
+}
+
+/* Номерной жетон. Радиус подобран так, чтобы и число, и точки
+   целиком помещались внутри круга. */
+const TOK_R = S * 0.375;
+function token(X, Y, num, letter){
+  const g = el("g", {});
+  const red = num === 6 || num === 8;
+  const ink = red ? "#b8332a" : "#2f2718";
+  g.appendChild(el("circle",{cx:X, cy:Y, r:TOK_R, fill:"#f8efd8", stroke:"#b9a175", "stroke-width":1.4}));
+  g.appendChild(el("circle",{cx:X, cy:Y, r:TOK_R-2.6, fill:"none", stroke:"#d8c9a4", "stroke-width":1}));
+  g.appendChild(el("text",{x:X, y:Y+0.5, "text-anchor":"middle", "dominant-baseline":"middle",
+    "font-size":18, "font-weight":"700", class:"ui", fill:ink}, red ? num + "\u00b7" : String(num)));
+  const p = PIPS(num), gap = 4.2, py = Y + 10.2;
+  for (let k=0;k<p;k++){
+    g.appendChild(el("circle",{cx: X - (p-1)*gap/2 + k*gap, cy: py, r:1.7, fill:ink}));
+  }
+  if (letter){
+    g.appendChild(el("text",{x:X, y:Y + S*0.60, "text-anchor":"middle", "font-size":10,
+      class:"ui", fill:"#4a3d22", opacity:".45"}, letter));
+  }
+  return g;
+}
+
+function draw(board, opts){
+  const svg = document.getElementById("board");
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+  const cells = board.cells;
+  const cx = c => c.x * HW;
+  const cy = c => c.row * VS;
+
+  let minX = 1e9, maxX = -1e9, minY = 1e9, maxY = -1e9;
+  const bump = (x,y) => { if(x<minX)minX=x; if(x>maxX)maxX=x; if(y<minY)minY=y; if(y>maxY)maxY=y; };
+  cells.forEach(c => { bump(cx(c)-HW/2, cy(c)-S); bump(cx(c)+HW/2, cy(c)+S); });
+  board.harbors.forEach(h => {
+    const c = cells[h.cell];
+    const dx = HW*(AX[h.dir][0] + AX[h.dir][1]/2), dy = VS*AX[h.dir][1];
+    bump(cx(c)+dx-S*0.65, cy(c)+dy-S*0.65); bump(cx(c)+dx+S*0.65, cy(c)+dy+S*0.65);
+  });
+  const vbW = maxX - minX + 2*PAD;
+  svg.setAttribute("viewBox",
+    (minX-PAD).toFixed(1) + " " + (minY-PAD).toFixed(1) + " " +
+    vbW.toFixed(1) + " " + (maxY-minY+2*PAD).toFixed(1));
+  // на узком экране поле не сжимается в нечитаемую кашу, а прокручивается вбок
+  svg.style.minWidth = Math.round((vbW / HW) * 48) + "px";
+
+  const gRim = el("g", {}), gHex = el("g", {}), gTop = el("g", {});
+  svg.appendChild(gRim); svg.appendChild(gHex); svg.appendChild(gTop);
+
+  cells.forEach(c => {
+    const X = cx(c), Y = cy(c);
+    const hidden = c.kind === "fog" && !opts.showFog;
+    const t = hidden ? T.fog : T[c.terrain];
+    const g = el("g", {});
+
+    // песчаная кайма у суши рисуется отдельным слоем, ниже всех гексов
+    if (!hidden && c.terrain !== "sea"){
+      gRim.appendChild(el("polygon",{points:hexPoints(X,Y,S*1.04), fill:"#eadcb6"}));
+    }
+    g.appendChild(el("polygon",{points:hexPoints(X,Y,S*0.985), fill:t.fill,
+      stroke:"rgba(0,0,0,.30)", "stroke-width":1.2}));
+
+    if (c.kind === "fog"){
+      g.appendChild(el("polygon",{points:hexPoints(X,Y,S*0.86), fill:"none",
+        stroke:"#f4f9fc", "stroke-width":2, "stroke-dasharray":"7 6", opacity:".8"}));
+    }
+
+    if (hidden){
+      g.appendChild(el("text",{x:X, y:Y+11, "text-anchor":"middle", "font-size":32,
+        "font-weight":"700", fill:"#e9f2f7"}, "?"));
+    } else {
+      g.appendChild(glyph(c.terrain, X, Y));
+      if (c.num) g.appendChild(token(X, Y + S*0.26, c.num, c.letter));
+      if (c.villages){
+        c.villages.forEach((v,k) => {
+          const vx = X + (k === 0 ? -16 : 16), vy = Y + S*0.26;
+          const vg = el("g", {});
+          vg.appendChild(el("circle",{cx:vx, cy:vy, r:13, fill:"#f7edd4", stroke:"#b9a175", "stroke-width":1.3}));
+          vg.appendChild(el("text",{x:vx, y:vy+0.5, "text-anchor":"middle", "dominant-baseline":"middle",
+            "font-size":14, "font-weight":"700", class:"ui",
+            fill: (v===6||v===8) ? "#b8332a" : "#2f2718"}, String(v)));
+          g.appendChild(vg);
+        });
+      }
+    }
+    gHex.appendChild(g);
+  });
+
+  board.harbors.forEach(h => {
+    const c = cells[h.cell];
+    const dx = HW*(AX[h.dir][0] + AX[h.dir][1]/2), dy = VS*AX[h.dir][1];
+    const bx = cx(c), by = cy(c), X = bx + dx, Y = by + dy;
+    const g = el("g", {});
+    g.appendChild(el("line",{x1:bx + dx*0.45, y1:by + dy*0.45, x2:X, y2:Y,
+      stroke:"#e9dcb8", "stroke-width":4, opacity:".7", "stroke-linecap":"round"}));
+    const generic = h.type === "any";
+    g.appendChild(el("circle",{cx:X, cy:Y, r:S*0.44,
+      fill: generic ? "#3c5a6b" : T[h.type].fill, stroke:"#f0e5c8", "stroke-width":2.5}));
+    g.appendChild(el("text",{x:X, y:generic ? Y+5 : Y+1, "text-anchor":"middle", "font-size":14,
+      "font-weight":"700", fill: generic ? "#ffffff" : T[h.type].ink}, generic ? "3:1" : "2:1"));
+    if (!generic){
+      g.appendChild(el("text",{x:X, y:Y+12, "text-anchor":"middle", "font-size":7.5,
+        textLength:24, lengthAdjust:"spacingAndGlyphs",
+        class:"ui", fill:T[h.type].ink, opacity:".95"}, T[h.type].sh));
+    }
+    gTop.appendChild(g);
+  });
+}
+
+/* ============================================================
+   Интерфейс
+   ============================================================ */
+const $ = id => document.getElementById(id);
+function updateSwipe(){
+  const box = document.querySelector(".board-scroll");
+  if (!box) return;
+  $("swipe").classList.toggle("on", box.scrollWidth - box.clientWidth > 6);
+}
+const state = {mode:"land", seats:4};
+
+function scenarioList(mode){
+  return Object.keys(SC).filter(k => (SC[k].group === "Базовая игра") === (mode === "land"));
+}
+function fillScenarios(){
+  const sel = $("scenario");
+  while (sel.firstChild) sel.removeChild(sel.firstChild);
+  const seen = new Set();
+  scenarioList(state.mode).forEach(k => {
+    const sc = SC[k];
+    const label = sc.name;
+    const groupKey = sc.scen ? "s" + sc.scen : k;
+    if (seen.has(groupKey)) return;
+    seen.add(groupKey);
+    const o = document.createElement("option");
+    o.value = groupKey; o.textContent = label;
+    sel.appendChild(o);
+  });
+}
+/* groupKey -> реальный id сценария с учётом числа игроков */
+function resolveId(groupKey){
+  if (SC[groupKey]) return groupKey;
+  const a = groupKey + "_" + state.seats;
+  if (SC[a]) return a;
+  const alt = groupKey + "_" + (state.seats === 3 ? 4 : 3);
+  return SC[alt] ? alt : groupKey;
+}
+function hasSeats(groupKey){
+  return !SC[groupKey] && (SC[groupKey + "_3"] || SC[groupKey + "_4"]);
+}
+
+function tableHexes(sc){
+  const rows = [];
+  let total = 0;
+  TERRAIN_ORDER.forEach(k => {
+    const n = sc.hexes[k];
+    if (!n) return;
+    total += n;
+    rows.push(`<tr><td><span class="sw" style="background:${T[k].fill}"></span>${T[k].ru}</td><td>${n}</td></tr>`);
+  });
+  return `<tr><th>Гексы</th><th>Кол-во</th></tr>${rows.join("")}` +
+         `<tr class="total"><td>Всего</td><td>${total}</td></tr>`;
+}
+function tableTokens(sc){
+  const keys = Object.keys(sc.tokens).map(Number).sort((a,b)=>a-b);
+  const rows = keys.map(n => {
+    const red = n === 6 || n === 8;
+    return `<tr><td><b style="color:${red?"#b8332a":"#332a17"};font-family:var(--display)">${red?n+".":n}</b>
+            <span style="color:var(--ink-soft);font-size:12px"> &middot; ${PIPS(n)} точ.</span></td><td>${sc.tokens[n]}</td></tr>`;
+  });
+  const total = countOf(sc.tokens);
+  let extra = `<tr class="total"><td>Всего жетонов</td><td>${total}</td></tr>`;
+  return `<tr><th>Жетон</th><th>Кол-во</th></tr>${rows.join("")}${extra}`;
+}
+
+function render(){
+  const groupKey = $("scenario").value;
+  const id = resolveId(groupKey);
+  const sc = SC[id];
+  const seed = $("seed").value.trim() || "катан";
+  const opts = {
+    red: $("optRed").checked,
+    same: $("optSame").checked,
+    spread: $("optSpread").checked,
+    showFog: $("optFog").checked,
+    letters: $("optLetters").checked
+  };
+
+  $("seatsField").hidden = !hasSeats(groupKey);
+  $("fogRow").hidden = !(sc.pools && sc.pools.fog);
+  $("letterRow").hidden = !sc.letters;
+
+  const board = buildBoard(id, seed, opts);
+  draw(board, opts);
+
+  $("boardTitle").textContent = sc.name + (hasSeats(groupKey) ? " — " + sc.players + " игрока" : "");
+  $("boardCode").textContent = "код поля · " + seed;
+  $("story").textContent = sc.story;
+  $("hexTbl").innerHTML = tableHexes(sc);
+  $("tokTbl").innerHTML = tableTokens(sc) +
+    `<tr><td colspan="2" style="padding-top:8px;color:var(--ink-soft);font-size:12.5px;border:none">
+      ${sc.harborText}${sc.extras ? "<br>Дополнительно: " + sc.extras : ""}</td></tr>`;
+  $("vp").textContent = sc.vp;
+  $("rules").innerHTML = sc.rules.map(r => "<li>" + r + "</li>").join("");
+
+  const links = [];
+  if (sc.doc){
+    const doc = DOCS[sc.doc.file];
+    links.push(`<a class="doclink" href="${doc.url}#page=${sc.doc.page}" target="_blank"
+      rel="noopener noreferrer">${sc.doc.title}, с. ${sc.doc.page}</a>`);
+    if (sc.doc.file === "sea"){
+      links.push(`<a class="doclink plain" href="${DOCS.sea.url}#page=4" target="_blank"
+        rel="noopener noreferrer">Общие правила «Мореходов», с. 4</a>`);
+    }
+  }
+  $("doclinks").innerHTML = links.join("");
+
+  // легенда только по тем ландшафтам, что есть на поле
+  const present = [];
+  board.cells.forEach(c => {
+    const k = (c.kind === "fog" && !opts.showFog) ? "fog" : c.terrain;
+    if (k && present.indexOf(k) < 0) present.push(k);
+  });
+  present.sort((a,b) => TERRAIN_ORDER.indexOf(a) - TERRAIN_ORDER.indexOf(b));
+  $("legend").innerHTML = present.map(k =>
+    `<span><i style="background:${T[k].fill}"></i>${T[k].ru}${T[k].res !== "—" && T[k].res !== "?" ? " · " + T[k].res.toLowerCase() : ""}</span>`).join("");
+
+  const hints = [];
+  if (sc.drawHarbors) hints.push("Гавани расставлены по рамке случайными типами.");
+  else hints.push("Гавани в «Мореходах» кладутся по схеме сценария, на поле они не показаны.");
+  if (board.leftover.length) hints.push("Лишние жетоны (" + board.leftover.join(", ") + ") идут на деревни или в резерв.");
+  $("hint").textContent = hints.join(" ");
+  updateSwipe();
+
+  // в песочнице артефакта history заблокирован, поэтому тихо пропускаем
+  try {
+    const q = new URLSearchParams({s:groupKey, p:String(state.seats), c:seed});
+    history.replaceState(null, "", "#" + q.toString());
+  } catch (e) { /* нет доступа к истории — ссылка просто не обновится */ }
+}
+
+function setMode(mode){
+  state.mode = mode;
+  document.body.className = "mode-" + mode;
+  Array.prototype.forEach.call($("modeSeg").children, b =>
+    b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  fillScenarios();
+  render();
+}
+function setSeats(n){
+  state.seats = n;
+  Array.prototype.forEach.call($("seatsSeg").children, b =>
+    b.setAttribute("aria-pressed", String(Number(b.dataset.seats) === n)));
+  render();
+}
+
+$("modeSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) setMode(b.dataset.mode);
+});
+$("seatsSeg").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) setSeats(Number(b.dataset.seats));
+});
+$("scenario").addEventListener("change", render);
+$("seed").addEventListener("change", render);
+["optRed","optSame","optSpread","optFog","optLetters"].forEach(id =>
+  $(id).addEventListener("change", render));
+$("roll").addEventListener("click", () => { $("seed").value = newCode(); render(); });
+$("again").addEventListener("click", render);
+$("print").addEventListener("click", () => window.print());
+$("copy").addEventListener("click", e => {
+  const b = e.currentTarget, old = b.textContent;
+  const done = ok => { b.textContent = ok ? "Скопировано" : "Не вышло"; setTimeout(() => b.textContent = old, 1500); };
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(location.href).then(() => done(true), () => done(false));
+  } else done(false);
+});
+
+let resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(updateSwipe, 120);
+});
+
+(function boot(){
+  // на широком экране настройки жетонов раскрыты, на телефоне свёрнуты
+  if (window.matchMedia && window.matchMedia("(min-width:641px)").matches) $("optsBox").open = true;
+  let hash = "";
+  try { hash = location.hash.replace(/^#/, ""); } catch (e) {}
+  const q = new URLSearchParams(hash);
+  const s = q.get("s"), p = q.get("p"), c = q.get("c");
+  if (p === "3" || p === "4") state.seats = Number(p);
+  Array.prototype.forEach.call($("seatsSeg").children, b =>
+    b.setAttribute("aria-pressed", String(Number(b.dataset.seats) === state.seats)));
+  const idFor = k => SC[k] ? k : (SC[k + "_4"] ? k + "_4" : (SC[k + "_3"] ? k + "_3" : null));
+  const known = s ? idFor(s) : null;
+  const mode = (known && SC[known].group !== "Базовая игра") ? "sea" : "land";
+  state.mode = mode;
+  document.body.className = "mode-" + mode;
+  Array.prototype.forEach.call($("modeSeg").children, b =>
+    b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  fillScenarios();
+  if (known){
+    const opt = Array.prototype.find.call($("scenario").options, o => o.value === s);
+    if (opt) $("scenario").value = s;
+  }
+  $("seed").value = c || newCode();
+  render();
+})();
+</script>
+</body>
+</html>
