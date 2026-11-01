@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Board Generator logo">
+  <defs>
+    <radialGradient id="sea" cx="50%" cy="0%" r="115%">
+      <stop offset="0" stop-color="#2a7db5"/>
+      <stop offset="0.5" stop-color="#1a5f8c"/>
+      <stop offset="1" stop-color="#0d3f5e"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#sea)"/>
+  <g transform="translate(64 64) scale(1) translate(-64 -64)">
+    <polygon points="64,17 104.7,40.5 104.7,87.5 64,111 23.3,87.5 23.3,40.5" fill="#8a6a1a" transform="translate(0 3)" opacity="0.45"/>
+    <polygon points="64,17 104.7,40.5 104.7,87.5 64,111 23.3,87.5 23.3,40.5" fill="#e8bb3f" stroke="#8a6a1a" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="64" cy="64" r="24" fill="#f8efd8" stroke="#8a6a1a" stroke-width="3"/>
+    <ellipse cx="64" cy="55.6" rx="6.4" ry="6" fill="none" stroke="#b8332a" stroke-width="5"/>
+    <ellipse cx="64" cy="71" rx="8.2" ry="8.4" fill="none" stroke="#b8332a" stroke-width="5.4"/>
+  </g>
+</svg>

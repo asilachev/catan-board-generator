@@ -1,0 +1,105 @@
+/* The deal (design: Board generation storyboard). Each piece gets its start in --delay. */
+
+.board {
+  display: block;
+  overflow: visible;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.tile {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.animate .coast,
+.animate .sea {
+  animation: coast 240ms var(--ease-out) both;
+}
+
+.animate .tile {
+  animation: deal 220ms var(--ease-pop) both;
+  animation-delay: var(--delay);
+}
+
+.animate .token {
+  animation: drop 160ms var(--ease-pop) both;
+  animation-delay: var(--delay);
+}
+
+.animate .harbor {
+  animation: appear 200ms var(--ease-out) both;
+  animation-delay: var(--delay);
+}
+
+@keyframes coast {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+
+.harbor {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+/* Rebuild: the board nudges 4 px left and right twice before it deals again. */
+.nudge {
+  animation: nudge 180ms ease-in-out;
+}
+
+@keyframes nudge {
+  20% {
+    transform: translateX(-4px);
+  }
+  40% {
+    transform: translateX(4px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* An invisible clock that runs for the whole deal. The progress pill reads its time, so a paused
+   animation (screenshots) shows the matching step. */
+.clock {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  animation: clock var(--deal-total) linear both;
+}
+
+@keyframes clock {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+}
