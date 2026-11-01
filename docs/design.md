@@ -172,7 +172,11 @@ speaker's review.
 - **Language:** a globe menu (details/summary, works without JavaScript) and chips in the footer;
   `hreflang` alternates; the English page sends a first visit to the browser's language unless a
   language was picked here. "Open the app" carries the page's language (`?lang=ru`).
-- **Layout:** no sideways scrolling from 320 px up; the section links show from 1180 px.
+- **Phones:** every screenshot sits whole in one phone drawn to scale (#26): a current phone's body
+  (about 1 : 2.07), a 3.8 % bezel of black glass and rim, concentric corners and the side buttons.
+  Every length is a share of the phone's width, so a small phone is the big one scaled down.
+- **Layout:** the page never scrolls sideways from 320 px up; the section links show from 1180 px.
+  Below 640 px the gallery is a row of phones to swipe through, the next one peeking in.
 - **v1's links keep working.** v1 lived at `catan.silachev.com` and shared links like
   `catan.silachev.com/#s=s4&p=4&c=anchor-4821`. Every page hands a link with a board in its hash
   (`s` and `c`) to the app before anything renders, the hash unchanged; the app reads v1's format.
