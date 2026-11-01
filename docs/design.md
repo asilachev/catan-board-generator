@@ -139,6 +139,11 @@ page, is remembered and wins from then on. Russian text gets non-breaking spaces
     `index.html`; security headers and `X-Robots-Tag: noindex` (the landing page is the public
     face). The CSP allows `blob:` and `data:` images for Save PNG.
   - HTTPS is required: PWA install, offline mode, the clipboard and the wake lock need it.
+- **Updates:** the service worker is in prompt mode, so a new version waits until the player taps
+  Reload on "A new version is ready" (nothing is lost: the board lives in the address and in
+  storage). The app looks for one when it loads, when it comes back to the foreground (at most
+  every 5 minutes; an installed app often resumes without loading) and hourly while it stays open.
+  The dev server has no service worker, so the toast never shows there.
 - **Analytics:** Vercel Web Analytics only in Vercel builds; anonymous page views, no cookies.
 
 ## Landing page
