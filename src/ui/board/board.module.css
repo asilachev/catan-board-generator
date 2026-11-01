@@ -14,7 +14,7 @@
 
 .animate .coast,
 .animate .sea {
-  animation: coast 120ms var(--ease-out) both;
+  animation: coast 80ms var(--ease-out) both;
 }
 
 .animate .tile {

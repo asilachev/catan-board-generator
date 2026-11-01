@@ -120,7 +120,7 @@ function shotsFor(lang, T) {
       (page) => page.getByRole('button', { name: T('board.share') }).click(),
     ],
     language: ['', null, null, null, { locale: TAGS[lang] }],
-    generating: deal(450, null),
+    generating: deal(410, null),
     splash: [
       board(lang),
       prefs,
@@ -168,10 +168,10 @@ function shotsFor(lang, T) {
           window.dispatchEvent(event)
         }),
     ],
-    'deal-0': deal(120),
-    'deal-300': deal(420),
-    'deal-700': deal(820),
-    'deal-900': deal(1100),
+    'deal-0': deal(80),
+    'deal-300': deal(380),
+    'deal-700': deal(760),
+    'deal-900': deal(1000),
   }
 }
 
