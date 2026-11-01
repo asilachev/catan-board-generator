@@ -54,7 +54,7 @@ const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === 'obj
 // ---- Device preferences ------------------------------------------------------------------------
 
 export interface Prefs {
-  /** Picked in Setup → Language or by the landing page's `?lang=`; null follows the browser. */
+  /** Picked in the language menu or by the landing page's `?lang=`; null follows the browser. */
   readonly language: Lang | null
   /** App starts so far; the install banner waits for the second. */
   readonly launches: number

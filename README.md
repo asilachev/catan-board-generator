@@ -36,7 +36,7 @@ deals: which tile and number go where, which harbors go on the frame, and what t
 - **Works offline:** it installs to the home screen, opens without a network and keeps the screen
   awake while the board is open.
 - **Speaks five languages:** English, Español, Deutsch, Русский and Српски (Cyrillic). It starts in
-  your phone's language; Setup → Language switches it.
+  your phone's language; the menu at the top switches it.
 
 ## Rules
 

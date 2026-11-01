@@ -17,10 +17,6 @@
   color: var(--ink);
 }
 
-.pushed {
-  animation: push 240ms var(--ease-out);
-}
-
 @keyframes rise {
   from {
     opacity: 0;
@@ -28,20 +24,39 @@
   }
 }
 
-@keyframes push {
-  from {
-    opacity: 0;
-    transform: translateX(24px);
-  }
-}
-
 /* ---- Board ----------------------------------------------------------------------------------- */
 
+/* Logo, title and actions on top; the scenario picker runs on under the actions, so a long
+   scenario name keeps its room on a narrow phone. */
 .boardHeader {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 14px;
+  column-gap: 14px;
   margin-bottom: 14px;
+}
+
+.boardHeader > :first-child {
+  grid-row: 1 / span 2;
+}
+
+.boardHeader .titles {
+  display: contents;
+}
+
+.boardHeader .appTitle {
+  grid-column: 2;
+  align-self: end;
+}
+
+.boardHeader .scenarioPicker {
+  grid-column: 2 / span 2;
+  justify-self: start;
+}
+
+.boardHeader .headerActions {
+  grid-column: 3;
+  grid-row: 1;
 }
 
 .titles {
@@ -89,6 +104,25 @@
 .shareButton {
   width: 48px;
   height: 48px;
+}
+
+/* Language and share, close together so the title keeps its room. */
+.headerActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Setup's title with the language beside it, at the top (#21). */
+.paperHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.paperHeader .screenTitle {
+  overflow-wrap: break-word;
 }
 
 .boardArea {
@@ -612,45 +646,6 @@
 .bookRow > svg:last-child {
   margin-left: auto;
   color: var(--ink-soft);
-}
-
-/* ---- Language ---------------------------------------------------------------------------- */
-
-.langBadge {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 42px;
-  height: 48px;
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-  background: var(--surface-sunk);
-  color: var(--ink-soft);
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.row[aria-checked='true'] .langBadge {
-  background: var(--accent);
-  color: var(--on-accent);
-}
-
-.backRow {
-  display: flex;
-  align-items: center;
-  margin: -6px 0 6px -10px;
-}
-
-.backButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 44px;
-  padding: 0 10px;
-  border: 0;
-  background: none;
-  color: var(--accent);
-  font-weight: 700;
-  font-size: 16px;
 }
 
 @media (min-width: 600px) {

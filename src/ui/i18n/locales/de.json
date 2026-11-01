@@ -12,7 +12,6 @@
   },
   "common": {
     "close": "Schließen",
-    "back": "Zurück",
     "dismiss": "Ausblenden",
     "playersRange": "{min}–{max} Spieler",
     "players": "{n, plural, one {# Spieler} other {# Spieler}}",
@@ -94,7 +93,6 @@
     "fogHint": "Nur zum Prüfen; im Spiel bleibt der Nebel verdeckt",
     "printed": "Wie im Regelheft",
     "printedHint": "Genau der Plan des Szenarios, für die erste Partie",
-    "language": "Sprache",
     "build": "Plan erstellen"
   },
   "scenario": {
@@ -157,8 +155,7 @@
   },
   "language": {
     "title": "Sprache",
-    "subtitle": "Die App startet in der Sprache deines Handys. Ein Plan-Code gilt in jeder Sprache.",
-    "note": "Namen von Landschaften, Rohstoffen und Szenarien sind übersetzt."
+    "button": "Sprache: {name}"
   },
   "pwa": {
     "installTitle": "Als App installieren",

@@ -24,7 +24,7 @@ This document records what the code follows and the decisions behind it.
 | 03 · Scenario | `ScenarioScreen` | Victory target, players, story; what's on the board; number tokens; harbors; extras; scenario rules; rulebooks |
 | 04 · Seafarers board | `BoardScreen` | The board in a rounded sea panel with open sea around the islands; wide boards scroll, ± zoom 0.6×–2×, pinch, double tap fits |
 | 05 · Splash | `Splash` | Only when launched from the home screen; 900 ms, then fades |
-| 06 · Language | `LanguageScreen` | Opens from Setup; a pick applies at once and is remembered. There is no first-launch picker: the app starts in the browser's language |
+| 06 · Language | `LanguageMenu` | A dropdown at the top of Board (next to Share) and Setup: the current code, then the five languages in their own names (#21). A pick applies at once and is remembered. There is no first-launch picker: the app starts in the browser's language |
 | 07 · Setup (Seafarers) | `SetupScreen` | Scenario row opens the sheet; Players 3/4 where the rules print two layouts; Reveal fog in Scenario 3 |
 | 08 · Scenario sheet | `ScenarioSheet` | Bottom sheet over a 40% scrim. From the board's title it also switches the game (Base game / Seafarers on top), so any board is two taps away |
 | 09 · Generating | `BoardScreen` | The deal: progress pill, New board shows "Dealing…" |
@@ -123,9 +123,10 @@ drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors
 
 English, Español, Deutsch, Русский, Српски (Cyrillic only), in the design's order. The app follows
 the browser: the first of its preferred languages the app speaks (Serbian in either script is
-Cyrillic), English otherwise. A language picked in Setup → Language, or `?lang=` from the landing
-page, is remembered and wins from then on. Russian text gets non-breaking spaces by
-`typography.ts`. Translations of Spanish, German and Serbian should get a native speaker's review.
+Cyrillic), English otherwise. A language picked in the menu at the top of Board and Setup, or
+`?lang=` from the landing page, is remembered and wins from then on. Russian text gets non-breaking
+spaces by `typography.ts`. Translations of Spanish, German and Serbian should get a native
+speaker's review.
 
 ## Tech and hosting
 

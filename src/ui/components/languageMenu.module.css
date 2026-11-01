@@ -1,0 +1,131 @@
+/* The language button and its dropdown (#21), on the sea header of Board and the parchment of
+   Setup. */
+.root {
+  position: relative;
+  flex: none;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 44px;
+  padding: 0 8px 0 13px;
+  border: 0;
+  border-radius: 22px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.root[data-tone='sea'] .button {
+  background: rgb(246 236 214 / 10%);
+  color: var(--on-sea);
+  box-shadow: inset 0 0 0 1px rgb(246 236 214 / 22%);
+}
+
+.root[data-tone='sea'] .button:active,
+.root[data-tone='sea'] .button[aria-expanded='true'] {
+  background: rgb(246 236 214 / 22%);
+}
+
+.root[data-tone='paper'] .button {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.root[data-tone='paper'] .button:active,
+.root[data-tone='paper'] .button[aria-expanded='true'] {
+  background: var(--surface-sunk);
+}
+
+.chevron {
+  opacity: 0.8;
+  transition: transform 160ms var(--ease-out);
+}
+
+.button[aria-expanded='true'] .chevron {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  min-width: 196px;
+  padding: 6px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 12px 28px rgb(13 40 60 / 28%);
+  animation: drop 140ms var(--ease-out) both;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu {
+    animation: none;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px 0 8px;
+  border: 0;
+  border-radius: 12px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.item:focus-visible,
+.item:hover {
+  background: var(--surface-sunk);
+  outline: none;
+}
+
+.item[aria-checked='true'] {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 34px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--surface-sunk);
+  color: var(--ink-soft);
+  font-weight: 700;
+  font-size: 11.5px;
+}
+
+.item[aria-checked='true'] .badge {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.name {
+  flex: 1;
+}
