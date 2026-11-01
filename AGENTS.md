@@ -54,8 +54,8 @@ change to a rule or ruling updates the docs in the same PR.
   publishers, and you need your own copy of the game.
 - **Languages.** English, Español, Deutsch, Русский and Српски. **Serbian is Cyrillic only.**
 - **Visibility.** The landing page is public; the app sends `noindex`, because the landing page is
-  its public face. The repository is private for now: whether it goes public like
-  splendor-marvel-automa is #8 (GitHub Pages on a free plan needs it).
+  its public face. The repository is public, like splendor-marvel-automa: no secrets, no
+  rulebook scans, nothing that isn't ours to share.
 - **No secrets.** There is no backend. Don't add analytics, accounts or network calls without an
   issue that approves them.
   - The one approved analytics is Vercel Web Analytics: anonymous, cookieless page views, only in
@@ -86,10 +86,9 @@ You need Node 22 or later (see `.nvmrc`). Use npm.
 CI (`.github/workflows/ci.yml`) runs `lint`, `format:check`, `typecheck`, `test` and `build` on every
 PR and on every push to `master`. Run the same commands before pushing. `docker.yml` builds the
 image on PRs and publishes it to GHCR from `master`. `pages.yml` captures the screenshots and builds
-the landing page on every run, and deploys it to GitHub Pages from `master` once the repository is
-public (#8). `vercel.ts` configures the other
-way to host the app, Vercel's Git integration; keep its caching and security headers in step with
-`docker/nginx.conf` and `docker/security-headers.inc`.
+the landing page on every run, and deploys it to GitHub Pages from `master`. `vercel.ts` configures
+the other way to host the app, Vercel's Git integration; keep its caching and security headers in
+step with `docker/nginx.conf` and `docker/security-headers.inc`.
 
 ## Code layout
 

@@ -81,8 +81,7 @@ Unprivileged nginx. Every push to `master` publishes
 `ghcr.io/asilachev/catan-board-generator:latest` for amd64 and arm64.
 
 1. **Start it.** Copy [`docker-compose.yml`](docker-compose.yml) to the server and run
-   `docker compose up -d`. It serves on port 8080. (If the package is private, log in first with a
-   token that has `read:packages`: `echo $TOKEN | docker login ghcr.io -u asilachev --password-stdin`.)
+   `docker compose up -d`. It serves on port 8080; the image is public, so no login is needed.
 2. **Add HTTPS.** Put it behind your reverse proxy (Caddy, Traefik, nginx…).
 3. **Update** with `docker compose pull && docker compose up -d`. The next time the app opens, phones
    show "A new version is ready · Reload".
@@ -92,9 +91,9 @@ To build from source instead, run `docker build -t catan-boards . && docker run 
 ### Landing page (GitHub Pages)
 
 `.github/workflows/pages.yml` captures the app in five languages, builds `_site/` and deploys it
-from `master` (only from a public repository: Pages on a free plan needs one). In the repo's
-*Settings → Pages*, the source is *GitHub Actions* and the custom domain is `catan.silachev.com`,
-with a DNS CNAME `catan` → `asilachev.github.io`.
+from `master`. In the repo's *Settings → Pages*, the source is *GitHub Actions* and the custom domain
+is `catan.silachev.com`, with a DNS CNAME `catan` → `asilachev.github.io`. Until then the page is at
+<https://asilachev.github.io/catan-board-generator/>.
 
 ## Development
 
