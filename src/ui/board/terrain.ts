@@ -27,19 +27,6 @@ export const FILL: Readonly<Record<Look, string>> = {
   fog: '#93a9b6',
 }
 
-/** The darker bottom edge of each tile. */
-export const EDGE: Readonly<Record<Look, string>> = {
-  forest: '#22502c',
-  pasture: '#6f9d36',
-  fields: '#c39a26',
-  hills: '#8f3f1f',
-  mountains: '#5f6c74',
-  desert: '#c9b585',
-  gold: '#cfa70c',
-  sea: '#174f75',
-  fog: '#768c99',
-}
-
 /** Glyph colour on each tile. */
 export const GLYPH: Readonly<Record<Look, string>> = {
   forest: '#dcebd5',
