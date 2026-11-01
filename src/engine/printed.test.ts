@@ -11,7 +11,7 @@ import {
   type PrintedMap,
 } from './printed.ts'
 import { hashSeed, mulberry32 } from './rng.ts'
-import { VARIANTS, type Terrain, type Variant, type VariantId } from './scenarios.ts'
+import { RESOURCES, VARIANTS, type Terrain, type Variant, type VariantId } from './scenarios.ts'
 
 /** A small map: island a (shuffled, a fixed desert), island b (as printed), harbors on both. */
 const MAP: PrintedMap = {
@@ -124,6 +124,38 @@ describe('dealing a printed map', () => {
     }
   })
 
+  it('leaves a group printed without numbers without them', () => {
+    const map: PrintedMap = {
+      ...MAP,
+      rows: [...MAP.rows.slice(0, 4), '~     fb    pb    ~     ~'],
+      harbors: [],
+    }
+    for (const seed of ['a', 'b', 'c']) {
+      const { cells } = dealPrinted(VARIANT, map, DEFAULT_OPTIONS, mulberry32(hashSeed(seed)))
+      expect([at(cells, 2, 4), at(cells, 4, 4)].map((i) => cells[i]?.num)).toEqual([null, null])
+      expect(cells.filter((c) => c.num !== null)).toHaveLength(8)
+    }
+  })
+
+  it('tells sea from land as dealt, when the table deals the sea too', () => {
+    const map: PrintedMap = {
+      page: 0,
+      rows: ['~a    ~a    ~a', '   ~a    ~a    ~a', '~a    ~a    ~a'],
+      harbors: [],
+      harborDeal: { setup: 'all', variable: 'all' },
+      fromTable: ['a'],
+    }
+    const variant: Variant = {
+      ...VARIANT,
+      hexes: { sea: 4, hills: 2, forest: 2 },
+      tokens: { 4: 1, 5: 1, 9: 1, 10: 1 },
+    }
+    const { cells } = dealPrinted(variant, map, DEFAULT_OPTIONS, mulberry32(hashSeed('a')))
+    for (const c of cells) expect(c.kind === 'sea').toBe(c.terrain === 'sea')
+    expect(cells.filter((c) => c.kind !== 'sea')).toHaveLength(4)
+    expect(cells.filter((c) => c.num !== null)).toHaveLength(4)
+  })
+
   it('keeps 6 and 8 apart when it can', () => {
     for (const seed of ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']) {
       const { cells } = deal({}, seed)
@@ -177,7 +209,8 @@ describe.runIf(MAPS.length > 0)('the rulebook’s maps (docs/rules.md → Printe
       if (land(h.terrain) && h.terrain !== 'desert') g.hexes++
       groups.set(h.group, g)
     }
-    for (const [group, g] of groups) expect(g.numbers, `group ${group}`).toBe(g.hexes)
+    // Or none at all: Scenario 5's small islands have no numbers.
+    for (const [group, g] of groups) expect([0, g.hexes], `group ${group}`).toContain(g.numbers)
     // A printed number sits on land that produces.
     for (const h of parseMap(map.rows))
       if (h.number !== null) expect(['sea', 'desert', 'fog']).not.toContain(h.terrain)
@@ -185,7 +218,14 @@ describe.runIf(MAPS.length > 0)('the rulebook’s maps (docs/rules.md → Printe
 
   it.each(MAPS)('%s puts its harbors on the coast, facing the sea', (id, map) => {
     const variant = VARIANTS[id]
-    expect(map.harbors).toHaveLength(variant.harbors.special + variant.harbors.generic)
+    // Scenario 9's players place their own harbors, so its map has none.
+    const types = map.harbors.map(([, , , type]) => type)
+    if (id === 's9') expect(types).toEqual([])
+    else {
+      expect(types.filter((t) => t === 'any')).toHaveLength(variant.harbors.generic)
+      // The special harbors are one per resource.
+      expect(types.filter((t) => t !== 'any').sort()).toEqual([...RESOURCES].sort())
+    }
     const hexes = new Map(parseMap(map.rows).map((h) => [axialKey(...axialOf(h.x, h.y)), h]))
     for (const [x, y, dir] of map.harbors) {
       const [q, r] = axialOf(x, y)

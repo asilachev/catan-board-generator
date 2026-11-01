@@ -211,6 +211,8 @@ export interface PrintedDeal {
   readonly cells: Cell[]
   readonly harbors: Harbor[]
   readonly leftover: number[]
+  /** Per cell: whether the deal chose its number (printed numbers that stay are false). */
+  readonly dealt: boolean[]
 }
 
 /** Deals a printed map: the outlines as printed, the rest as the scenario allows. */
@@ -293,7 +295,8 @@ export function dealPrinted(
         ])
       : members.flatMap((i) => (cell(i).hex.number === null ? [] : [cell(i).hex.number as number]))
     pool = shuffled(pool, random)
-    const open = members.filter((i) => numbered(cell(i)))
+    // A group printed without numbers stays without (Scenario 5's small islands).
+    const open = pool.length === 0 ? [] : members.filter((i) => numbered(cell(i)))
     for (let k = 0; pool.length < open.length; k++)
       pool.push(STANDARD[k % STANDARD.length] as number)
     open.forEach((ci, k) => {
@@ -379,11 +382,13 @@ export function dealPrinted(
     type: types[k] as HarborType,
   }))
 
-  // Islands, for the cells' kind: the biggest is the main island.
+  // Islands as dealt (Scenario 9 deals sea too), for the cells' kind: the biggest is the main
+  // island. Fog lies face down, so it isn't land yet.
+  const land = (w: Work) => w.hex.terrain !== 'fog' && w.terrain !== null && w.terrain !== 'sea'
   const island = new Array<number>(work.length).fill(-1)
   const sizes: number[] = []
   work.forEach((w, i) => {
-    if (island[i] !== -1 || w.hex.terrain === 'sea' || w.hex.terrain === 'fog') return
+    if (island[i] !== -1 || !land(w)) return
     const id = sizes.length
     const stack = [i]
     island[i] = id
@@ -392,8 +397,7 @@ export function dealPrinted(
       const c = stack.pop() as number
       size++
       for (const j of cell(c).adj) {
-        const t = cell(j).hex.terrain
-        if (island[j] === -1 && t !== 'sea' && t !== 'fog') {
+        if (island[j] === -1 && land(cell(j))) {
           island[j] = id
           stack.push(j)
         }
@@ -411,13 +415,7 @@ export function dealPrinted(
 
   const cells: Cell[] = work.map((w, i) => {
     const kind: CellKind =
-      w.hex.terrain === 'fog'
-        ? 'fog'
-        : w.hex.terrain === 'sea'
-          ? 'sea'
-          : island[i] === main
-            ? 'main'
-            : 'isle'
+      w.hex.terrain === 'fog' ? 'fog' : !land(w) ? 'sea' : island[i] === main ? 'main' : 'isle'
     return {
       q: w.q,
       r: w.r,
@@ -430,5 +428,6 @@ export function dealPrinted(
       adj: w.adj,
     }
   })
-  return { cells, harbors, leftover }
+  const dealt = work.map((_, i) => slotOf.has(i))
+  return { cells, harbors, leftover, dealt }
 }

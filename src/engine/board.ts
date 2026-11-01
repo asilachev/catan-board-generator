@@ -252,7 +252,7 @@ export function buildBoard(
       cells: dealt.cells,
       harbors: dealt.harbors,
       leftover: dealt.leftover,
-      violations: countViolations(dealt.cells, options, variant),
+      violations: countViolations(dealt.cells, options, variant, (i) => dealt.dealt[i] ?? false),
     }
   }
   const cells = buildLayout(variant)
@@ -485,17 +485,24 @@ export function countViolations(
   cells: readonly Cell[],
   options: DealOptions,
   variant: Variant,
+  /** Whether the deal chose this cell's number; a printed number that stays isn't relaxed. */
+  dealt: (i: number) => boolean = () => true,
 ): Violations {
   let red = 0
   let same = 0
   cells.forEach((c, i) => {
     if (c.num === null) return
-    if (variant.noRedOnGold && c.terrain === 'gold' && RED(c.num)) red++
-    if (variant.noRedNearDesert && RED(c.num) && c.adj.some((j) => cells[j]?.terrain === 'desert'))
+    if (dealt(i) && variant.noRedOnGold && c.terrain === 'gold' && RED(c.num)) red++
+    if (
+      dealt(i) &&
+      variant.noRedNearDesert &&
+      RED(c.num) &&
+      c.adj.some((j) => cells[j]?.terrain === 'desert')
+    )
       red++
     for (const j of c.adj) {
       const other = cells[j]?.num
-      if (j < i || other === null || other === undefined) continue
+      if (j < i || other === null || other === undefined || !(dealt(i) || dealt(j))) continue
       if (options.red && RED(c.num) && RED(other)) red++
       if (options.same && c.num === other) same++
     }

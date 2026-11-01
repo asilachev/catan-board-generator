@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { buildBoard, DEFAULT_OPTIONS, type Board } from './board.ts'
+import { buildBoard, DEFAULT_OPTIONS, type Board, type DealOptions } from './board.ts'
 import { normalizeCode } from './code.ts'
 import { TERRAINS, VARIANT_IDS, VARIANTS, type Terrain, type VariantId } from './scenarios.ts'
 
 const ALL = VARIANT_IDS as readonly VariantId[]
 const CODES = Array.from({ length: 12 }, (_, i) => `test-${1000 + i * 37}`)
+
+/** v1's generator: what links without `v=` deal (docs/rules.md → R2). printed.test.ts covers v2. */
+const v1 = (id: VariantId, code: string, options: DealOptions) => buildBoard(id, code, options, 1)
 
 const counts = (board: Board) => {
   const terrain: Partial<Record<Terrain, number>> = {}
@@ -12,10 +15,10 @@ const counts = (board: Board) => {
   return terrain
 }
 
-describe('boards (docs/rules.md → Scenarios)', () => {
+describe('version 1 boards (docs/rules.md → Boards, rulings R2–R8)', () => {
   it.each(ALL)('%s places every land hex the rules list', (id) => {
     const variant = VARIANTS[id]
-    const board = buildBoard(id, 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1(id, 'anchor-4821', DEFAULT_OPTIONS)
     expect(board.cells).toHaveLength(variant.shape.reduce((n, r) => n + r.size, 0))
     const placed = counts(board)
     for (const t of TERRAINS) {
@@ -27,7 +30,7 @@ describe('boards (docs/rules.md → Scenarios)', () => {
   })
 
   it.each(ALL)('%s puts a token on every producing hex that takes one', (id) => {
-    const board = buildBoard(id, 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1(id, 'anchor-4821', DEFAULT_OPTIONS)
     for (const c of board.cells) {
       const producing = c.terrain !== 'sea' && c.terrain !== 'desert'
       const takesToken = producing && c.kind !== 'notoken' && c.kind !== 'notokenPick'
@@ -36,7 +39,7 @@ describe('boards (docs/rules.md → Scenarios)', () => {
   })
 
   it('places the base game’s nine harbors: four 3:1 and one 2:1 per resource', () => {
-    const board = buildBoard('base34', 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1('base34', 'anchor-4821', DEFAULT_OPTIONS)
     const types = board.harbors.map((h) => h.type).sort()
     expect(types).toEqual([
       'any',
@@ -70,7 +73,7 @@ describe('boards (docs/rules.md → Scenarios)', () => {
   it('keeps the desert of Scenarios 1 (4 players) and 8 on the main island', () => {
     for (const id of ['s1_4', 's8'] as const) {
       for (const code of CODES) {
-        const board = buildBoard(id, code, DEFAULT_OPTIONS)
+        const board = v1(id, code, DEFAULT_OPTIONS)
         const deserts = board.cells.filter((c) => c.terrain === 'desert')
         expect(
           deserts.every((c) => c.kind === 'main'),
@@ -82,7 +85,7 @@ describe('boards (docs/rules.md → Scenarios)', () => {
 
   it('builds the desert wall of Scenario 4', () => {
     for (const code of CODES) {
-      const board = buildBoard('s4_4', code, DEFAULT_OPTIONS)
+      const board = v1('s4_4', code, DEFAULT_OPTIONS)
       const wall = board.cells.filter((c) => c.terrain === 'desert' && c.region === 0)
       expect(wall.length, code).toBeGreaterThanOrEqual(3)
       expect(new Set(wall.map((c) => c.q)).size, code).toBe(1)
@@ -90,29 +93,30 @@ describe('boards (docs/rules.md → Scenarios)', () => {
   })
 
   it('leaves three isle hexes of Scenario 7 without tokens', () => {
-    const board = buildBoard('s7', 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1('s7', 'anchor-4821', DEFAULT_OPTIONS)
     expect(board.cells.filter((c) => c.kind === 'notokenPick')).toHaveLength(3)
   })
 
   it('gives each islet of Scenario 6 two village numbers', () => {
-    const board = buildBoard('s6', 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1('s6', 'anchor-4821', DEFAULT_OPTIONS)
     const islets = board.cells.filter((c) => c.kind === 'notoken')
     expect(islets).toHaveLength(4)
     for (const c of islets) expect(c.villages).toHaveLength(2)
   })
 
   it('hides Scenario 3’s fog hexes between the islands', () => {
-    const board = buildBoard('s3_4', 'anchor-4821', DEFAULT_OPTIONS)
+    const board = v1('s3_4', 'anchor-4821', DEFAULT_OPTIONS)
     expect(board.cells.filter((c) => c.kind === 'fog')).toHaveLength(12)
   })
 
-  it('keeps 6 and 8 apart on default settings', () => {
-    for (const id of ALL) {
-      for (const code of CODES) {
-        const board = buildBoard(id, code, DEFAULT_OPTIONS)
-        expect(board.violations.red, `${id} ${code}`).toBe(0)
+  it('keeps 6 and 8 apart on default settings, in both versions', () => {
+    for (const version of [1, 2] as const)
+      for (const id of ALL) {
+        for (const code of CODES) {
+          const board = buildBoard(id, code, DEFAULT_OPTIONS, version)
+          expect(board.violations.red, `v${version} ${id} ${code}`).toBe(0)
+        }
       }
-    }
   })
 
   it('reports equal neighbours it could not separate', () => {
