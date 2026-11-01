@@ -145,3 +145,6 @@ page, is remembered and wins from then on. Russian text gets non-breaking spaces
   `hreflang` alternates; the English page sends a first visit to the browser's language unless a
   language was picked here. "Open the app" carries the page's language (`?lang=ru`).
 - **Layout:** no sideways scrolling from 320 px up; the section links show from 1180 px.
+- **v1's links keep working.** v1 lived at `catan.silachev.com` and shared links like
+  `catan.silachev.com/#s=s4&p=4&c=anchor-4821`. Every page hands a link with a board in its hash
+  (`s` and `c`) to the app before anything renders, the hash unchanged; the app reads v1's format.
