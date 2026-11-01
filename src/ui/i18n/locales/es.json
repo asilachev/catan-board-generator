@@ -1,0 +1,388 @@
+{
+  "app": {
+    "name": "Generador de tableros",
+    "tagline": "Juego base y Navegantes: los 9 escenarios",
+    "loading": "Preparando la isla…"
+  },
+  "tabs": {
+    "label": "Secciones",
+    "board": "Tablero",
+    "setup": "Ajustes",
+    "scenario": "Escenario"
+  },
+  "common": {
+    "close": "Cerrar",
+    "back": "Atrás",
+    "dismiss": "Cerrar aviso",
+    "playersRange": "{min}–{max} {max, plural, one {jugador} other {jugadores}}",
+    "players": "{n, plural, one {# jugador} other {# jugadores}}",
+    "times": "×{n}",
+    "opensInNewTab": "se abre en una pestaña nueva"
+  },
+  "game": {
+    "base": "Juego base",
+    "seafarers": "Navegantes"
+  },
+  "terrain": {
+    "forest": "Bosque",
+    "pasture": "Pastos",
+    "fields": "Sembrados",
+    "hills": "Colinas",
+    "mountains": "Montañas",
+    "desert": "Desierto",
+    "gold": "Oro",
+    "sea": "Mar",
+    "fog": "Niebla"
+  },
+  "resource": {
+    "forest": "madera",
+    "pasture": "lana",
+    "fields": "cereales",
+    "hills": "arcilla",
+    "mountains": "mineral",
+    "desert": "sin recurso",
+    "gold": "cualquiera",
+    "sea": "estrechos",
+    "fog": "boca abajo"
+  },
+  "board": {
+    "codeLabel": "Código del tablero",
+    "copyLink": "Copiar enlace",
+    "share": "Compartir tablero",
+    "rebuild": "Rehacer",
+    "newBoard": "Nuevo tablero",
+    "dealing": "Generando…",
+    "dealingHexes": "Repartiendo hexágonos · {n} de {total}",
+    "dealingTokens": "Fichas numeradas · {n} de {total}",
+    "dealingHarbors": "Puertos y muelles",
+    "wide": "El tablero no cabe — desliza de lado",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "changeScenario": "Cambiar escenario: {scenario}",
+    "legend": "Leyenda",
+    "label": "{scenario}, código {code}",
+    "harbor": "Puerto {ratio}",
+    "harborFor": "Puerto 2:1, {resource}",
+    "hiddenFog": "Niebla, boca abajo",
+    "revealedFog": "Bajo la niebla: {terrain}",
+    "villages": "Aldeas {a} y {b}",
+    "letter": "Letra {letter}"
+  },
+  "setup": {
+    "title": "Preparar tablero",
+    "subtitle": "Juego, escenario y reglas para las fichas",
+    "game": "Juego",
+    "baseMeta": "{n, plural, one {# variante} other {# variantes}}",
+    "seafarersMeta": "{n, plural, one {# escenario} other {# escenarios}}",
+    "scenario": "Escenario",
+    "players": "Jugadores",
+    "baseCounts": "{hexes, plural, one {# hexágono} other {# hexágonos}} · {tokens, plural, one {# ficha} other {# fichas}} · {harbors, plural, one {# puerto} other {# puertos}}",
+    "code": "Código del tablero",
+    "codePlaceholder": "p. ej. ancla-4821",
+    "codeHelp": "El mismo código siempre genera el mismo tablero, así que es fácil compartirlo.",
+    "newCode": "Nuevo código al azar",
+    "tokens": "Colocación de fichas",
+    "red": "6 y 8 nunca adyacentes",
+    "redHint": "Lo exigen las reglas de Navegantes",
+    "same": "Sin números iguales juntos",
+    "sameHint": "Regla de la casa, no está en el reglamento",
+    "spread": "Repartir terrenos",
+    "spreadHint": "Menos grupos del mismo terreno",
+    "letters": "Fichas por letras A–R",
+    "lettersHint": "El orden fijo del reglamento, alrededor de la isla",
+    "fog": "Revelar la niebla",
+    "fogHint": "Solo para revisar el reparto; en la partida sigue boca abajo",
+    "language": "Idioma",
+    "build": "Crear tablero"
+  },
+  "scenario": {
+    "eyebrow": "Escenario",
+    "onBoard": "Contenido del tablero",
+    "totalHexes": "Total de hexágonos",
+    "robber": "ladrón",
+    "seaNote": "Los hexágonos de mar rodean las islas; el tablero muestra solo la tierra.",
+    "tokens": "Fichas numeradas",
+    "tokensNote": "{n, plural, one {# ficha} other {# fichas}}. Los puntos indican la probabilidad: el 6 y el 8 salen más a menudo.",
+    "spare": "Quedan en la caja: {list}.",
+    "villageTokens": "Los números de las aldeas salen de estas fichas.",
+    "harbors": "Puertos",
+    "any": "cualquiera",
+    "harborsBase": "{n} puertos en el marco de mar: {generic} genéricos 3:1 y uno 2:1 por recurso. Los tipos se colocan al azar.",
+    "harborsSea": "{special} puertos especiales 2:1 y {generic, plural, one {# puerto genérico 3:1} other {# puertos genéricos 3:1}}, según el mapa del escenario. No se dibujan en este tablero.",
+    "extras": "También de la caja",
+    "rules": "Reglas del escenario",
+    "rulebooks": "Reglamentos",
+    "inBase": "Reglamento del juego base",
+    "inSeafarers": "Reglamento de Navegantes",
+    "baseSection": "Busca: preparación variable",
+    "seaSection": "Busca: escenario {n} · {name}",
+    "official": "Reglas oficiales",
+    "officialSub": "catan.com · reglamentos para descargar"
+  },
+  "sheet": {
+    "baseEyebrow": "Juego base · 2 variantes",
+    "seaEyebrow": "Navegantes · 9 escenarios",
+    "title": "Escenario"
+  },
+  "share": {
+    "title": "Compartir tablero",
+    "codeLabel": "Código del tablero",
+    "note": "Un código, el mismo tablero en cualquier dispositivo e idioma.",
+    "copy": "Copiar enlace",
+    "send": "Enviar…",
+    "print": "Imprimir",
+    "png": "Guardar PNG",
+    "sendText": "Un tablero de Catán para esta noche: {code}",
+    "printTitle": "{scenario} · código {code}"
+  },
+  "toasts": {
+    "copied": "Enlace copiado",
+    "copiedSub": "Código {code} · envíalo a tus amigos",
+    "copyFailed": "No se pudo copiar el enlace",
+    "send": "Enviar",
+    "offlineReady": "Funciona sin conexión",
+    "offlineReadySub": "El tablero se abre incluso sin internet",
+    "offline": "Sin conexión: la app sigue funcionando",
+    "update": "Hay una versión nueva",
+    "reload": "Recargar",
+    "relaxed": "Regla relajada",
+    "relaxedSame": "No se pudieron separar todos los números iguales",
+    "relaxedRed": "No se pudieron separar todos los 6 y 8",
+    "again": "Otra vez",
+    "pngFailed": "No se pudo guardar la imagen"
+  },
+  "language": {
+    "eyebrow": "Primer inicio",
+    "title": "Idioma",
+    "subtitle": "Elige el idioma de la app; puedes cambiarlo luego en Ajustes.",
+    "note": "Los nombres de terrenos, recursos y escenarios están traducidos.",
+    "continue": "Continuar"
+  },
+  "pwa": {
+    "installTitle": "Instalar como app",
+    "installSub": "Tu tablero, incluso sin conexión",
+    "install": "Instalar",
+    "how": "Cómo",
+    "notNow": "Ahora no",
+    "iosTitle": "Instalar en el iPhone",
+    "iosSteps": [
+      "Toca Compartir abajo en Safari",
+      "Elige «Añadir a pantalla de inicio»",
+      "Abre el tablero desde la pantalla de inicio"
+    ],
+    "gotIt": "Entendido"
+  },
+  "victory": {
+    "points": "{n} puntos de victoria",
+    "pointsShort": "{n} PV",
+    "fortress": "Conquista tu fortaleza pirata y llega a {n} PV",
+    "fortressShort": "Fortaleza + {n} PV",
+    "wonder": "Termina una maravilla, o llega a {n} PV con más etapas de maravilla",
+    "wonderShort": "Maravilla o {n} PV"
+  },
+  "extras": {
+    "vpTokens": "{n, plural, one {# ficha de punto de victoria} other {# fichas de punto de victoria}}",
+    "devCards": "{n, plural, one {# carta de desarrollo} other {# cartas de desarrollo}}",
+    "cloth": "{n, plural, one {# ficha de tela} other {# fichas de tela}}",
+    "fortresses": "{n, plural, one {# ficha de fortaleza pirata} other {# fichas de fortaleza pirata}}",
+    "playerTokens": "{n, plural, one {# marcador de jugador} other {# marcadores de jugador}}",
+    "wonderCards": "{n, plural, one {# carta de maravilla} other {# cartas de maravilla}}",
+    "wallTokens": "{n, plural, one {# ficha de la Gran Muralla} other {# fichas de la Gran Muralla}}",
+    "bridgeTokens": "{n, plural, one {# ficha del Gran Puente} other {# fichas del Gran Puente}}"
+  },
+  "codeWords": [
+    "ancla",
+    "oleaje",
+    "brisa",
+    "faro",
+    "tormenta",
+    "arrecife",
+    "laguna",
+    "vela",
+    "puerto",
+    "cabo",
+    "estrecho",
+    "marea",
+    "rumbo",
+    "quilla",
+    "isla",
+    "costa",
+    "muelle",
+    "boya",
+    "remo",
+    "ola"
+  ],
+  "scenarios": {
+    "base34": {
+      "name": "Juego base",
+      "short": "Juego base",
+      "tagline": "",
+      "story": "La preparación avanzada: hexágonos y fichas se colocan al azar.",
+      "rules": [
+        "El ladrón empieza en el desierto, que no lleva ficha numerada.",
+        "Monta el marco de mar con sus seis piezas en cualquier orden, con los puertos hacia fuera.",
+        "Fundación: la primera ronda en sentido horario y la segunda al revés; tu segundo poblado da recursos iniciales al momento.",
+        "Con tres jugadores, guarda las piezas blancas en la caja."
+      ]
+    },
+    "base56": {
+      "name": "Juego base",
+      "short": "Juego base",
+      "tagline": "",
+      "story": "La ampliación para 5–6 jugadores: más hexágonos, fichas y puertos, y un segundo desierto.",
+      "rules": [
+        "Dos desiertos: el ladrón empieza en cualquiera de ellos.",
+        "Tras el turno de cada jugador hay una fase especial de construcción.",
+        "El contorno del marco es aproximado; la cantidad de hexágonos y fichas es la estándar."
+      ]
+    },
+    "s1": {
+      "name": "Hacia nuevas costas",
+      "short": "Nuevas costas",
+      "tagline": "Isla principal y archipiélago",
+      "story": "Una isla principal y un archipiélago de islotes; en algunos se ha encontrado oro."
+    },
+    "s1_3": {
+      "rules": [
+        "Tus 2 primeros poblados van solo en la isla principal; en lugar de un camino en la costa puedes colocar un barco al momento.",
+        "Tu primer poblado en cada isla pequeña da 2 fichas de punto de victoria, así que vale 3 PV.",
+        "El ladrón empieza en el hexágono de colinas con el 12; el pirata, en el hexágono de mar marcado con X.",
+        "Un río de oro da a un poblado 1 carta de recurso a elegir, y a una ciudad 2."
+      ]
+    },
+    "s1_4": {
+      "rules": [
+        "Tus 2 primeros poblados van solo en la isla principal; en lugar de un camino en la costa puedes colocar un barco al momento.",
+        "Tu primer poblado en cada isla pequeña da 2 fichas de punto de victoria, así que vale 3 PV.",
+        "El ladrón empieza en el desierto; el pirata, en el hexágono de mar marcado con X.",
+        "Los hexágonos de la isla principal y de las islas pequeñas se colocan al azar; los números rojos no deben tocarse."
+      ]
+    },
+    "s2": {
+      "name": "Las cuatro islas",
+      "short": "Cuatro islas",
+      "tagline": "Archipiélago de cuatro islas",
+      "story": "Un archipiélago de cuatro islas: todos los navegantes quieren pisar cada una."
+    },
+    "s2_3": {
+      "rules": [
+        "Tus 2 primeros poblados pueden ir en una isla o en dos distintas: esas serán tus islas de origen.",
+        "Tu primer poblado en cada isla extranjera da 2 fichas de punto de victoria, 3 PV en total.",
+        "El ladrón empieza en el hexágono con el 12; el pirata, en el hexágono de mar marcado con X.",
+        "Procura que el bosque y los pastos no reciban solo números malos: 2, 3, 11 y 12."
+      ]
+    },
+    "s2_4": {
+      "rules": [
+        "Tus 2 primeros poblados pueden ir en una isla o en dos distintas: esas serán tus islas de origen.",
+        "Tu primer poblado en cada isla extranjera da 2 fichas de punto de victoria, 3 PV en total.",
+        "El ladrón empieza en el hexágono con el 12; el pirata, en el hexágono de mar marcado con X.",
+        "El contorno de las islas no cambia; los hexágonos y las fichas dentro de cada isla, sí."
+      ]
+    },
+    "s3": {
+      "name": "Las islas de niebla",
+      "short": "Islas de niebla",
+      "tagline": "Dos islas y niebla entre ellas",
+      "story": "Dos islas y, entre ellas, un mar cubierto de niebla espesa."
+    },
+    "s3_3": {
+      "rules": [
+        "Los hexágonos de niebla están boca abajo. Cuando un camino o un barco llega a una esquina de un hexágono oculto, se le da la vuelta.",
+        "Si bajo la niebla hay tierra, recibe la ficha superior del montón boca abajo, y quien la descubrió toma 1 carta de su recurso. El mar no da nada.",
+        "El ladrón empieza en el hexágono con el 12; el pirata, en el hexágono de mar marcado con X.",
+        "Sin puntos de victoria especiales. Estas reglas permiten dos números rojos juntos: desactiva «6 y 8 nunca adyacentes» en Ajustes si quieres jugar así."
+      ]
+    },
+    "s3_4": {
+      "rules": [
+        "Los hexágonos de niebla están boca abajo y se revelan cuando un camino o un barco llega a una de sus esquinas.",
+        "Tierra revelada: toma la ficha superior del montón y 1 carta de su recurso. Mar revelado: nada.",
+        "El ladrón empieza en el hexágono con el 12; el pirata, en el hexágono de mar marcado con X.",
+        "Este escenario no tiene puntos de victoria especiales."
+      ]
+    },
+    "s4": {
+      "name": "A través del desierto",
+      "short": "A través del desierto",
+      "tagline": "Un desierto parte la isla",
+      "story": "Un desierto parte en dos la isla principal, y al este hay islas pequeñas."
+    },
+    "s4_3": {
+      "rules": [
+        "En la fundación, los poblados solo van en la parte grande de la isla principal, a este lado del desierto.",
+        "Las islas pequeñas y la franja más allá del desierto son extranjeras: tu primer poblado allí da 2 PV extra.",
+        "Los desiertos no llevan fichas. El ladrón empieza en cualquier desierto; el pirata, en el hexágono de mar marcado con X.",
+        "Los números rojos no pueden tocarse ni ir en ríos de oro."
+      ]
+    },
+    "s4_4": {
+      "rules": [
+        "En la fundación, los poblados solo van en la parte grande de la isla principal, a este lado del desierto.",
+        "Las islas pequeñas y la franja más allá del desierto son extranjeras: tu primer poblado allí da 2 PV extra.",
+        "Los desiertos no llevan fichas. El ladrón empieza en cualquier desierto; el pirata, en el hexágono de mar marcado con X.",
+        "Los números rojos no pueden tocarse ni ir en ríos de oro."
+      ]
+    },
+    "s5": {
+      "name": "La tribu olvidada",
+      "short": "Tribu olvidada",
+      "tagline": "Una isla y los islotes de la tribu",
+      "story": "Una isla larga y estrecha, rodeada por los islotes habitados de una tribu olvidada.",
+      "rules": [
+        "Las islas pequeñas no tienen fichas numeradas, no producen nada y no se pueden poblar.",
+        "Los regalos de la tribu esperan en las rutas junto a los islotes: fichas de punto de victoria, cartas de desarrollo y puertos libres, para quien coloque o mueva allí un barco.",
+        "El ladrón empieza en cualquier desierto y no puede entrar en las islas pequeñas ni volver a su hexágono inicial.",
+        "Procura que los tres hexágonos extremos de la isla principal no reciban los mejores números: 5, 6, 8 y 9."
+      ]
+    },
+    "s6": {
+      "name": "Telas para Catán",
+      "short": "Telas para Catán",
+      "tagline": "Aldeas de tejedores",
+      "story": "Dos islas principales y, entre ellas, aldeas que tejen las mejores telas.",
+      "rules": [
+        "Cada isla pequeña recibe 2 fichas numeradas colocadas en sus esquinas: son aldeas. Pon 5 fichas de tela junto a cada aldea.",
+        "Llega a una aldea con una línea de barcos y toma 1 tela al momento, y otra cada vez que salga su número.",
+        "2 telas dan 1 PV; una sola no vale nada. No se usa la carta de la Ruta comercial más larga.",
+        "La partida también termina cuando solo 3 aldeas conservan tela: gana quien tenga más PV."
+      ]
+    },
+    "s7": {
+      "name": "Las islas piratas",
+      "short": "Islas piratas",
+      "tagline": "",
+      "story": "La isla del este es tu hogar. Los piratas dominan las islas del oeste, y hay que responder.",
+      "rules": [
+        "Todos empiezan en la isla del este: 1 poblado con barco según el mapa y 2 poblados normales.",
+        "Tres hexágonos de las islas del oeste no reciben ficha numerada ni producen nada.",
+        "La flota pirata navega en sentido horario alrededor de las islas centrales tantos hexágonos como marque el dado menor.",
+        "No se usan las cartas de Ruta comercial más larga ni de Gran ejército; las cartas de caballero convierten barcos en barcos de guerra."
+      ]
+    },
+    "s8": {
+      "name": "Las maravillas de Catán",
+      "short": "Maravillas de Catán",
+      "tagline": "",
+      "story": "Tras derrotar a los piratas, grandes maravillas se alzan en las islas del norte.",
+      "rules": [
+        "Tus 2 primeros poblados van solo en la isla grande.",
+        "Cada jugador construye una de cinco maravillas en 4 etapas, pagando 5 de los recursos indicados por etapa.",
+        "Tu primer poblado en cada isla pequeña da 1 ficha de punto de victoria.",
+        "Los hexágonos junto a un desierto no deben recibir un 6 ni un 8."
+      ]
+    },
+    "s9": {
+      "name": "Un nuevo mundo",
+      "short": "Nuevo mundo",
+      "tagline": "Todo al azar, incluso el mar",
+      "story": "Un escenario libre: todos los hexágonos, incluido el mar, se colocan al azar.",
+      "rules": [
+        "Los hexágonos se barajan boca abajo y se colocan dentro del marco al azar, justo lo que hace el generador.",
+        "Por turnos, los jugadores colocan puertos junto a cualquier hexágono de tierra, empezando por el de más edad.",
+        "Tus 2 primeros poblados van donde quieras; tu primer poblado en cada isla extranjera da 1 PV.",
+        "El ladrón empieza en el hexágono con el 12; el pirata, en cualquier hexágono del marco."
+      ]
+    }
+  }
+}

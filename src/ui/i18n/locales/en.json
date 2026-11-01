@@ -1,0 +1,388 @@
+{
+  "app": {
+    "name": "Board Generator",
+    "tagline": "Base game and Seafarers — all 9 scenarios",
+    "loading": "Laying out the island…"
+  },
+  "tabs": {
+    "label": "Sections",
+    "board": "Board",
+    "setup": "Setup",
+    "scenario": "Scenario"
+  },
+  "common": {
+    "close": "Close",
+    "back": "Back",
+    "dismiss": "Dismiss",
+    "playersRange": "{min}–{max} {max, plural, one {player} other {players}}",
+    "players": "{n, plural, one {# player} other {# players}}",
+    "times": "×{n}",
+    "opensInNewTab": "opens in a new tab"
+  },
+  "game": {
+    "base": "Base game",
+    "seafarers": "Seafarers"
+  },
+  "terrain": {
+    "forest": "Forest",
+    "pasture": "Pasture",
+    "fields": "Fields",
+    "hills": "Hills",
+    "mountains": "Mountains",
+    "desert": "Desert",
+    "gold": "Gold",
+    "sea": "Sea",
+    "fog": "Fog"
+  },
+  "resource": {
+    "forest": "lumber",
+    "pasture": "wool",
+    "fields": "grain",
+    "hills": "brick",
+    "mountains": "ore",
+    "desert": "no resource",
+    "gold": "any resource",
+    "sea": "straits",
+    "fog": "face down"
+  },
+  "board": {
+    "codeLabel": "Board code",
+    "copyLink": "Copy link",
+    "share": "Share board",
+    "rebuild": "Rebuild",
+    "newBoard": "New board",
+    "dealing": "Dealing…",
+    "dealingHexes": "Dealing hexes · {n} of {total}",
+    "dealingTokens": "Number tokens · {n} of {total}",
+    "dealingHarbors": "Harbors and piers",
+    "wide": "Board is wider than the screen — swipe",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "changeScenario": "Change scenario: {scenario}",
+    "legend": "Legend",
+    "label": "{scenario}, board code {code}",
+    "harbor": "Harbor {ratio}",
+    "harborFor": "Harbor 2:1, {resource}",
+    "hiddenFog": "Fog, face down",
+    "revealedFog": "Under the fog: {terrain}",
+    "villages": "Villages {a} and {b}",
+    "letter": "Letter {letter}"
+  },
+  "setup": {
+    "title": "Board setup",
+    "subtitle": "Game, scenario and token placement rules",
+    "game": "Game",
+    "baseMeta": "{n, plural, one {# layout} other {# layouts}}",
+    "seafarersMeta": "{n, plural, one {# scenario} other {# scenarios}}",
+    "scenario": "Scenario",
+    "players": "Players",
+    "baseCounts": "{hexes, plural, one {# hex} other {# hexes}} · {tokens, plural, one {# token} other {# tokens}} · {harbors, plural, one {# harbor} other {# harbors}}",
+    "code": "Board code",
+    "codePlaceholder": "e.g. anchor-4821",
+    "codeHelp": "The same code always builds the same board, so it’s easy to share with other players.",
+    "newCode": "New random code",
+    "tokens": "Token placement",
+    "red": "6 and 8 never adjacent",
+    "redHint": "Required by the Seafarers rules",
+    "same": "No equal numbers side by side",
+    "sameHint": "House rule, not in the rulebook",
+    "spread": "Spread terrain",
+    "spreadHint": "Fewer clusters of the same terrain",
+    "letters": "Tokens by letters A–R",
+    "lettersHint": "The rulebook’s fixed order, around the island",
+    "fog": "Reveal fog",
+    "fogHint": "Only to check the layout; fog stays face down in play",
+    "language": "Language",
+    "build": "Build board"
+  },
+  "scenario": {
+    "eyebrow": "Scenario",
+    "onBoard": "What’s on the board",
+    "totalHexes": "Total hexes",
+    "robber": "robber",
+    "seaNote": "Sea hexes frame the islands; the board shows only the land.",
+    "tokens": "Number tokens",
+    "tokensNote": "{n, plural, one {# token} other {# tokens}}. Dots under a number show how likely it is: 6 and 8 come up most often.",
+    "spare": "Left in the box: {list}.",
+    "villageTokens": "Village numbers come from these spares.",
+    "harbors": "Harbors",
+    "any": "any",
+    "harborsBase": "{n} harbors on the sea frame: {generic} generic 3:1 and one 2:1 for each resource. Their types are placed at random.",
+    "harborsSea": "{special} special 2:1 harbors and {generic, plural, one {# generic 3:1 harbor} other {# generic 3:1 harbors}}, placed as the scenario map shows. They aren’t drawn on this board.",
+    "extras": "Also from the box",
+    "rules": "Scenario rules",
+    "rulebooks": "Rulebooks",
+    "inBase": "Base game rulebook",
+    "inSeafarers": "Seafarers rulebook",
+    "baseSection": "Look for: variable setup",
+    "seaSection": "Look for: Scenario {n} · {name}",
+    "official": "Official rules",
+    "officialSub": "catan.com · rulebooks to download"
+  },
+  "sheet": {
+    "baseEyebrow": "Base game · 2 layouts",
+    "seaEyebrow": "Seafarers · 9 scenarios",
+    "title": "Scenario"
+  },
+  "share": {
+    "title": "Share board",
+    "codeLabel": "Board code",
+    "note": "One code, the same board on any device and in any language.",
+    "copy": "Copy link",
+    "send": "Send…",
+    "print": "Print",
+    "png": "Save PNG",
+    "sendText": "A Catan board for tonight: {code}",
+    "printTitle": "{scenario} · board code {code}"
+  },
+  "toasts": {
+    "copied": "Link copied",
+    "copiedSub": "Code {code} · send it to friends",
+    "copyFailed": "Couldn’t copy the link",
+    "send": "Send",
+    "offlineReady": "Works offline",
+    "offlineReadySub": "The board opens even without internet",
+    "offline": "You’re offline — the app still works",
+    "update": "A new version is ready",
+    "reload": "Reload",
+    "relaxed": "Rule relaxed",
+    "relaxedSame": "Couldn’t keep every equal number apart",
+    "relaxedRed": "Couldn’t keep every 6 and 8 apart",
+    "again": "Again",
+    "pngFailed": "Couldn’t save the picture"
+  },
+  "language": {
+    "eyebrow": "First launch",
+    "title": "Language",
+    "subtitle": "Choose the app language — you can change it later in Setup.",
+    "note": "Terrain, resource and scenario names are translated for each language.",
+    "continue": "Continue"
+  },
+  "pwa": {
+    "installTitle": "Install as app",
+    "installSub": "Your board, even offline",
+    "install": "Install",
+    "how": "How",
+    "notNow": "Not now",
+    "iosTitle": "Install on iPhone",
+    "iosSteps": [
+      "Tap Share at the bottom of Safari",
+      "Choose “Add to Home Screen”",
+      "Open the board from your home screen"
+    ],
+    "gotIt": "Got it"
+  },
+  "victory": {
+    "points": "{n} victory points",
+    "pointsShort": "{n} VP",
+    "fortress": "Capture your pirate fortress and reach {n} VP",
+    "fortressShort": "Fortress + {n} VP",
+    "wonder": "Finish a wonder, or reach {n} VP with the most wonder stages",
+    "wonderShort": "Wonder or {n} VP"
+  },
+  "extras": {
+    "vpTokens": "{n, plural, one {# victory point token} other {# victory point tokens}}",
+    "devCards": "{n, plural, one {# development card} other {# development cards}}",
+    "cloth": "{n, plural, one {# cloth token} other {# cloth tokens}}",
+    "fortresses": "{n, plural, one {# pirate fortress token} other {# pirate fortress tokens}}",
+    "playerTokens": "{n, plural, one {# player marker} other {# player markers}}",
+    "wonderCards": "{n, plural, one {# wonder card} other {# wonder cards}}",
+    "wallTokens": "{n, plural, one {# Great Wall token} other {# Great Wall tokens}}",
+    "bridgeTokens": "{n, plural, one {# Great Bridge token} other {# Great Bridge tokens}}"
+  },
+  "codeWords": [
+    "anchor",
+    "surf",
+    "breeze",
+    "compass",
+    "fairway",
+    "lighthouse",
+    "shoal",
+    "storm",
+    "reef",
+    "lagoon",
+    "sail",
+    "mast",
+    "harbor",
+    "bay",
+    "calm",
+    "jib",
+    "cape",
+    "strait",
+    "sunset",
+    "island"
+  ],
+  "scenarios": {
+    "base34": {
+      "name": "Base game",
+      "short": "Base game",
+      "tagline": "",
+      "story": "The advanced setup: hexes and tokens are placed at random.",
+      "rules": [
+        "The robber starts on the desert; no number token goes there.",
+        "Assemble the sea frame from its six pieces in any order, harbor symbols facing out.",
+        "Founding: the first round goes clockwise, the second counter-clockwise; your second settlement pays starting resources at once.",
+        "With three players, put the white pieces back in the box."
+      ]
+    },
+    "base56": {
+      "name": "Base game",
+      "short": "Base game",
+      "tagline": "",
+      "story": "The 5–6 player extension: more hexes, tokens and harbors, and a second desert.",
+      "rules": [
+        "Two deserts: the robber starts on either of them.",
+        "After each player’s turn comes a special building phase.",
+        "The frame’s outline here is approximate; the hex and token counts are the standard ones."
+      ]
+    },
+    "s1": {
+      "name": "Heading for New Shores",
+      "short": "New Shores",
+      "tagline": "Main island and archipelago",
+      "story": "A main island and an archipelago of small isles; gold has been found on some of them."
+    },
+    "s1_3": {
+      "rules": [
+        "Your first 2 settlements go on the main island only; instead of a road on the coast you may place a ship at once.",
+        "Your first settlement on each small island earns 2 victory point tokens, so it is worth 3 VP.",
+        "The robber starts on the hills hex with the 12, the pirate on the sea hex marked X.",
+        "A gold field gives a settlement 1 resource card of its choice, a city 2."
+      ]
+    },
+    "s1_4": {
+      "rules": [
+        "Your first 2 settlements go on the main island only; instead of a road on the coast you may place a ship at once.",
+        "Your first settlement on each small island earns 2 victory point tokens, so it is worth 3 VP.",
+        "The robber starts in the desert, the pirate on the sea hex marked X.",
+        "The hexes of the main island and of the small isles are placed at random; red numbers must not touch."
+      ]
+    },
+    "s2": {
+      "name": "The Four Islands",
+      "short": "Four Islands",
+      "tagline": "Four-island archipelago",
+      "story": "An archipelago of four islands: every seafarer wants a foothold on all of them."
+    },
+    "s2_3": {
+      "rules": [
+        "Your first 2 settlements may go on one island or on two; those become your home islands.",
+        "Your first settlement on each foreign island earns 2 victory point tokens, 3 VP in all.",
+        "The robber starts on the hex with the 12, the pirate on the sea hex marked X.",
+        "Make sure forest and pasture don’t get only poor numbers: 2, 3, 11 and 12."
+      ]
+    },
+    "s2_4": {
+      "rules": [
+        "Your first 2 settlements may go on one island or on two; those become your home islands.",
+        "Your first settlement on each foreign island earns 2 victory point tokens, 3 VP in all.",
+        "The robber starts on the hex with the 12, the pirate on the sea hex marked X.",
+        "The outlines of the islands stay fixed; the hexes and tokens within an island may change."
+      ]
+    },
+    "s3": {
+      "name": "The Fog Islands",
+      "short": "Fog Islands",
+      "tagline": "Two islands, fog between",
+      "story": "Two islands, and between them a sea under thick fog."
+    },
+    "s3_3": {
+      "rules": [
+        "Fog hexes lie face down. When a road or ship reaches a corner of a hidden hex, the hex is turned over.",
+        "Land under the fog takes the top token of the face-down pile, and whoever revealed it takes 1 card of its resource. Sea gives nothing.",
+        "The robber starts on the hex with the 12, the pirate on the sea hex marked X.",
+        "No special victory points. These rules allow two red numbers side by side: switch off “6 and 8 never adjacent” in Setup to play it that way."
+      ]
+    },
+    "s3_4": {
+      "rules": [
+        "Fog hexes lie face down and are turned over when a road or ship reaches one of their corners.",
+        "Revealed land takes the top token of the pile and gives 1 card of its resource. Revealed sea gives nothing.",
+        "The robber starts on the hex with the 12, the pirate on the sea hex marked X.",
+        "This scenario has no special victory points."
+      ]
+    },
+    "s4": {
+      "name": "Through the Desert",
+      "short": "Through the Desert",
+      "tagline": "A desert splits the island",
+      "story": "A desert cuts the main island in two, and small islands lie to the east."
+    },
+    "s4_3": {
+      "rules": [
+        "During founding, settle only on the larger part of the main island, on your side of the desert.",
+        "The small islands and the land beyond the desert are foreign: your first settlement there earns 2 extra VP.",
+        "Deserts get no tokens. The robber starts on any desert hex, the pirate on the sea hex marked X.",
+        "Red numbers may not touch each other or lie on gold fields."
+      ]
+    },
+    "s4_4": {
+      "rules": [
+        "During founding, settle only on the larger part of the main island, on your side of the desert.",
+        "The small islands and the land beyond the desert are foreign: your first settlement there earns 2 extra VP.",
+        "Deserts get no tokens. The robber starts on any desert hex, the pirate on the sea hex marked X.",
+        "Red numbers may not touch each other or lie on gold fields."
+      ]
+    },
+    "s5": {
+      "name": "The Forgotten Tribe",
+      "short": "Forgotten Tribe",
+      "tagline": "An island and the tribe’s islets",
+      "story": "A long, narrow island, ringed by the inhabited islets of a forgotten tribe.",
+      "rules": [
+        "The small islands have no number tokens, produce nothing and can’t be settled.",
+        "The tribe’s gifts lie on the routes by the islets: victory point tokens, development cards and free harbors go to whoever places or moves a ship there.",
+        "The robber starts on any desert; it may neither enter the small islands nor return to its starting hex.",
+        "Make sure the three outermost hexes of the main island don’t get the best numbers: 5, 6, 8 and 9."
+      ]
+    },
+    "s6": {
+      "name": "Cloth for Catan",
+      "short": "Cloth for Catan",
+      "tagline": "Weaving villages",
+      "story": "Two main islands, and between them villages that weave the finest cloth.",
+      "rules": [
+        "Each small island gets 2 number tokens placed right on its corners: these are villages. Put 5 cloth tokens next to each village.",
+        "Reach a village with a line of ships and take 1 cloth at once, then 1 more each time its number is rolled.",
+        "2 cloth make 1 VP; a single cloth is worth nothing. The Longest Trade Route card isn’t used.",
+        "The game also ends when only 3 villages have cloth left: the player with the most VP wins."
+      ]
+    },
+    "s7": {
+      "name": "The Pirate Islands",
+      "short": "Pirate Islands",
+      "tagline": "",
+      "story": "The eastern island is your home. Pirates hold the western islands, and they need an answer.",
+      "rules": [
+        "Everyone starts on the eastern island: 1 settlement with a ship as the map shows, plus 2 normal settlements.",
+        "Three hexes on the western islands get no number token and produce nothing.",
+        "The pirate fleet sails clockwise around the central islands, as many hexes as the smaller die shows.",
+        "The Longest Trade Route and Largest Army cards aren’t used; knight cards turn ships into warships."
+      ]
+    },
+    "s8": {
+      "name": "The Wonders of Catan",
+      "short": "Wonders of Catan",
+      "tagline": "",
+      "story": "After the pirates’ defeat, great wonders rise on the northern islands.",
+      "rules": [
+        "Your first 2 settlements go on the large island only.",
+        "Each player builds one of five wonders in 4 stages, paying 5 of the listed resources per stage.",
+        "Your first settlement on each small island earns 1 victory point token.",
+        "Hexes next to a desert must not get a 6 or an 8."
+      ]
+    },
+    "s9": {
+      "name": "New World",
+      "short": "New World",
+      "tagline": "All random, even the sea",
+      "story": "A free scenario: every hex, the sea included, is placed at random.",
+      "rules": [
+        "The hexes are shuffled face down and laid out inside the frame at random, which is exactly what the generator does.",
+        "Players take turns placing harbors next to any land hex, oldest player first.",
+        "Your first 2 settlements go anywhere; your first settlement on each foreign island earns 1 VP.",
+        "The robber starts on the hex with the 12, the pirate on any hex of the frame."
+      ]
+    }
+  }
+}
