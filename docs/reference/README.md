@@ -8,5 +8,6 @@ The rulebooks the board data was checked against (see [`../rules.md`](../rules.m
 | `catan-seafarers-rules-ru-2025.pdf` | CATAN – Seafarers («Мореходы»), Hobby World (Russian), 2025, version 1.0 |
 
 They belong to their publishers, so they are **not committed** (`docs/reference/*.pdf` is in
-`.gitignore`). `npm run reference` downloads them from the repository's `reference-docs` release
-(needs `gh` auth). The app itself links CATAN GmbH's official rules page instead.
+`.gitignore`). `npm run reference` is meant to download them from the repository's `reference-docs`
+release (needs `gh` auth); whether that release exists is still open (#6). The app itself links
+CATAN GmbH's official rules page instead.
