@@ -63,9 +63,9 @@ or the board when the app was opened from a shared link.
 
 ## The deal
 
-The storyboard (design 13): coast and empty sand slots → tiles dealt in a spiral from the centre
-(scale 0.6 → 1 and fade, 220 ms each, 25 ms apart, tighter on big boards) → number tokens drop in
-(−12 px, 160 ms, 15 ms apart) → harbors and piers. About 0.9 s for the base game.
+The storyboard (design 13): coast and empty sand slots (120 ms) → tiles dealt in a spiral from the
+centre (scale 0.6 → 1 and fade, 220 ms each, 25 ms apart, tighter on big boards) → number tokens
+drop in (−12 px, 160 ms, 15 ms apart) → harbors and piers. About 1.3 s for the base game.
 
 - It plays whenever a board appears that hasn't been dealt on screen yet: a new code, a new
   scenario, new token rules, Build board, Rebuild (after a 180 ms nudge).
@@ -130,7 +130,7 @@ language on first launch, then the picked one. Russian text gets non-breaking sp
   notice.
 - **Each page shows the app in its own language.** `npm run site:shots` captures the app with
   Playwright and Google Chrome in every language: 11 phone screens and the 4 deal frames (the board
-  paused at 0, 300, 700 and 950 ms). They aren't committed; the Pages workflow captures them on every
+  alone, paused at 120, 420, 820 and 1100 ms: coast, spiral, tokens, harbors). They aren't committed; the Pages workflow captures them on every
   build.
 - **One source of truth.** Scenario names, victory targets, button labels and sample codes come from
   the app's translations and engine; the page's own copy is in `site/locales/<lang>.json`.
