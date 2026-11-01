@@ -226,7 +226,9 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
             <g key={index} transform={`translate(${x.toFixed(2)} ${y.toFixed(2)})`}>
               <g
                 className={styles.tile}
-                style={{ '--delay': `${(order * stagger).toFixed(0)}ms` } as Vars}
+                style={
+                  { '--delay': `${(timing.tilesStart + order * stagger).toFixed(0)}ms` } as Vars
+                }
               >
                 <Tile look={look} cell={cell} fogPeek={cell.kind === 'fog' && fogRevealed} t={t} />
               </g>

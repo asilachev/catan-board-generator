@@ -95,13 +95,16 @@ function shotsFor(lang, T) {
     options: { red: true, same: true, spread: true, letters: false },
     fog: false,
   }
-  const deal = (ms, crop = 'main section') => [
+  // The board alone, without the progress pill (the storyboard frames).
+  const deal = (ms, crop = 'main section > div') => [
     board(lang),
     prefs,
     null,
     async (page) => {
       await startDeal(page, T)
       await freezeAt(page, ms)
+      // The storyboard frames show the board alone; the generating screen keeps its pill.
+      if (crop) await page.addStyleTag({ content: '[data-deal-pill] { visibility: hidden }' })
     },
     { reducedMotion: 'no-preference' },
     crop,
@@ -117,7 +120,7 @@ function shotsFor(lang, T) {
       (page) => page.getByRole('button', { name: T('board.share') }).click(),
     ],
     language: ['', null, null, null, { locale: TAGS[lang] }],
-    generating: deal(330, null),
+    generating: deal(450, null),
     splash: [
       board(lang),
       prefs,
@@ -165,10 +168,10 @@ function shotsFor(lang, T) {
           window.dispatchEvent(event)
         }),
     ],
-    'deal-0': deal(0),
-    'deal-300': deal(300),
-    'deal-700': deal(700),
-    'deal-900': deal(950),
+    'deal-0': deal(120),
+    'deal-300': deal(420),
+    'deal-700': deal(820),
+    'deal-900': deal(1100),
   }
 }
 

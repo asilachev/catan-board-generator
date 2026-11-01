@@ -47,7 +47,10 @@ export function useDealProgress(
       if (now < timing.tokensStart) {
         setProgress({
           phase: 'tiles',
-          done: Math.min(counts.tiles, Math.floor(now / counts.stagger) + 1),
+          done: Math.min(
+            counts.tiles,
+            Math.max(1, Math.floor((now - timing.tilesStart) / counts.stagger) + 1),
+          ),
           of: counts.tiles,
         })
       } else if (now < timing.harborsStart || timing.harborsStart >= timing.total) {

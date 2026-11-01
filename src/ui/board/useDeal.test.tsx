@@ -4,12 +4,13 @@ import type { DealTiming } from './timing.ts'
 import { useDealProgress } from './useDeal.ts'
 
 const TIMING: DealTiming = {
-  tilesEnd: 670,
-  tokensStart: 510,
+  tilesStart: 120,
+  tilesEnd: 790,
+  tokensStart: 630,
   tokenStagger: 15,
-  tokensEnd: 925,
-  harborsStart: 865,
-  total: 1185,
+  tokensEnd: 1045,
+  harborsStart: 985,
+  total: 1305,
 }
 const COUNTS = { tiles: 19, tokens: 18, stagger: 25, tokenStagger: 15 }
 
@@ -25,7 +26,7 @@ function fakeClock(currentTime: number) {
 
 describe('deal progress (design 09)', () => {
   it('counts the hexes dealt so far, from the clock animation', async () => {
-    const clock = fakeClock(330)
+    const clock = fakeClock(450)
     const { result } = renderHook(() =>
       useDealProgress(clock.ref, 'a', true, TIMING, COUNTS, () => {}),
     )
@@ -34,7 +35,7 @@ describe('deal progress (design 09)', () => {
   })
 
   it('ends when the clock finishes, and shows nothing once the deal is over', async () => {
-    const clock = fakeClock(600)
+    const clock = fakeClock(700)
     const onEnd = vi.fn()
     const { result, rerender } = renderHook(
       ({ running }: { running: boolean }) =>
