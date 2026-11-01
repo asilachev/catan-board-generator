@@ -1,7 +1,8 @@
 .toasts {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--safe-bottom) + 24px);
+  /* Above the tab bar and the board's buttons. */
+  bottom: calc(var(--safe-bottom) + 160px);
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -9,11 +10,6 @@
   width: min(100% - 32px, 480px);
   transform: translateX(-50%);
   pointer-events: none;
-}
-
-/* Above the tab bar and the board's buttons. */
-.toasts[data-raised='true'] {
-  bottom: calc(var(--safe-bottom) + 160px);
 }
 
 .toast {

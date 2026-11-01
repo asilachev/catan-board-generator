@@ -27,20 +27,35 @@ beforeEach(() => {
   vi.restoreAllMocks()
 })
 
-describe('first launch (design 06)', () => {
-  it('starts on the language picker, previews a language and saves it', async () => {
-    const user = userEvent.setup()
+describe('first launch (design 01, 06)', () => {
+  it("opens on a dealt base-game board in the browser's language", async () => {
+    vi.spyOn(navigator, 'languages', 'get').mockReturnValue(['de-AT', 'en'])
+    history.replaceState(null, '', '/')
     await act(async () => {
-      await Promise.all([loadCatalog('de'), loadCatalog('ru')])
+      await loadCatalog('de')
     })
     render(<App />)
-    expect(screen.getByRole('heading', { name: 'Language' })).toBeInTheDocument()
-    await user.click(screen.getByRole('radio', { name: /Deutsch/ }))
-    expect(await screen.findByRole('heading', { name: 'Sprache' })).toBeInTheDocument()
-    await user.click(screen.getByRole('button', { name: 'Weiter' }))
-    expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language).toBe('de')
-    // Then Setup, as the user journey goes.
-    expect(screen.getByRole('heading', { name: 'Spielplan-Aufbau' })).toBeInTheDocument()
+    // No language screen and no Setup: the board, with a fresh code in the address bar.
+    expect(screen.queryByRole('heading', { name: 'Sprache' })).not.toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /^Basisspiel · 3–4 Spieler/ })).toBeInTheDocument()
+    expect(location.hash).toMatch(/^#s=base34&p=4&c=\S+-\d{4}$/)
+    // Nothing is picked yet, so the app keeps following the browser.
+    expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language ?? null).toBeNull()
+  })
+
+  it('switches the language from Setup and remembers it', async () => {
+    const user = userEvent.setup()
+    await openLink('#s=base34&p=4&c=anchor-4821')
+    await act(async () => {
+      await loadCatalog('ru')
+    })
+    await user.click(screen.getByRole('button', { name: 'Setup' }))
+    await user.click(screen.getByRole('button', { name: /^English/ }))
+    await user.click(screen.getByRole('radio', { name: /Русский/ }))
+    expect(await screen.findByRole('heading', { name: 'Язык' })).toBeInTheDocument()
+    expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language).toBe('ru')
+    await user.click(screen.getByRole('button', { name: 'Назад' }))
+    expect(screen.getByRole('heading', { name: 'Настройка поля' })).toBeInTheDocument()
   })
 })
 

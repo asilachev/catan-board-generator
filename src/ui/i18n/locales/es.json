@@ -152,11 +152,9 @@
     "pngFailed": "No se pudo guardar la imagen"
   },
   "language": {
-    "eyebrow": "Primer inicio",
     "title": "Idioma",
-    "subtitle": "Elige el idioma de la app; puedes cambiarlo luego en Ajustes.",
-    "note": "Los nombres de terrenos, recursos y escenarios están traducidos.",
-    "continue": "Continuar"
+    "subtitle": "La app empieza en el idioma de tu teléfono. Un código de tablero vale en cualquier idioma.",
+    "note": "Los nombres de terrenos, recursos y escenarios están traducidos."
   },
   "pwa": {
     "installTitle": "Instalar como app",

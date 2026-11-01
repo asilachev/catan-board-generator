@@ -152,11 +152,9 @@
     "pngFailed": "Bild konnte nicht gespeichert werden"
   },
   "language": {
-    "eyebrow": "Erster Start",
     "title": "Sprache",
-    "subtitle": "Wähle die Sprache der App – du kannst sie später im Aufbau ändern.",
-    "note": "Namen von Landschaften, Rohstoffen und Szenarien sind übersetzt.",
-    "continue": "Weiter"
+    "subtitle": "Die App startet in der Sprache deines Handys. Ein Plan-Code gilt in jeder Sprache.",
+    "note": "Namen von Landschaften, Rohstoffen und Szenarien sind übersetzt."
   },
   "pwa": {
     "installTitle": "Als App installieren",
