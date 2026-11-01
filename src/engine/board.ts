@@ -6,6 +6,8 @@ import {
   growIsland,
   type Axial,
 } from './hex.ts'
+import { PRINTED_MAPS } from './maps.ts'
+import { dealPrinted } from './printed.ts'
 import { hashSeed, mulberry32, shuffled, type Random } from './rng.ts'
 import {
   VARIANTS,
@@ -36,12 +38,27 @@ export interface DealOptions {
   readonly spread: boolean
   /** The base game's A–R token order, where the scenario offers it. */
   readonly letters: boolean
+  /** Seafarers: the rulebook's own map, instead of its layout variants (printed maps only). */
+  readonly printed: boolean
 }
 
-export const DEFAULT_OPTIONS: DealOptions = { red: true, same: true, spread: true, letters: false }
+export const DEFAULT_OPTIONS: DealOptions = {
+  red: true,
+  same: true,
+  spread: true,
+  letters: false,
+  printed: false,
+}
 
-/** `notokenPick` marks isle hexes that lost their token (Scenario 7). */
-export type CellKind = RegionKind | 'notokenPick'
+/**
+ * How boards are dealt. 1: v1's algorithm, Seafarers islands grown to size. 2: Seafarers boards
+ * from the rulebook's printed maps (#7). A link without a version is v1's, so it keeps its board.
+ */
+export type BoardVersion = 1 | 2
+export const BOARD_VERSION: BoardVersion = 2
+
+/** `notokenPick` marks isle hexes that lost their token (Scenario 7); `sea` is a printed map's sea. */
+export type CellKind = RegionKind | 'notokenPick' | 'sea'
 
 export interface Cell {
   readonly q: number
@@ -78,6 +95,9 @@ export interface Board {
   readonly variant: Variant
   readonly code: string
   readonly options: DealOptions
+  readonly version: BoardVersion
+  /** Dealt on the rulebook's printed map (docs/rules.md → Printed maps), sea included. */
+  readonly printedMap: boolean
   readonly cells: readonly Cell[]
   readonly harbors: readonly Harbor[]
   /** Tokens left in the box (villages took theirs). */
@@ -214,10 +234,30 @@ function swapTerrain(cells: Work[], a: number, b: number): void {
   cb.terrain = tmp
 }
 
-/** Deals the board for a variant and a code. */
-export function buildBoard(variantId: VariantId, code: string, options: DealOptions): Board {
+/** Deals the board for a variant and a code, the way `version` deals it. */
+export function buildBoard(
+  variantId: VariantId,
+  code: string,
+  options: DealOptions,
+  version: BoardVersion = BOARD_VERSION,
+): Board {
   const variant = VARIANTS[variantId]
   const random = mulberry32(hashSeed(`${variantId}#${code}`))
+  const map = version >= 2 ? PRINTED_MAPS[variantId] : undefined
+  if (map) {
+    const dealt = dealPrinted(variant, map, options, random)
+    return {
+      variant,
+      code,
+      options,
+      version,
+      printedMap: true,
+      cells: dealt.cells,
+      harbors: dealt.harbors,
+      leftover: dealt.leftover,
+      violations: countViolations(dealt.cells, options, variant, (i) => dealt.dealt[i] ?? false),
+    }
+  }
   const cells = buildLayout(variant)
   const pools = variant.pools ?? { land: variant.hexes }
   const cell = (i: number) => cells[i] as Work
@@ -435,6 +475,8 @@ export function buildBoard(variantId: VariantId, code: string, options: DealOpti
     variant,
     code,
     options,
+    version,
+    printedMap: false,
     cells: done,
     harbors,
     leftover,
@@ -447,17 +489,24 @@ export function countViolations(
   cells: readonly Cell[],
   options: DealOptions,
   variant: Variant,
+  /** Whether the deal chose this cell's number; a printed number that stays isn't relaxed. */
+  dealt: (i: number) => boolean = () => true,
 ): Violations {
   let red = 0
   let same = 0
   cells.forEach((c, i) => {
     if (c.num === null) return
-    if (variant.noRedOnGold && c.terrain === 'gold' && RED(c.num)) red++
-    if (variant.noRedNearDesert && RED(c.num) && c.adj.some((j) => cells[j]?.terrain === 'desert'))
+    if (dealt(i) && variant.noRedOnGold && c.terrain === 'gold' && RED(c.num)) red++
+    if (
+      dealt(i) &&
+      variant.noRedNearDesert &&
+      RED(c.num) &&
+      c.adj.some((j) => cells[j]?.terrain === 'desert')
+    )
       red++
     for (const j of c.adj) {
       const other = cells[j]?.num
-      if (j < i || other === null || other === undefined) continue
+      if (j < i || other === null || other === undefined || !(dealt(i) || dealt(j))) continue
       if (options.red && RED(c.num) && RED(other)) red++
       if (options.same && c.num === other) same++
     }

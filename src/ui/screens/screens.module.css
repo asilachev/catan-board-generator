@@ -207,6 +207,11 @@
   }
 }
 
+/* Setup: the rulebook's own map, under the scenario. */
+.printedCard {
+  margin-top: 14px;
+}
+
 /* ---- Paper screens ------------------------------------------------------------------------- */
 
 .screenTitle {

@@ -21,12 +21,14 @@ deals: which tile and number go where, which harbors go on the frame, and what t
 ## What it does
 
 - **Deals 11 boards:** the base game for 3–4 and 5–6 players, and Seafarers scenarios 1–9 with
-  their 3- and 4-player layouts.
+  their 3- and 4-player layouts. Seafarers boards keep the islands, sea and harbors where the
+  rulebook's maps put them and shuffle only what each scenario allows, or deal the map exactly as
+  printed.
 - **Keeps it fair:** 6 and 8 never touch, equal numbers stay apart and terrain is spread out; each
   rule can be switched off. When a rule can't be met everywhere, it says so.
 - **Same code, same board:** every board has a code such as `anchor-4821`. Send the link or just the
-  code and everyone sees the same island, on any device and in any language. Codes from the first
-  version still open the same boards.
+  code and everyone sees the same island, on any device and in any language. Links from the first
+  version still open the boards they showed then.
 - **Says what to take from the box:** hexes, number tokens, harbors and extra pieces for the
   scenario, its own rules, its victory target, and where to look in the rulebook.
 - **Made for the table:** big tiles with probability dots, a legend, wide Seafarers archipelagos

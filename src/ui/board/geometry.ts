@@ -42,7 +42,10 @@ export interface PlacedHarbor {
 
 export interface Geometry {
   readonly cells: readonly PlacedCell[]
-  /** Open sea around Seafarers islands: drawn for orientation, not part of the deal. */
+  /**
+   * Open sea around the islands of a Seafarers board from a v1 link: drawn for orientation, not
+   * part of the deal. Printed maps deal their sea as cells, up to the frame.
+   */
   readonly sea: readonly { x: number; y: number }[]
   readonly harbors: readonly PlacedHarbor[]
   readonly viewBox: { x: number; y: number; width: number; height: number }
@@ -66,7 +69,7 @@ export function boardGeometry(board: Board): Geometry {
 
   const taken = new Set(board.cells.map((c) => axialKey(c.q, c.r)))
   const sea: { x: number; y: number }[] = []
-  if (board.variant.game === 'seafarers') {
+  if (board.variant.game === 'seafarers' && !board.printedMap) {
     const seen = new Set<string>()
     for (const c of board.cells) {
       for (const [dq, dr] of AXIAL_DIRECTIONS) {

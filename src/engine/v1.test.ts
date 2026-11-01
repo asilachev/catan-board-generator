@@ -47,9 +47,9 @@ const CODES = [
 ]
 const OPTION_SETS: DealOptions[] = [
   DEFAULT_OPTIONS,
-  { red: false, same: false, spread: false, letters: false },
-  { red: true, same: false, spread: true, letters: true },
-  { red: false, same: true, spread: false, letters: false },
+  { red: false, same: false, spread: false, letters: false, printed: false },
+  { red: true, same: false, spread: true, letters: true, printed: false },
+  { red: false, same: true, spread: false, letters: false, printed: false },
 ]
 
 const simplify = (cells: readonly V1Cell[]) =>
@@ -60,7 +60,7 @@ describe('v1 compatibility', () => {
     for (const code of CODES) {
       for (const options of OPTION_SETS) {
         const old = v1.buildBoard(id, code, { ...options })
-        const now = buildBoard(id, code, options)
+        const now = buildBoard(id, code, options, 1)
         const label = `${id} ${code} ${JSON.stringify(options)}`
         expect(simplify(now.cells as readonly V1Cell[]), label).toEqual(simplify(old.cells))
         expect(now.harbors, label).toEqual(old.harbors)
