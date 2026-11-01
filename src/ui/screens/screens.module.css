@@ -149,13 +149,6 @@
   min-width: 0;
 }
 
-/* Deal again and copy, close together so the label keeps its line. */
-.codeActions {
-  display: flex;
-  flex: none;
-  gap: 6px;
-}
-
 .codeLabel {
   color: var(--on-sea-soft);
   font-weight: 700;

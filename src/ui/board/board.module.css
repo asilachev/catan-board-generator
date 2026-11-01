@@ -64,26 +64,6 @@
   transform-origin: 50% 50%;
 }
 
-/* Rebuild: the board nudges 4 px left and right twice before it deals again. */
-.nudge {
-  animation: nudge 180ms ease-in-out;
-}
-
-@keyframes nudge {
-  20% {
-    transform: translateX(-4px);
-  }
-  40% {
-    transform: translateX(4px);
-  }
-  60% {
-    transform: translateX(-4px);
-  }
-  80% {
-    transform: translateX(4px);
-  }
-}
-
 /* An invisible clock that runs for the whole deal. The progress pill reads its time, so a paused
    animation (screenshots) shows the matching step. */
 .clock {

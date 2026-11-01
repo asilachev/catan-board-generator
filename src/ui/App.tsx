@@ -348,7 +348,6 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
           newBoard()
           setTab('setup')
         }}
-        onRebuild={() => setNonce((n) => n + 1)}
         onShare={() => setOverlay('share')}
         onCopy={() => void copy()}
         onPickScenario={() => setOverlay('sheet')}

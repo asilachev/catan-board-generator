@@ -1,14 +1,5 @@
-import {
-  ChevronDown,
-  Copy,
-  Dices,
-  Hash,
-  Hexagon,
-  RotateCcw,
-  Share2,
-  SlidersHorizontal,
-} from 'lucide-react'
-import { useMemo, useRef, useState, type CSSProperties, type ReactNode, type Ref } from 'react'
+import { ChevronDown, Copy, Dices, Hash, Hexagon, Share2, SlidersHorizontal } from 'lucide-react'
+import { useMemo, useRef, type CSSProperties, type ReactNode, type Ref } from 'react'
 import type { Board } from '../../engine/index.ts'
 import { BoardViewport } from '../board/BoardViewport.tsx'
 import { boardGeometry } from '../board/geometry.ts'
@@ -33,7 +24,6 @@ export function BoardScreen({
   onDealEnd,
   onNewBoard,
   onNewGame,
-  onRebuild,
   onShare,
   onCopy,
   onPickScenario,
@@ -48,14 +38,12 @@ export function BoardScreen({
   onNewBoard: () => void
   /** Ends this game: a fresh code, and Setup for the next one. */
   onNewGame: () => void
-  onRebuild: () => void
   onShare: () => void
   onCopy: () => void
   onPickScenario: () => void
 }) {
   const t = useT()
   const clock = useRef<HTMLSpanElement>(null)
-  const [nudging, setNudging] = useState(false)
   const geometry = useMemo(() => boardGeometry(board), [board])
   const timing = useMemo(() => dealTiming(geometry, fogRevealed), [geometry, fogRevealed])
   const counts = useMemo(
@@ -109,7 +97,7 @@ export function BoardScreen({
 
       {install}
 
-      <section className={`${styles.boardArea} ${nudging ? boardStyles.nudge : ''}`} data-sea={sea}>
+      <section className={styles.boardArea} data-sea={sea}>
         {pill ? (
           <p className={styles.pill} role="status" data-deal-pill="">
             <Hexagon size={16} aria-hidden="true" />
@@ -143,25 +131,9 @@ export function BoardScreen({
           <span className={styles.codeLabel}>{t('board.codeLabel')}</span>
           <span className={styles.codeValue}>{board.code}</span>
         </div>
-        <div className={styles.codeActions}>
-          <IconButton
-            label={t('board.rebuild')}
-            tone="sea"
-            disabled={dealing}
-            onClick={() => {
-              setNudging(true)
-              window.setTimeout(() => {
-                setNudging(false)
-                onRebuild()
-              }, 180)
-            }}
-          >
-            <RotateCcw size={22} />
-          </IconButton>
-          <IconButton label={t('board.copyLink')} tone="sea" onClick={onCopy}>
-            <Copy size={22} />
-          </IconButton>
-        </div>
+        <IconButton label={t('board.copyLink')} tone="sea" onClick={onCopy}>
+          <Copy size={22} />
+        </IconButton>
       </div>
 
       <Legend board={board} t={t} fogRevealed={fogRevealed} />

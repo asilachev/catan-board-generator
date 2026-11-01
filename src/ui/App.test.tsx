@@ -130,11 +130,11 @@ describe('a new game from the board (design 01, 08)', () => {
     ).toBeInTheDocument()
   })
 
-  it('deals the same board again from the code card', async () => {
-    const user = userEvent.setup()
+  it('keeps the code card to the code and its copy button (#17)', async () => {
     await openLink('#s=base34&p=4&c=anchor-4821')
-    await user.click(screen.getByRole('button', { name: 'Deal this board again' }))
-    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821')
+    expect(screen.getByText('anchor-4821')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Copy link' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /again/i })).toBeNull()
   })
 })
 
