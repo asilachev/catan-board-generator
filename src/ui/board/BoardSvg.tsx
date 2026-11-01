@@ -1,10 +1,10 @@
 import { Eye } from 'lucide-react'
-import { forwardRef, useMemo, type CSSProperties } from 'react'
+import { forwardRef, useId, useMemo, type CSSProperties } from 'react'
 import { pips, type Board, type Cell } from '../../engine/index.ts'
 import type { Translate } from '../i18n/index.ts'
 import { boardGeometry, HARBOR_R, hexPoints, R, SAND, TILE, TOKEN_R, TOKEN_Y } from './geometry.ts'
 import { dealTiming, HARBOR_STAGGER, tileStagger } from './timing.ts'
-import { EDGE, FILL, GLYPH, ICON, type Look } from './terrain.ts'
+import { FILL, GLYPH, ICON, type Look } from './terrain.ts'
 import styles from './board.module.css'
 
 const isRed = (n: number) => n === 6 || n === 8
@@ -89,6 +89,44 @@ function Glyph({ look, size, y }: { look: Look; size: number; y: number }) {
   )
 }
 
+const W = (Math.sqrt(3) / 2) * TILE
+/**
+ * The design's inner shadow (black 16 %, 3 px up): a band inside the tile's lower edges, so a
+ * tile reads as a slightly raised piece without anything showing outside it.
+ */
+const BEVEL = [
+  [W, TILE / 2],
+  [0, TILE],
+  [-W, TILE / 2],
+  [-W, TILE / 2 - 3],
+  [0, TILE - 3],
+  [W, TILE / 2 - 3],
+]
+  .map(([x, y]) => `${(x as number).toFixed(2)},${(y as number).toFixed(2)}`)
+  .join(' ')
+
+/** A hex tile as the design draws it: flat colour, the bevel, then a hairline edge. */
+function HexFace({ look }: { look: Look }) {
+  const points = hexPoints(0, 0, TILE)
+  return (
+    <>
+      <polygon points={points} fill={FILL[look]} />
+      <polygon points={BEVEL} fill="rgb(0 0 0 / 16%)" />
+      <polygon points={points} fill="none" stroke="rgb(0 0 0 / 20%)" strokeWidth={1} />
+    </>
+  )
+}
+
+/** Sea recedes (design 04): the same tile at half strength, the waves glyph in its middle. */
+function SeaHex() {
+  return (
+    <>
+      <HexFace look="sea" />
+      <Glyph look="sea" size={0.75 * R} y={-0.375 * R} />
+    </>
+  )
+}
+
 function Tile({
   look,
   cell,
@@ -102,15 +140,10 @@ function Tile({
 }) {
   const glyphSize = 0.5625 * R
   const showsToken = cell?.num !== null && cell?.num !== undefined && look !== 'fog'
+  if (look === 'sea') return <SeaHex />
   return (
     <>
-      <polygon points={hexPoints(0, 2.6, TILE)} fill={EDGE[look]} />
-      <polygon
-        points={hexPoints(0, 0, TILE)}
-        fill={FILL[look]}
-        stroke="rgb(0 0 0 / 20%)"
-        strokeWidth={1}
-      />
+      <HexFace look={look} />
       {look === 'fog' ? (
         <Glyph look="fog" size={0.75 * R} y={-0.375 * R} />
       ) : (
@@ -171,7 +204,8 @@ export interface BoardSvgProps {
 }
 
 /**
- * The board as SVG: sand coast, tiles with their glyphs, number tokens, harbors and piers. With
+ * The board as SVG, layered as the design (screens 01 and 04): the sea at half strength, piers,
+ * one sand coast per island with its shadow, tiles that touch, number tokens, harbors. With
  * `animate`, it deals itself like the storyboard: coast, tiles in a spiral, tokens, harbors.
  */
 export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardSvg(
@@ -181,6 +215,9 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
   const geometry = useMemo(() => boardGeometry(board), [board])
   const timing = useMemo(() => dealTiming(geometry, fogRevealed), [geometry, fogRevealed])
   const stagger = tileStagger(geometry.cells.length)
+  const shadow = `coast-shadow${useId().replace(/[^\w-]/g, '')}`
+  const harborDelay = (k: number) =>
+    ({ '--delay': `${(timing.harborsStart + k * HARBOR_STAGGER).toFixed(0)}ms` }) as Vars
   const { viewBox: vb } = geometry
   let tokenIndex = 0
   const anim = animate ? styles.animate : ''
@@ -199,23 +236,63 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
       xmlns="http://www.w3.org/2000/svg"
       style={{ '--deal-total': `${timing.total}ms` } as Vars}
     >
-      <g className={styles.sea}>
+      <defs>
+        {/* The coast's soft shadow (design: #06263d at 40 %, 4 px down, 10 px blur). */}
+        <filter id={shadow} x="-20%" y="-20%" width="140%" height="150%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="5" />
+          <feOffset dy="4" result="blur" />
+          <feFlood floodColor="#06263d" floodOpacity="0.4" />
+          <feComposite in2="blur" operator="in" />
+          <feMerge>
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+      <g className={styles.sea} opacity={0.5}>
         {geometry.sea.map((s, k) => (
           <g key={k} transform={`translate(${s.x.toFixed(2)} ${s.y.toFixed(2)})`}>
-            <polygon
-              points={hexPoints(0, 0, TILE)}
-              fill="#1a5a85"
-              stroke="rgb(255 255 255 / 10%)"
-              strokeWidth={1}
-            />
-            <Glyph look="sea" size={0.5 * R} y={-0.25 * R} />
+            <SeaHex />
           </g>
         ))}
       </g>
-      <g className={styles.coast}>
+      {/* Piers run under the coast, so they come out of the island like jetties. */}
+      <g>
+        {geometry.harbors.map(({ x, y, piers }, k) => (
+          <g key={k} className={styles.harbor} style={harborDelay(k)}>
+            {piers.map((p, i) => (
+              <line
+                key={i}
+                x1={x}
+                y1={y}
+                x2={p.x}
+                y2={p.y}
+                stroke="#eadcb6"
+                strokeWidth={3}
+                strokeLinecap="round"
+              />
+            ))}
+          </g>
+        ))}
+      </g>
+      <g className={styles.coast} filter={`url(#${shadow})`}>
         {geometry.cells.map(({ cell, x, y, index }) =>
           cell.terrain === 'sea' && cell.kind !== 'fog' ? null : lookOf(cell) === 'fog' ? null : (
             <polygon key={index} points={hexPoints(x, y, SAND)} fill="#eadcb6" />
+          ),
+        )}
+      </g>
+      {/* The empty slots the deal fills (storyboard); the tiles cover them as they land. */}
+      <g className={styles.coast}>
+        {geometry.cells.map(({ cell, x, y, index }) =>
+          cell.terrain === 'sea' && cell.kind !== 'fog' ? null : lookOf(cell) === 'fog' ? null : (
+            <polygon
+              key={index}
+              points={hexPoints(x, y, TILE - 1)}
+              fill="none"
+              stroke="rgb(47 36 21 / 14%)"
+              strokeWidth={1}
+            />
           ),
         )}
       </g>
@@ -223,7 +300,11 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
         {geometry.cells.map(({ cell, x, y, index, order }) => {
           const look = lookOf(cell)
           return (
-            <g key={index} transform={`translate(${x.toFixed(2)} ${y.toFixed(2)})`}>
+            <g
+              key={index}
+              transform={`translate(${x.toFixed(2)} ${y.toFixed(2)})`}
+              opacity={cell.kind === 'sea' ? 0.5 : undefined}
+            >
               <g
                 className={styles.tile}
                 style={
@@ -260,7 +341,7 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
           })}
       </g>
       <g>
-        {geometry.harbors.map(({ harbor, x, y, piers }, k) => {
+        {geometry.harbors.map(({ harbor, x, y }, k) => {
           const any = harbor.type === 'any'
           const fill = any ? '#2c4a5c' : FILL[harbor.type]
           const ink = any ? '#ffffff' : GLYPH[harbor.type]
@@ -268,27 +349,13 @@ export const BoardSvg = forwardRef<SVGSVGElement, BoardSvgProps>(function BoardS
             <g
               key={k}
               className={styles.harbor}
-              style={
-                { '--delay': `${(timing.harborsStart + k * HARBOR_STAGGER).toFixed(0)}ms` } as Vars
-              }
+              style={harborDelay(k)}
               aria-label={
                 any
                   ? t('board.harbor', { ratio: '3:1' })
                   : t('board.harborFor', { resource: t(`resource.${harbor.type}`) })
               }
             >
-              {piers.map((p, i) => (
-                <line
-                  key={i}
-                  x1={x}
-                  y1={y}
-                  x2={p.x}
-                  y2={p.y}
-                  stroke="#eadcb6"
-                  strokeWidth={3}
-                  strokeLinecap="round"
-                />
-              ))}
               <circle cx={x} cy={y + 1.5} r={HARBOR_R} fill="rgb(0 0 0 / 28%)" />
               <circle cx={x} cy={y} r={HARBOR_R} fill={fill} stroke="#eadcb6" strokeWidth={2} />
               {any ? (

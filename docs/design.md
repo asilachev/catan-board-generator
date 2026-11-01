@@ -105,18 +105,25 @@ drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors
 
 ## Visual language
 
-- **Two surfaces.** The sea ("the table") for the board; parchment ("the rulebook") for setup,
-  scenario and language. `data-surface` on `<html>` switches the page behind them and the theme
-  colour.
+- **Two surfaces.** The sea ("the table") for the board; parchment ("the rulebook") for Setup and
+  Scenario. `data-surface` on `<html>` switches the page behind them and the theme colour.
 - **Accent by game.** Brick red `#b8432b` for the base game, sea blue `#1b6fae` for Seafarers
   (`data-game` on `<html>`).
 - **Tokens** come from the Pencil variables (`src/ui/styles/global.css`); terrain colours are the
   design's `t-*` colours.
 - **Fonts.** Alegreya SC 800 (headings, buttons), PT Sans 400/700 (text), Spectral 800 (numerals),
   PT Mono (codes). Latin and Cyrillic subsets, bundled, `font-display: block`.
-- **Board.** Pointy-top hexes of circumradius 32 (the design's 55 × 64 tile), drawn at 93% so the
-  sand frame shows between them; a darker bottom edge; Lucide glyphs; cream tokens with pips; 6 and
-  8 in red; harbors on the coast with two piers to the edge's corners.
+- **Board**, layered as screens 01 and 04 of the design:
+  - **Tiles:** pointy-top hexes of circumradius 32 (the design's 55 × 64 `Hex` tile) that touch,
+    with a hairline between them (black 20 %) and a 3 px bevel inside the lower edges (black 16 %).
+    Lucide glyphs; cream tokens with pips; 6 and 8 in red.
+  - **Coast:** one sand band around each island (`#eadcb6`, 1.09 × the hex), with a soft shadow
+    (`#06263d` at 40 %, 4 px down, 10 px blur). Sand never shows between tiles, except as the faint
+    empty slots the deal fills.
+  - **Sea:** the same tiles at half strength with the waves glyph in the middle, so the islands
+    carry the picture: the printed maps' sea, and the ring around a v1 board's islands.
+  - **Harbors:** a token on the coast with two 3 px sand piers to the corners of its edge, drawn
+    under the coast so they come out of the island.
 - **Touch.** Tap targets at least 44 px; no double-tap zoom; the board doesn't select text.
 
 ## Languages

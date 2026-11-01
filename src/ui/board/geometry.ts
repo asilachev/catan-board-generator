@@ -13,10 +13,10 @@ import {
  */
 export const R = 32
 export const HEX_W = Math.sqrt(3) * R
-/** Tiles are drawn a little smaller than the grid, so the sand frame shows between them. */
-export const TILE = 0.93 * R
-/** The sand under the land reaches a little past the tiles. */
-export const SAND = 1.07 * R
+/** Tiles fill the grid and touch, with a hairline between them, as the design's `Hex` tiles. */
+export const TILE = R
+/** One sand coast around each island (the design's Coast: 34.85 for a 32 hex), never between tiles. */
+export const SAND = 1.09 * R
 export const TOKEN_R = 14
 export const TOKEN_Y = 0.26 * R
 export const HARBOR_R = 15
