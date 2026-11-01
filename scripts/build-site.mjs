@@ -41,6 +41,18 @@ const links = (code) => ({
   rules: 'https://www.catan.com/understand-catan/game-rules',
 })
 
+/**
+ * A board link opens the board, wherever it lands. v1 lived at this address and shared links like
+ * `catan.silachev.com/#s=s4&p=4&c=anchor-4821`; the app reads that format, so every page hands
+ * such a link to the app with its hash unchanged before anything renders (#12).
+ */
+const FORWARD = `<script>
+      ;(() => {
+        const board = new URLSearchParams(location.hash.slice(1))
+        if (board.get('s') && board.get('c')) location.replace(\`${APP_URL}\${location.hash}\`)
+      })()
+    </script>`
+
 /** First visit to the English page: go to the browser's language, unless one was picked here. */
 const REDIRECT = `<script>
       ;(() => {
@@ -353,7 +365,7 @@ function page(template, lang, icons) {
     ].join('\n    '),
     langMenu: languageLinks,
     langChips: languageLinks,
-    redirect: code === 'en' ? REDIRECT : '',
+    redirect: code === 'en' ? `${FORWARD}\n    ${REDIRECT}` : FORWARD,
     cssVersion,
     'gen.sprite': icons,
     'gen.heroDecor': heroDecor(),
