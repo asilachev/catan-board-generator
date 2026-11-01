@@ -1,4 +1,13 @@
-import { ChevronDown, Copy, Dices, Hash, Hexagon, RotateCcw, Share2 } from 'lucide-react'
+import {
+  ChevronDown,
+  Copy,
+  Dices,
+  Hash,
+  Hexagon,
+  RotateCcw,
+  Share2,
+  SlidersHorizontal,
+} from 'lucide-react'
 import { useMemo, useRef, useState, type CSSProperties, type ReactNode, type Ref } from 'react'
 import type { Board } from '../../engine/index.ts'
 import { BoardViewport } from '../board/BoardViewport.tsx'
@@ -23,6 +32,7 @@ export function BoardScreen({
   svgRef,
   onDealEnd,
   onNewBoard,
+  onNewGame,
   onRebuild,
   onShare,
   onCopy,
@@ -36,6 +46,8 @@ export function BoardScreen({
   svgRef: Ref<SVGSVGElement>
   onDealEnd: () => void
   onNewBoard: () => void
+  /** Ends this game: a fresh code, and Setup for the next one. */
+  onNewGame: () => void
   onRebuild: () => void
   onShare: () => void
   onCopy: () => void
@@ -131,27 +143,32 @@ export function BoardScreen({
           <span className={styles.codeLabel}>{t('board.codeLabel')}</span>
           <span className={styles.codeValue}>{board.code}</span>
         </div>
-        <IconButton label={t('board.copyLink')} tone="sea" onClick={onCopy}>
-          <Copy size={22} />
-        </IconButton>
+        <div className={styles.codeActions}>
+          <IconButton
+            label={t('board.rebuild')}
+            tone="sea"
+            disabled={dealing}
+            onClick={() => {
+              setNudging(true)
+              window.setTimeout(() => {
+                setNudging(false)
+                onRebuild()
+              }, 180)
+            }}
+          >
+            <RotateCcw size={22} />
+          </IconButton>
+          <IconButton label={t('board.copyLink')} tone="sea" onClick={onCopy}>
+            <Copy size={22} />
+          </IconButton>
+        </div>
       </div>
 
       <Legend board={board} t={t} fogRevealed={fogRevealed} />
 
       <div className={styles.actions}>
-        <Button
-          variant="sea"
-          icon={<RotateCcw size={22} />}
-          disabled={dealing}
-          onClick={() => {
-            setNudging(true)
-            window.setTimeout(() => {
-              setNudging(false)
-              onRebuild()
-            }, 180)
-          }}
-        >
-          {t('board.rebuild')}
+        <Button variant="sea" icon={<SlidersHorizontal size={22} />} onClick={onNewGame}>
+          {t('board.newGame')}
         </Button>
         <Button icon={<Dices size={24} />} loading={dealing} onClick={onNewBoard}>
           {dealing ? t('board.dealing') : t('board.newBoard')}

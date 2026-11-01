@@ -149,6 +149,13 @@
   min-width: 0;
 }
 
+/* Deal again and copy, close together so the label keeps its line. */
+.codeActions {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
 .codeLabel {
   color: var(--on-sea-soft);
   font-weight: 700;
@@ -167,18 +174,24 @@
   white-space: nowrap;
 }
 
+/* New game and New board share a line when both labels fit, the main action wider; otherwise each
+   takes a whole line (Spanish and German on narrow phones), so no label is ever cut. */
 .actions {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 22px;
 }
 
 .actions > * {
-  min-width: 0;
+  flex: 1 1 auto;
 }
 
-/* Narrow phones: the main action keeps its whole label in every language. */
+.actions > :last-child {
+  flex-grow: 2;
+}
+
+/* Narrow phones: tighter buttons, so more languages keep both on one line. */
 @media (max-width: 380px) {
   .actions {
     gap: 10px;
@@ -649,6 +662,11 @@
 }
 
 /* ---- Sheets ---------------------------------------------------------------------------------- */
+
+/* From the board, the sheet switches the game too. */
+.sheetGames {
+  margin-bottom: 14px;
+}
 
 .sheetList {
   overflow: hidden;

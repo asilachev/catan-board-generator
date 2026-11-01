@@ -106,6 +106,38 @@ describe('board (design 01, 04)', () => {
   })
 })
 
+describe('a new game from the board (design 01, 08)', () => {
+  it('ends this game: a fresh code, then Setup, and Build board deals it', async () => {
+    const user = userEvent.setup()
+    await openLink('#s=s8&p=4&c=bay-7098')
+    await user.click(screen.getByRole('button', { name: 'New game' }))
+    expect(screen.getByRole('heading', { name: 'Board setup' })).toBeInTheDocument()
+    expect(location.hash).not.toContain('c=bay-7098')
+    await user.click(screen.getByRole('radio', { name: /Base game/ }))
+    await user.click(screen.getByRole('button', { name: 'Build board' }))
+    expect(screen.getByRole('img', { name: /^Base game · 3–4 players/ })).toBeInTheDocument()
+  })
+
+  it('switches from a Seafarers scenario back to the base game in the title’s sheet', async () => {
+    const user = userEvent.setup()
+    await openLink('#s=s8&p=4&c=bay-7098')
+    await user.click(screen.getByRole('button', { name: /^Change scenario/ }))
+    const sheet = screen.getByRole('dialog', { name: 'Scenario' })
+    await user.click(within(sheet).getByRole('radio', { name: 'Base game' }))
+    await user.click(within(sheet).getByRole('option', { name: /5–6 players/ }))
+    expect(
+      screen.getByRole('img', { name: /^Base game · 5–6 players, board code bay-7098$/ }),
+    ).toBeInTheDocument()
+  })
+
+  it('deals the same board again from the code card', async () => {
+    const user = userEvent.setup()
+    await openLink('#s=base34&p=4&c=anchor-4821')
+    await user.click(screen.getByRole('button', { name: 'Deal this board again' }))
+    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821')
+  })
+})
+
 describe('setup (design 02, 07, 08)', () => {
   it('switches to Seafarers, picks a scenario in the sheet and a player count', async () => {
     const user = userEvent.setup()

@@ -343,6 +343,10 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
         }
         onDealEnd={onDealEnd}
         onNewBoard={newBoard}
+        onNewGame={() => {
+          newBoard()
+          setTab('setup')
+        }}
         onRebuild={() => setNonce((n) => n + 1)}
         onShare={() => setOverlay('share')}
         onCopy={() => void copy()}
@@ -360,6 +364,8 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
           game={settings.game}
           current={group}
           seats={settings.seats}
+          // From the board, the sheet switches the game too; Setup has its own game tiles.
+          switchGame={tab === 'board'}
           onPick={pickScenario}
           onClose={() => setOverlay(null)}
         />

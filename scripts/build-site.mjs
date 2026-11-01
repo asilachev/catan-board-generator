@@ -133,7 +133,7 @@ const ICONS = [
   'users',
   'trophy',
   'check',
-  'rotate-ccw',
+  'sliders-horizontal',
   'house',
   'trees',
   'fence',
@@ -271,7 +271,7 @@ function howTiles(t) {
 }
 
 const howButtons = (t) =>
-  `<div class="mini-buttons"><span class="mini-button secondary"><svg class="icon" aria-hidden="true"><use href="#i-rotate-ccw"/></svg>${escapeHtml(t('board.rebuild'))}</span>` +
+  `<div class="mini-buttons"><span class="mini-button secondary"><svg class="icon" aria-hidden="true"><use href="#i-sliders-horizontal"/></svg>${escapeHtml(t('board.newGame'))}</span>` +
   `<span class="mini-button"><svg class="icon" aria-hidden="true"><use href="#i-dices"/></svg>${escapeHtml(t('board.newBoard'))}</span></div>`
 
 const sampleCode = (t) => `${t.list('codeWords')[0]}-4821`
