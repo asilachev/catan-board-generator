@@ -117,6 +117,7 @@ describe('share links', () => {
       seats: 3,
       code: 'якорь-4821',
       options: DEFAULT_OPTIONS,
+      version: 1,
     })
     expect(decodeHash('s=base34&p=4&c=%D1%8F%D0%BA%D0%BE%D1%80%D1%8C-4821')?.code).toBe(
       'якорь-4821',
@@ -143,20 +144,39 @@ describe('share links', () => {
       seats: 4,
       code: 'anchor-4821',
       options: DEFAULT_OPTIONS,
+      version: 1,
     } as const
     expect(encodeHash(ref)).toBe('s=base34&p=4&c=anchor-4821')
     const custom = { ...ref, options: { ...DEFAULT_OPTIONS, same: false } }
-    expect(encodeHash(custom)).toBe('s=base34&p=4&c=anchor-4821&o=r1s0t1l0')
+    expect(encodeHash(custom)).toBe('s=base34&p=4&c=anchor-4821&o=r1s0t1l0p0')
     expect(decodeHash(encodeHash(custom))).toEqual(custom)
   })
 
+  it('marks boards from the printed maps with v=2, and reads older option letters', () => {
+    const ref = {
+      group: 's4',
+      seats: 3,
+      code: 'anchor-4821',
+      options: { ...DEFAULT_OPTIONS, printed: true },
+      version: 2,
+    } as const
+    expect(encodeHash(ref)).toBe('s=s4&p=3&c=anchor-4821&o=r1s1t1l0p1&v=2')
+    expect(decodeHash(encodeHash(ref))).toEqual(ref)
+    // Links from before the printed maps: no p letter, no version.
+    expect(decodeHash('s=s4&p=3&c=x&o=r1s0t1l0')).toMatchObject({
+      options: { same: false, printed: false },
+      version: 1,
+    })
+  })
+
   it('round-trips every option set', () => {
-    for (let mask = 0; mask < 16; mask++) {
+    for (let mask = 0; mask < 32; mask++) {
       const options = {
         red: (mask & 1) > 0,
         same: (mask & 2) > 0,
         spread: (mask & 4) > 0,
         letters: (mask & 8) > 0,
+        printed: (mask & 16) > 0,
       }
       expect(decodeOptions(encodeOptions(options))).toEqual(options)
     }

@@ -50,6 +50,7 @@ import {
   savePrefs,
   saveSettings,
   shareUrl,
+  withChange,
   writeLocation,
   type Prefs,
   type Settings,
@@ -142,14 +143,14 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
   const group = groupOf(settings)
   const variant = resolveVariant(group, settings.seats)
   const board = useMemo(
-    () => buildBoard(variant.id, settings.code, settings.options),
-    [variant.id, settings.code, settings.options],
+    () => buildBoard(variant.id, settings.code, settings.options, settings.version),
+    [variant.id, settings.code, settings.options, settings.version],
   )
   const url = shareUrl(settings)
   const surface = !languageOpen && tab === 'board' ? 'sea' : 'paper'
 
   const change = useCallback(
-    (next: Partial<Settings>) => setSettings((s) => ({ ...s, ...next })),
+    (next: Partial<Settings>) => setSettings((s) => withChange(s, next)),
     [],
   )
 
@@ -186,7 +187,7 @@ function Shell({ prefs, updatePrefs }: { prefs: Prefs; updatePrefs: UpdatePrefs 
 
   // A deal plays whenever a board is shown that hasn't been dealt on screen yet. Derived during
   // render, so the board mounts already dealing.
-  const dealKey = `${variant.id}|${board.code}|${encodeOptions(settings.options)}#${nonce}`
+  const dealKey = `${variant.id}|${board.code}|${encodeOptions(settings.options)}|v${board.version}#${nonce}`
   if (surface === 'sea' && dealKey !== shown) {
     setShown(dealKey)
     setDealing(dealKey)

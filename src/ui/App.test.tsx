@@ -38,7 +38,7 @@ describe('first launch (design 01, 06)', () => {
     // No language screen and no Setup: the board, with a fresh code in the address bar.
     expect(screen.queryByRole('heading', { name: 'Sprache' })).not.toBeInTheDocument()
     expect(screen.getByRole('img', { name: /^Basisspiel · 3–4 Spieler/ })).toBeInTheDocument()
-    expect(location.hash).toMatch(/^#s=base34&p=4&c=\S+-\d{4}$/)
+    expect(location.hash).toMatch(/^#s=base34&p=4&c=\S+-\d{4}&v=2$/)
     // Nothing is picked yet, so the app keeps following the browser.
     expect(JSON.parse(localStorage.getItem(PREFS) ?? '{}').language ?? null).toBeNull()
   })
@@ -148,7 +148,8 @@ describe('setup (design 02, 07, 08)', () => {
     const sheet = screen.getByRole('dialog', { name: 'Scenario' })
     await user.click(within(sheet).getByRole('option', { name: /The Fog Islands/ }))
     await user.click(screen.getByRole('radio', { name: '3 players' }))
-    expect(location.hash).toBe('#s=s3&p=3&c=anchor-4821')
+    // A new board: dealt from the printed maps, so the link says v=2.
+    expect(location.hash).toBe('#s=s3&p=3&c=anchor-4821&v=2')
     // The fog scenario offers to reveal the fog.
     expect(screen.getByRole('switch', { name: /Reveal fog/ })).toBeInTheDocument()
   })
@@ -158,7 +159,8 @@ describe('setup (design 02, 07, 08)', () => {
     await openLink('#s=base34&p=4&c=anchor-4821')
     await user.click(screen.getByRole('button', { name: 'Setup' }))
     await user.click(screen.getByRole('switch', { name: /No equal numbers/ }))
-    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821&o=r1s0t1l0')
+    // Still the v1 link's board, so it keeps v1's format.
+    expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821&o=r1s0t1l0p0')
   })
 
   it('takes a typed code as v1 did: trimmed, with its case and spaces', async () => {

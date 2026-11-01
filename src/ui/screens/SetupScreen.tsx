@@ -15,6 +15,8 @@ import {
   groupsOf,
   hasSeats,
   normalizeCode,
+  offersPrinted,
+  PRINTED_MAPS,
   resolveVariant,
   variantsOf,
   type DealOptions,
@@ -76,6 +78,11 @@ export function SetupScreen({
   }
   const setOption = (key: keyof DealOptions, on: boolean) =>
     onChange({ options: { ...settings.options, [key]: on } })
+  // Seafarers maps offer the rulebook's own layout; while it's on, nothing is shuffled, so the
+  // token rules have nothing to do (except in fog, which is always dealt at random).
+  const map = PRINTED_MAPS[variant.id]
+  const printedChoice = map !== undefined && offersPrinted(map)
+  const asPrinted = printedChoice && settings.options.printed && map.fromTable === undefined
 
   const gameTile = (game: Game) => {
     const groups = groupsOf(game)
@@ -187,6 +194,18 @@ export function SetupScreen({
                 />
               </>
             ) : null}
+            {printedChoice ? (
+              <div className={styles.printedCard}>
+                <Card>
+                  <ToggleRow
+                    title={t('setup.printed')}
+                    hint={t('setup.printedHint')}
+                    checked={settings.options.printed}
+                    onChange={(on) => setOption('printed', on)}
+                  />
+                </Card>
+              </div>
+            ) : null}
           </>
         )}
       </section>
@@ -230,18 +249,21 @@ export function SetupScreen({
             hint={t('setup.redHint')}
             checked={settings.options.red}
             onChange={(on) => setOption('red', on)}
+            disabled={asPrinted}
           />
           <ToggleRow
             title={t('setup.same')}
             hint={t('setup.sameHint')}
             checked={settings.options.same}
             onChange={(on) => setOption('same', on)}
+            disabled={asPrinted}
           />
           <ToggleRow
             title={t('setup.spread')}
             hint={t('setup.spreadHint')}
             checked={settings.options.spread}
             onChange={(on) => setOption('spread', on)}
+            disabled={asPrinted}
           />
           {variant.letters ? (
             <ToggleRow

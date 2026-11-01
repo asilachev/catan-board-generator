@@ -1,4 +1,5 @@
 import {
+  BOARD_VERSION,
   DEFAULT_OPTIONS,
   decodeHash,
   encodeHash,
@@ -6,6 +7,7 @@ import {
   isGroupId,
   normalizeCode,
   type BoardRef,
+  type BoardVersion,
   type DealOptions,
   type Game,
   type GroupId,
@@ -101,6 +103,8 @@ export interface Settings {
   readonly options: DealOptions
   /** Show what is under Scenario 3's fog (display only; doesn't change the board). */
   readonly fog: boolean
+  /** How this board is dealt: a v1 link's board stays v1 until something makes a new board. */
+  readonly version: BoardVersion
 }
 
 export const groupOf = (s: Settings): GroupId => (s.game === 'base' ? s.base : s.sea)
@@ -110,6 +114,7 @@ export const refOf = (s: Settings): BoardRef => ({
   seats: s.seats,
   code: s.code,
   options: s.options,
+  version: s.version,
 })
 
 export function defaultSettings(code: string): Settings {
@@ -121,6 +126,7 @@ export function defaultSettings(code: string): Settings {
     code,
     options: DEFAULT_OPTIONS,
     fog: false,
+    version: BOARD_VERSION,
   }
 }
 
@@ -128,7 +134,13 @@ function parseOptions(v: unknown): DealOptions {
   if (!isRecord(v)) return DEFAULT_OPTIONS
   const flag = (k: keyof DealOptions) =>
     typeof v[k] === 'boolean' ? (v[k] as boolean) : DEFAULT_OPTIONS[k]
-  return { red: flag('red'), same: flag('same'), spread: flag('spread'), letters: flag('letters') }
+  return {
+    red: flag('red'),
+    same: flag('same'),
+    spread: flag('spread'),
+    letters: flag('letters'),
+    printed: flag('printed'),
+  }
 }
 
 export function loadSettings(fallbackCode: string, storage = browserStorage()): Settings {
@@ -144,6 +156,7 @@ export function loadSettings(fallbackCode: string, storage = browserStorage()): 
     code: code || fallbackCode,
     options: parseOptions(v.options),
     fog: v.fog === true,
+    version: v.version === 1 ? 1 : BOARD_VERSION,
   }
 }
 
@@ -160,7 +173,21 @@ export function applyRef(settings: Settings, ref: BoardRef): Settings {
     seats: ref.seats,
     code: ref.code,
     options: ref.options,
+    version: ref.version,
   }
+}
+
+/**
+ * Settings after a change. A board keeps the version it was dealt with (a v1 link stays v1), until
+ * the change makes a new board: a code, scenario or player count, or the printed map.
+ */
+export function withChange(settings: Settings, next: Partial<Settings>): Settings {
+  const merged = { ...settings, ...next }
+  const keys = ['game', 'base', 'sea', 'seats', 'code'] as const
+  const newBoard =
+    keys.some((k) => next[k] !== undefined && next[k] !== settings[k]) ||
+    (next.options !== undefined && next.options.printed !== settings.options.printed)
+  return newBoard ? { ...merged, version: BOARD_VERSION } : merged
 }
 
 /** The board in the address bar, if any. */

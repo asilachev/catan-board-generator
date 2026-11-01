@@ -199,10 +199,16 @@ export function ScenarioDetails({
                 n: variant.harbors.special + variant.harbors.generic,
                 generic: variant.harbors.generic,
               })
-            : t('scenario.harborsSea', {
-                special: variant.harbors.special,
-                generic: variant.harbors.generic,
-              })}
+            : t(
+                // Printed maps draw the harbors on their spots; Scenario 9's players place
+                // their own; boards from v1 links don't draw them.
+                variant.group === 's9'
+                  ? 'scenario.harborsNewWorld'
+                  : board !== null && board.harbors.length === 0
+                    ? 'scenario.harborsSeaHidden'
+                    : 'scenario.harborsSea',
+                { special: variant.harbors.special, generic: variant.harbors.generic },
+              )}
         </p>
       </section>
 
