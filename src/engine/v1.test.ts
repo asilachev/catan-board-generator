@@ -33,7 +33,18 @@ function loadV1(): V1 {
 }
 
 const v1 = loadV1()
-const CODES = ['якорь-4821', 'anchor-4821', 'катан', 'surf-3170', 'сидро-1000', 'a']
+// Typed v1 codes too: v1 kept their case, inner spaces and length.
+const CODES = [
+  'якорь-4821',
+  'anchor-4821',
+  'катан',
+  'surf-3170',
+  'сидро-1000',
+  'a',
+  'Вечер у Пети',
+  'Anchor',
+  'x'.repeat(60),
+]
 const OPTION_SETS: DealOptions[] = [
   DEFAULT_OPTIONS,
   { red: false, same: false, spread: false, letters: false },

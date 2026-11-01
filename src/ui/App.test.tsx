@@ -114,14 +114,14 @@ describe('setup (design 02, 07, 08)', () => {
     expect(location.hash).toBe('#s=base34&p=4&c=anchor-4821&o=r1s0t1l0')
   })
 
-  it('normalises a typed code', async () => {
+  it('takes a typed code as v1 did: trimmed, with its case and spaces', async () => {
     const user = userEvent.setup()
     await openLink('#s=base34&p=4&c=anchor-4821')
     await user.click(screen.getByRole('button', { name: 'Setup' }))
     const input = screen.getByRole('textbox', { name: 'Board code' })
     await user.clear(input)
     await user.type(input, '  Storm 1234 {enter}')
-    expect(location.hash).toContain('c=storm-1234')
+    expect(location.hash).toContain('c=Storm+1234')
   })
 })
 

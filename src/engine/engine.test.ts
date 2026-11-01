@@ -98,10 +98,10 @@ describe('scenarios (docs/rules.md)', () => {
 })
 
 describe('board codes', () => {
-  it('normalises case, spaces and length', () => {
-    expect(normalizeCode('  Anchor 4821 ')).toBe('anchor-4821')
-    expect(normalizeCode('ЯКОРЬ-4821')).toBe('якорь-4821')
-    expect(normalizeCode('x'.repeat(60))).toHaveLength(40)
+  it('hashes a code as v1 did: trimmed, with its case, spaces and length', () => {
+    expect(normalizeCode('  Anchor 4821 ')).toBe('Anchor 4821')
+    expect(normalizeCode('ЯКОРЬ-4821')).toBe('ЯКОРЬ-4821')
+    expect(normalizeCode('x'.repeat(60))).toHaveLength(60)
   })
 
   it('makes word-and-number codes', () => {
@@ -121,6 +121,14 @@ describe('share links', () => {
     expect(decodeHash('s=base34&p=4&c=%D1%8F%D0%BA%D0%BE%D1%80%D1%8C-4821')?.code).toBe(
       'якорь-4821',
     )
+  })
+
+  it('keeps a code from a v1 link exactly as v1 typed it', () => {
+    // v1 wrote its links with URLSearchParams too.
+    const link = (c: string) => new URLSearchParams({ s: 'base34', p: '4', c }).toString()
+    expect(decodeHash(link('Вечер у Пети'))?.code).toBe('Вечер у Пети')
+    expect(decodeHash(link('x'.repeat(60)))?.code).toHaveLength(60)
+    expect(decodeHash(link('x'.repeat(201)))).toBeNull()
   })
 
   it('rejects links without a known scenario or a code', () => {

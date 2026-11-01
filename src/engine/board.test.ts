@@ -145,8 +145,9 @@ describe('boards (docs/rules.md → Scenarios)', () => {
     expect(buildBoard('s5', 'anchor-4822', DEFAULT_OPTIONS).cells).not.toEqual(a.cells)
   })
 
-  it('treats a code the same whatever its case and spacing', () => {
+  it('builds a code as typed, like v1: case and inner spaces count', () => {
     const typed = buildBoard('base34', normalizeCode('  Anchor 4821 '), DEFAULT_OPTIONS)
-    expect(typed.cells).toEqual(buildBoard('base34', 'anchor-4821', DEFAULT_OPTIONS).cells)
+    expect(typed.cells).toEqual(buildBoard('base34', 'Anchor 4821', DEFAULT_OPTIONS).cells)
+    expect(typed.cells).not.toEqual(buildBoard('base34', 'anchor-4821', DEFAULT_OPTIONS).cells)
   })
 })

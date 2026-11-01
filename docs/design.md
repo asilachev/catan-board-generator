@@ -48,8 +48,10 @@ or the board when the app was opened from a shared link.
 
 ## Board codes
 
-- A code is any text. It's normalised before hashing: trimmed, lower case, inner spaces as one
-  hyphen, at most 40 characters. v1's codes are already in that form.
+- A code is any text, hashed the way v1 hashed it: trimmed, and otherwise exactly as typed. Case
+  and inner spaces count (`Anchor` and `anchor` are different boards), so every code and link v1
+  made still builds the same board. The input turns off auto-capitalisation and takes up to 40
+  characters; a link may carry up to 200 (v1 had no limit).
 - Codes are words of each language (`anchor-4821`, `ancla-4821`, `якорь-4821`…), but any code builds
   the same board in every language.
 

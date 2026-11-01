@@ -1,5 +1,5 @@
 import { DEFAULT_OPTIONS, type DealOptions } from './board.ts'
-import { MAX_CODE_LENGTH, normalizeCode } from './code.ts'
+import { MAX_LINK_CODE_LENGTH, normalizeCode } from './code.ts'
 import { isGroupId, type GroupId, type Seats } from './scenarios.ts'
 
 /**
@@ -50,7 +50,7 @@ export function decodeHash(hash: string): BoardRef | null {
   const params = new URLSearchParams(hash.replace(/^#/, ''))
   const group = params.get('s')
   const code = normalizeCode(params.get('c') ?? '')
-  if (!isGroupId(group) || code === '' || code.length > MAX_CODE_LENGTH) return null
+  if (!isGroupId(group) || code === '' || code.length > MAX_LINK_CODE_LENGTH) return null
   return {
     group,
     seats: params.get('p') === '3' ? 3 : 4,
