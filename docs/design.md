@@ -111,8 +111,9 @@ drop in as the last tiles land (−12 px, 160 ms, up to 15 ms apart) → harbors
   (`data-game` on `<html>`).
 - **Tokens** come from the Pencil variables (`src/ui/styles/global.css`); terrain colours are the
   design's `t-*` colours.
-- **Fonts.** Alegreya SC 800 (headings, buttons), PT Sans 400/700 (text), Spectral 800 (numerals),
-  PT Mono (codes). Latin and Cyrillic subsets, bundled, `font-display: block`.
+- **Fonts.** Alegreya SC 800 for headings only; PT Sans 400/700 for text and every control, buttons
+  and the game tiles included (#43); Spectral 800 (numerals), PT Mono (codes). Latin and Cyrillic
+  subsets, bundled, `font-display: block`. The landing page follows the same split.
 - **Board**, layered as screens 01 and 04 of the design:
   - **Tiles:** pointy-top hexes of circumradius 32 (the design's 55 × 64 `Hex` tile) that touch,
     with a hairline between them (black 20 %) and a 3 px bevel inside the lower edges (black 16 %).

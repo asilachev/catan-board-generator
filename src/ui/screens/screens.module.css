@@ -340,9 +340,8 @@
 }
 
 .tileName {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 20px;
+  font-weight: 700;
+  font-size: 18px;
   line-height: 1.1;
 }
 

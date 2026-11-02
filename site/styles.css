@@ -221,9 +221,9 @@ h3 {
   border-radius: 14px;
   background: var(--accent);
   color: #fff7e8;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 20px;
+  /* Sans, like every control: the serif is for headings only (#43). */
+  font-weight: 700;
+  font-size: 18px;
   text-decoration: none;
   white-space: nowrap;
   box-shadow:
@@ -252,7 +252,7 @@ h3 {
 .button.small {
   min-height: 46px;
   padding: 0 18px;
-  font-size: 17px;
+  font-size: 16px;
 }
 
 .button.ghost {
@@ -752,10 +752,9 @@ h3 {
 }
 
 .stats-row strong {
-  font-family: var(--display);
-  font-size: 18px;
+  font-size: 15px;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
 }
 
 .stats-row span {
@@ -897,8 +896,7 @@ h3 {
 
 .mini-tile strong {
   margin-top: 12px;
-  font-family: var(--display);
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .mini-tile small {
@@ -958,9 +956,8 @@ h3 {
   border-radius: 13px;
   background: var(--accent);
   color: #fff7e8;
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 18px;
+  font-weight: 700;
+  font-size: 17px;
   white-space: nowrap;
   box-shadow:
     inset 0 -3px 0 rgb(0 0 0 / 22%),
