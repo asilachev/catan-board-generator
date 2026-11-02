@@ -39,6 +39,35 @@
     "ext": "Проширење за 5–6 играча",
     "extSub": "За 5–6 играча"
   },
+  "facts": {
+    "author": "Аутор",
+    "authorName": "Клаус Тојбер",
+    "authorUrl": "https://sr.wikipedia.org/wiki/Naseljenici_ostrva_Katan",
+    "authorText": "1952–2023. Осмислио је CATAN 1995. и „Поморце“ 1997. године.",
+    "publisher": "Издавач",
+    "publisherName": "Igroljub",
+    "publisherUrl": "https://www.igroljub.si/catan/",
+    "publisherText": "Издаје CATAN за Србију и регион.",
+    "buy": "Где купити",
+    "buyText": "Ништа не зарађујемо од ових линкова.",
+    "shops": [
+      {
+        "name": "MIPL – Друштвене игре",
+        "note": "Нови Сад и Београд",
+        "url": "https://www.drustveneigre.rs/index.php?route=product/search&search=catan"
+      },
+      {
+        "name": "GameS",
+        "note": "Београд, Нови Сад, Крагујевац, Ниш",
+        "url": "https://www.games.rs/board-game/catan-drustvena-igra/"
+      },
+      {
+        "name": "Клуб Црни змај",
+        "note": "Београд",
+        "url": "https://www.klubcrnizmaj.com/search/node/catan"
+      }
+    ]
+  },
   "stats": {
     "boards": "табли",
     "boardsText": "Основна игра за 3–4 и 5–6 играча и свих 9 сценарија „Помораца“",

@@ -128,6 +128,40 @@
             </li>
           </ul>
         </div>
+        <ul class="wrap facts">
+          <li>
+            <span class="fact-icon" aria-hidden="true"
+              ><svg class="icon"><use href="#i-feather" /></svg
+            ></span>
+            <div>
+              <p class="fact-label">{{facts.author}}</p>
+              <p class="fact-name"><a href="{{facts.authorUrl}}">{{facts.authorName}}</a></p>
+              <p>{{facts.authorText}}</p>
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon" aria-hidden="true"
+              ><svg class="icon"><use href="#i-building-2" /></svg
+            ></span>
+            <div>
+              <p class="fact-label">{{facts.publisher}}</p>
+              <p class="fact-name"><a href="{{facts.publisherUrl}}">{{facts.publisherName}}</a></p>
+              <p>{{facts.publisherText}}</p>
+            </div>
+          </li>
+          <li>
+            <span class="fact-icon" aria-hidden="true"
+              ><svg class="icon"><use href="#i-store" /></svg
+            ></span>
+            <div>
+              <p class="fact-label">{{facts.buy}}</p>
+              <ul class="shops">
+                {{gen.shops}}
+              </ul>
+              <p>{{facts.buyText}}</p>
+            </div>
+          </li>
+        </ul>
       </section>
 
       <section class="stats">

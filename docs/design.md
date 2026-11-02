@@ -160,9 +160,14 @@ speaker's review.
 `site/` is a static page on GitHub Pages, in the app's five languages: `catan.silachev.com/`
 (English), then `es/`, `de/`, `ru/` and `sr/`.
 
-- **Sections** (design 20): hero, "you'll need the board game", stats, features, gallery, how it
-  works, the deal, the math, Seafarers, scenarios, languages, install, FAQ, run your own copy, footer
-  with the legal notice.
+- **Sections** (design 20): hero, "you'll need the board game" with who made the game and where to
+  buy it, stats, features, gallery, how it works, the deal, the math, Seafarers, scenarios,
+  languages, install, FAQ, run your own copy, footer with the legal notice.
+- **Author, publisher, where to buy** (#41): Klaus Teuber, linked to Wikipedia in the page's language
+  (Serbian has no article on him, so it links the Serbian one on the game); the publisher CATAN GmbH
+  licenses for that language ([catan.com/our-partners](https://www.catan.com/our-partners)); and the
+  shops of that language's market, as many as it has, from `facts.shops` in the locale file. Every
+  link is checked by hand, none is an affiliate link, and the card says so.
 - **Run your own copy** (#42): the Docker command for the published image and the four commands
   that run it from source, each with a Copy button (shown only where the clipboard works), and a link
   to the README's Deploy section.
