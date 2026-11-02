@@ -91,6 +91,7 @@
   --gold: #e8bb3f;
   --gold-text: #f0c24f;
   --wood: #2f2415;
+  --sea-bg: radial-gradient(110% 80% at 50% 0%, #2a7db5 0%, #1a5f8c 45%, #0d3f5e 100%);
   --display: 'Alegreya SC', Georgia, serif;
   --body: 'PT Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --num: 'Spectral', Georgia, serif;
@@ -401,7 +402,7 @@ h3 {
   position: relative;
   overflow: hidden;
   color: var(--on-sea);
-  background: radial-gradient(110% 80% at 50% 0%, #2a7db5 0%, #1a5f8c 45%, #0d3f5e 100%);
+  background: var(--sea-bg);
 }
 
 .sea .lead {
@@ -1219,7 +1220,9 @@ h3 {
 
 /* ---- Seafarers ---------------------------------------------------------------------------------- */
 
-.seafarers {
+/* The section, not the game: `.mini-hex.seafarers` is Seafarers' icon in "How it works", and this
+   padding made it a tall sliver (#34). */
+section.seafarers {
   padding: clamp(64px, 9vw, 110px) 0;
 }
 
@@ -1356,9 +1359,12 @@ h3 {
   gap: 6px;
 }
 
+/* The last card is the sea, as in design 20. It is also a `.scenario`, whose surface comes later
+   in this file than `.sea` and would win, leaving the card's cream text on cream (#33). */
 .cta-card {
   justify-content: space-between;
   min-height: 200px;
+  background: var(--sea-bg);
   box-shadow: none;
 }
 
@@ -1794,6 +1800,11 @@ h3 {
   }
   .gallery > li {
     scroll-snap-align: start;
+  }
+  /* Alone on its row, the card needs no height to match its neighbours. */
+  .cta-card {
+    min-height: 0;
+    gap: 28px;
   }
   .float.hex {
     width: 64px;
