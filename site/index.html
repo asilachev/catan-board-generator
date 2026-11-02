@@ -510,6 +510,74 @@
           </div>
         </div>
       </section>
+
+      <section id="self-host" class="section tinted" aria-labelledby="host-title">
+        <div class="wrap">
+          <p class="eyebrow">{{host.eyebrow}}</p>
+          <h2 id="host-title">{{host.title}}</h2>
+          <p class="section-lead">{{host.lead}}</p>
+          <div class="host-grid">
+            <article class="host-card">
+              <div class="host-head">
+                <span class="hex-badge" aria-hidden="true"
+                  ><svg class="icon"><use href="#i-container" /></svg
+                ></span>
+                <h3>{{host.docker}}</h3>
+              </div>
+              <p>{{host.dockerText}}</p>
+              <div class="terminal">
+                <div class="terminal-bar">
+                  <span class="dots" aria-hidden="true"></span>
+                  <button
+                    type="button"
+                    class="copy"
+                    data-label="{{host.copy}}"
+                    data-done="{{host.copied}}"
+                    hidden
+                  >
+                    {{host.copy}}
+                  </button>
+                </div>
+                <pre><code>docker run -d -p 8080:8080 ghcr.io/asilachev/catan-board-generator</code></pre>
+              </div>
+              <p class="host-note">{{host.dockerNote}}</p>
+            </article>
+            <article class="host-card">
+              <div class="host-head">
+                <span class="hex-badge" aria-hidden="true"
+                  ><svg class="icon"><use href="#i-laptop" /></svg
+                ></span>
+                <h3>{{host.local}}</h3>
+              </div>
+              <p>{{host.localText}}</p>
+              <div class="terminal">
+                <div class="terminal-bar">
+                  <span class="dots" aria-hidden="true"></span>
+                  <button
+                    type="button"
+                    class="copy"
+                    data-label="{{host.copy}}"
+                    data-done="{{host.copied}}"
+                    hidden
+                  >
+                    {{host.copy}}
+                  </button>
+                </div>
+                <pre><code>git clone https://github.com/asilachev/catan-board-generator.git
+cd catan-board-generator
+npm ci
+npm run dev</code></pre>
+              </div>
+              <p class="host-note">{{host.localNote}}</p>
+            </article>
+          </div>
+          <p class="host-more">
+            <a href="{{links.deploy}}"
+              >{{host.more}}<svg class="icon" aria-hidden="true"><use href="#i-arrow-right" /></svg
+            ></a>
+          </p>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
@@ -528,6 +596,7 @@
             <li><a href="#install">{{nav.install}}</a></li>
             <li><a href="#scenarios">{{nav.scenarios}}</a></li>
             <li><a href="#how">{{nav.how}}</a></li>
+            <li><a href="#self-host">{{host.title}}</a></li>
           </ul>
         </div>
         <div>
@@ -560,6 +629,24 @@
           } catch {
             // Storage blocked: the choice just isn't remembered.
           }
+        })
+      }
+      // Copy buttons show only where the clipboard works; without it the commands stay selectable.
+      for (const button of document.querySelectorAll('button.copy')) {
+        if (!navigator.clipboard) continue
+        button.hidden = false
+        let reset
+        button.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(
+              button.closest('.terminal').querySelector('code').textContent,
+            )
+          } catch {
+            return
+          }
+          button.textContent = button.dataset.done
+          clearTimeout(reset)
+          reset = setTimeout(() => (button.textContent = button.dataset.label), 2000)
         })
       }
       // The language menu closes on Escape or a click elsewhere.

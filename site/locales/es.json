@@ -243,6 +243,20 @@
       }
     ]
   },
+  "host": {
+    "eyebrow": "Código abierto",
+    "title": "Ejecuta tu propia copia",
+    "lead": "La app es de código abierto con licencia MIT: un sitio estático sin backend. Ejecútala en tu servidor o en tu ordenador; todas las copias generan el mismo tablero con el mismo código.",
+    "docker": "Con Docker",
+    "dockerText": "Un solo comando arranca la imagen publicada, para amd64 y arm64.",
+    "dockerNote": "Después abre localhost:8080. Para instalarla en el móvil y usarla sin conexión, sírvela por HTTPS, por ejemplo detrás de tu proxy inverso.",
+    "local": "Desde el código fuente",
+    "localText": "Con Node.js 22 o posterior y npm: clona el repositorio, instala y arranca.",
+    "localNote": "Después abre localhost:5173.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "more": "Docker Compose, Vercel y actualizaciones: en el README"
+  },
   "footer": {
     "tagline": "Tableros justos y fáciles de compartir para el juego base de Catan y Navegantes. Hecho para la noche de juegos.",
     "app": "App",
