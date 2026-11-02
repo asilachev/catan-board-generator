@@ -35,9 +35,9 @@
     "base": "CATAN – Basisspiel",
     "baseSub": "Jeder Spielplan",
     "sea": "Erweiterung Seefahrer",
-    "seaSub": "Szenarien 1–9",
+    "seaSub": "Für die Szenarien 1–9",
     "ext": "Ergänzung 5–6 Spieler",
-    "extSub": "Plan für 5–6 Spieler"
+    "extSub": "Für 5–6 Spieler"
   },
   "stats": {
     "boards": "Spielpläne",
@@ -250,7 +250,7 @@
     "language": "Sprache",
     "official": "Offizielle Regeln · catan.com",
     "source": "Quellcode · GitHub",
-    "copyright": "© 2026 Spielplan-Generator – ein inoffizielles, kostenloses und nicht kommerzielles Fanprojekt.",
+    "project": "Spielplan-Generator ist ein inoffizielles, kostenloses und nicht kommerzielles Fanprojekt.",
     "trademarks": "CATAN®, CATAN – Seefahrer und das CATAN-Logo sind Marken der CATAN GmbH. Regeln, Szenarionamen und Spielinhalte © CATAN GmbH und ihre lizenzierten Verlage. Diese Seite steht in keiner Verbindung zur CATAN GmbH oder ihren Verlagen und wird von ihnen weder gesponsert noch unterstützt. Zum Spielen brauchst du ein eigenes Exemplar.",
     "licenses": "Icons: Lucide (ISC) und eigene Zeichnungen. Schriften: Alegreya SC, PT Sans, PT Mono und Spectral (SIL Open Font License).",
     "privacy": "Keine Cookies, keine Konten. Die App auf app.catan.silachev.com zählt anonyme Seitenaufrufe mit Vercel Web Analytics."

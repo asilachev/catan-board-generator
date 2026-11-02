@@ -35,9 +35,9 @@
     "base": "CATAN — base game",
     "baseSub": "Every board",
     "sea": "Seafarers expansion",
-    "seaSub": "Scenarios 1–9",
+    "seaSub": "For scenarios 1–9",
     "ext": "5–6 player extension",
-    "extSub": "5–6 player board"
+    "extSub": "For 5–6 players"
   },
   "stats": {
     "boards": "boards",
@@ -250,7 +250,7 @@
     "language": "Language",
     "official": "Official rules · catan.com",
     "source": "Source code · GitHub",
-    "copyright": "© 2026 Board Generator — an unofficial, free and non-commercial fan project.",
+    "project": "Board Generator is an unofficial, free and non-commercial fan project.",
     "trademarks": "CATAN®, CATAN – Seafarers and the CATAN logo are trademarks of CATAN GmbH. Rules, scenario names and game content © CATAN GmbH and its licensed publishers. This site is not affiliated with, sponsored or endorsed by CATAN GmbH or its publishers. You need your own copy of the game to play.",
     "licenses": "Icons: Lucide (ISC) and our own drawings. Fonts: Alegreya SC, PT Sans, PT Mono and Spectral (SIL Open Font License).",
     "privacy": "No cookies and no accounts. The app on app.catan.silachev.com counts anonymous page views with Vercel Web Analytics."
