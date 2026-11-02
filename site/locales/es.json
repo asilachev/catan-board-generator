@@ -35,9 +35,9 @@
     "base": "CATAN — juego base",
     "baseSub": "Todos los tableros",
     "sea": "Expansión Navegantes",
-    "seaSub": "Escenarios 1–9",
+    "seaSub": "Para los escenarios 1–9",
     "ext": "Ampliación 5–6 jugadores",
-    "extSub": "Tablero para 5–6"
+    "extSub": "Para 5–6 jugadores"
   },
   "stats": {
     "boards": "tableros",
@@ -250,7 +250,7 @@
     "language": "Idioma",
     "official": "Reglas oficiales · catan.com",
     "source": "Código fuente · GitHub",
-    "copyright": "© 2026 Generador de tableros — un proyecto de fans no oficial, gratuito y sin ánimo de lucro.",
+    "project": "Generador de tableros es un proyecto de fans no oficial, gratuito y sin ánimo de lucro.",
     "trademarks": "CATAN®, CATAN – Navegantes y el logotipo de CATAN son marcas de CATAN GmbH. Reglas, nombres de escenarios y contenido del juego © CATAN GmbH y sus editoriales autorizadas. Este sitio no está afiliado, patrocinado ni respaldado por CATAN GmbH ni sus editoriales. Necesitas tu propio ejemplar del juego para jugar.",
     "licenses": "Iconos: Lucide (ISC) y dibujos propios. Fuentes: Alegreya SC, PT Sans, PT Mono y Spectral (SIL Open Font License).",
     "privacy": "Sin cookies ni cuentas. La app en app.catan.silachev.com cuenta visitas anónimas con Vercel Web Analytics."

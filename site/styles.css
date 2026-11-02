@@ -1589,9 +1589,10 @@ section.seafarers {
   color: rgb(246 236 214 / 80%);
 }
 
+/* The last column is as wide as its five language chips, which never wrap (#39). */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr) minmax(0, 1fr) auto;
   gap: 40px;
   padding-bottom: 40px;
   border-bottom: 1px solid rgb(246 236 214 / 14%);
@@ -1636,7 +1637,6 @@ section.seafarers {
 
 .footer .chips {
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
 }
 
