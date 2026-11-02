@@ -39,6 +39,35 @@
     "ext": "Дополнение на 5–6 игроков",
     "extSub": "Для 5–6 игроков"
   },
+  "facts": {
+    "author": "Автор",
+    "authorName": "Клаус Тойбер",
+    "authorUrl": "https://ru.wikipedia.org/wiki/%D0%A2%D0%BE%D0%B9%D0%B1%D0%B5%D1%80,_%D0%9A%D0%BB%D0%B0%D1%83%D1%81_(%D1%80%D0%B0%D0%B7%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%87%D0%B8%D0%BA_%D0%B8%D0%B3%D1%80)",
+    "authorText": "1952–2023. Придумал CATAN в 1995 году, а «Мореходов» — в 1997-м.",
+    "publisher": "Издатель",
+    "publisherName": "Мир Хобби",
+    "publisherUrl": "https://hobbyworld.ru/catan",
+    "publisherText": "Издаёт CATAN на русском языке в России и Беларуси.",
+    "buy": "Где купить",
+    "buyText": "Мы ничего не зарабатываем на этих ссылках.",
+    "shops": [
+      {
+        "name": "Hobby Games",
+        "note": "сеть магазинов «Мира Хобби»",
+        "url": "https://hobbygames.ru/kolonizatori-category"
+      },
+      {
+        "name": "Мосигра",
+        "note": "магазины в городах России",
+        "url": "https://www.mosigra.ru/seriya-igr-kolonizatory"
+      },
+      {
+        "name": "Магазины и клубы",
+        "note": "список на сайте «Мира Хобби»",
+        "url": "https://hobbyworld.ru/company/play?store=1"
+      }
+    ]
+  },
   "stats": {
     "boards": "полей",
     "boardsText": "Базовая игра на 3–4 и 5–6 игроков и все 9 сценариев «Мореходов»",

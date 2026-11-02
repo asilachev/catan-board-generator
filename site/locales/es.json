@@ -39,6 +39,41 @@
     "ext": "Ampliación 5–6 jugadores",
     "extSub": "Para 5–6 jugadores"
   },
+  "facts": {
+    "author": "Autor",
+    "authorName": "Klaus Teuber",
+    "authorUrl": "https://es.wikipedia.org/wiki/Klaus_Teuber",
+    "authorText": "1952–2023. Creó CATAN en 1995 y Navegantes en 1997.",
+    "publisher": "Editorial",
+    "publisherName": "Devir",
+    "publisherUrl": "https://devir.es/devirpedia/catan",
+    "publisherText": "Publica CATAN en español, en España y Latinoamérica.",
+    "buy": "Dónde comprar",
+    "buyText": "No ganamos nada con estos enlaces.",
+    "shops": [
+      {
+        "name": "Tienda Devir",
+        "note": "España, online",
+        "url": "https://devir.es/catalogo/juegos-de-mesa/categoria-catan"
+      },
+      {
+        "name": "Tiendas en España",
+        "url": "https://devir.es/storelocator"
+      },
+      {
+        "name": "Tiendas en México",
+        "url": "https://devir.mx/puntos-de-venta/"
+      },
+      {
+        "name": "Tiendas en Chile",
+        "url": "https://devir.cl/storelocator"
+      },
+      {
+        "name": "Tiendas en Argentina",
+        "url": "https://devir.com.ar/storelocator"
+      }
+    ]
+  },
   "stats": {
     "boards": "tableros",
     "boardsText": "Juego base para 3–4 y 5–6 jugadores, más los 9 escenarios de Navegantes",

@@ -713,6 +713,103 @@ h3 {
   color: var(--ink-soft);
 }
 
+/* Who made the game and where to buy it (#41), under what you need. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px 40px;
+  padding: 26px 0 34px;
+  border-top: 1px solid #e6c6b4;
+  list-style: none;
+}
+
+.facts > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  min-width: 0;
+}
+
+.fact-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 46px;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--surface);
+  color: var(--accent);
+  font-size: 19px;
+}
+
+.facts p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+.facts .fact-label {
+  margin-bottom: 2px;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.facts .fact-name,
+.shops {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.facts a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgb(184 67 43 / 45%);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+}
+
+.facts a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* One shop a line; its note follows the name, or goes under it as a whole when there's no room. */
+.shops {
+  display: grid;
+  gap: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.shops li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+}
+
+.shops a {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.shops .icon {
+  width: 0.9em;
+  height: 0.9em;
+  color: var(--accent);
+}
+
+.shops small {
+  color: var(--ink-soft);
+  font-weight: 400;
+  font-size: 13.5px;
+}
+
 /* ---- Stats ------------------------------------------------------------------------------------- */
 
 .stats {
@@ -1867,6 +1964,9 @@ section.seafarers {
     grid-template-columns: 1fr 1fr;
   }
   .host-grid {
+    grid-template-columns: 1fr;
+  }
+  .facts {
     grid-template-columns: 1fr;
   }
 }

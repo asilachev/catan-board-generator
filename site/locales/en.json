@@ -39,6 +39,30 @@
     "ext": "5–6 player extension",
     "extSub": "For 5–6 players"
   },
+  "facts": {
+    "author": "Author",
+    "authorName": "Klaus Teuber",
+    "authorUrl": "https://en.wikipedia.org/wiki/Klaus_Teuber",
+    "authorText": "1952–2023. Created CATAN in 1995 and Seafarers in 1997.",
+    "publisher": "Publisher",
+    "publisherName": "CATAN Studio",
+    "publisherUrl": "https://www.catanstudio.com/",
+    "publisherText": "Publishes CATAN in English, under license from CATAN GmbH.",
+    "buy": "Where to buy",
+    "buyText": "We earn nothing from these links.",
+    "shops": [
+      {
+        "name": "CATAN Shop",
+        "note": "official shop, US",
+        "url": "https://catanshop.com/"
+      },
+      {
+        "name": "Local game stores",
+        "note": "UK",
+        "url": "https://www.asmodee.co.uk/pages/find-your-local-game-store"
+      }
+    ]
+  },
   "stats": {
     "boards": "boards",
     "boardsText": "Base game for 3–4 and 5–6 players, plus all 9 Seafarers scenarios",

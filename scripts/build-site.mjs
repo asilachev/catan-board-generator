@@ -88,15 +88,24 @@ function flatten(value, path = '', into = new Map()) {
 }
 const readJson = async (path) => JSON.parse(await readFile(`${root}${path}`, 'utf8'))
 const site = {}
+const siteJson = {}
 const app = {}
 for (const { code } of LANGS) {
-  site[code] = flatten(await readJson(`site/locales/${code}.json`))
+  siteJson[code] = await readJson(`site/locales/${code}.json`)
+  site[code] = flatten(siteJson[code])
   app[code] = await readJson(`src/ui/i18n/locales/${code}.json`)
 }
 const problems = []
+// Each language lists the shops of its own market, as many as it has, so those aren't compared.
+const compared = (key) => !key.startsWith('facts.shops.')
 for (const { code } of LANGS) {
-  const missing = [...site.en.keys()].filter((k) => !site[code].has(k))
-  const extra = [...site[code].keys()].filter((k) => !site.en.has(k))
+  const missing = [...site.en.keys()].filter((k) => compared(k) && !site[code].has(k))
+  const extra = [...site[code].keys()].filter((k) => compared(k) && !site.en.has(k))
+  const shops = siteJson[code].facts?.shops ?? []
+  if (!shops.length || shops.some((s) => !s.name || !/^https:\/\//.test(s.url ?? '')))
+    problems.push(
+      `site/locales/${code}.json: every shop in facts.shops needs a name and an https url`,
+    )
   if (missing.length) problems.push(`site/locales/${code}.json misses ${missing.join(', ')}`)
   if (extra.length) problems.push(`site/locales/${code}.json has unknown ${extra.join(', ')}`)
 }
@@ -159,6 +168,10 @@ const ICONS = [
   'cloud-fog',
   'container',
   'laptop',
+  'feather',
+  'building-2',
+  'store',
+  'arrow-up-right',
 ]
 const CACTUS = [
   ['path', { d: 'M10 21V6a2 2 0 0 1 4 0v15' }],
@@ -321,6 +334,19 @@ function languageCards(texts) {
   }).join('\n            ')
 }
 
+/** Where to buy: the shops the page's locale file lists for its language's market (#41). */
+function shopItems(code, texts) {
+  return siteJson[code].facts.shops
+    .map(
+      ({ url, note }, i) =>
+        `<li><a href="${escapeAttribute(url)}">${escapeHtml(texts(`facts.shops.${i}.name`))}` +
+        `<svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>` +
+        (note ? `<small>${escapeHtml(texts(`facts.shops.${i}.note`))}</small>` : '') +
+        '</li>',
+    )
+    .join('\n              ')
+}
+
 // ---- Pages ---------------------------------------------------------------------------------------
 
 /** Fills {{key}}: inside a tag the value is attribute text; elsewhere it's (trusted) HTML. */
@@ -379,6 +405,7 @@ function page(template, lang, icons) {
     'gen.code': escapeHtml(sampleCode(t)),
     'gen.scenarioCards': scenarioCards(t, texts),
     'gen.languageCards': languageCards(texts),
+    'gen.shops': shopItems(code, texts),
     ...Object.fromEntries(Object.entries(links(code)).map(([k, v]) => [`links.${k}`, v])),
   }
   return render(template, (key) => (key in generated ? generated[key] : texts(key)))

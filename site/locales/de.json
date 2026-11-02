@@ -39,6 +39,35 @@
     "ext": "Ergänzung 5–6 Spieler",
     "extSub": "Für 5–6 Spieler"
   },
+  "facts": {
+    "author": "Autor",
+    "authorName": "Klaus Teuber",
+    "authorUrl": "https://de.wikipedia.org/wiki/Klaus_Teuber",
+    "authorText": "1952–2023. Erfand CATAN 1995 und die Seefahrer-Erweiterung 1997.",
+    "publisher": "Verlag",
+    "publisherName": "KOSMOS",
+    "publisherUrl": "https://www.kosmos.de/pages/catan",
+    "publisherText": "Verlegt CATAN seit 1995 im deutschsprachigen Raum.",
+    "buy": "Erhältlich bei",
+    "buyText": "Wir verdienen nichts an diesen Links.",
+    "shops": [
+      {
+        "name": "KOSMOS-Shop",
+        "note": "Verlagsshop",
+        "url": "https://www.kosmos.de/collections/catan"
+      },
+      {
+        "name": "Müller",
+        "note": "Filialen und online",
+        "url": "https://www.mueller.de/search/?q=catan"
+      },
+      {
+        "name": "VEDES",
+        "note": "Spielwarenhändler vor Ort",
+        "url": "https://www.vedes.com/haendler"
+      }
+    ]
+  },
   "stats": {
     "boards": "Spielpläne",
     "boardsText": "Basisspiel für 3–4 und 5–6 Spieler plus alle 9 Seefahrer-Szenarien",
