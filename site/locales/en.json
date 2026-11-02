@@ -243,6 +243,20 @@
       }
     ]
   },
+  "host": {
+    "eyebrow": "Open source",
+    "title": "Run your own copy",
+    "lead": "The app is open source under the MIT License: a static site with no backend. Run it on your own server or computer; every copy deals the same board from the same code.",
+    "docker": "With Docker",
+    "dockerText": "One command starts the published image, for amd64 and arm64.",
+    "dockerNote": "Then open localhost:8080. To install it on phones and use it offline, serve it over HTTPS, for example behind your reverse proxy.",
+    "local": "From source",
+    "localText": "With Node.js 22 or later and npm: clone the repository, install, start.",
+    "localNote": "Then open localhost:5173.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "more": "Docker Compose, Vercel and updates: see the README"
+  },
   "footer": {
     "tagline": "Fair, shareable boards for the Catan base game and Seafarers. Made for game night.",
     "app": "App",

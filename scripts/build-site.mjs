@@ -38,6 +38,8 @@ const links = (code) => ({
   // The owner's copy of the app, on Vercel. It opens in this page's language and keeps it.
   app: `${APP_URL}?lang=${code}`,
   github: 'https://github.com/asilachev/catan-board-generator',
+  // The README's Deploy section: Docker Compose, Vercel, HTTPS and updates.
+  deploy: 'https://github.com/asilachev/catan-board-generator#deploy',
   rules: 'https://www.catan.com/understand-catan/game-rules',
 })
 
@@ -155,6 +157,8 @@ const ICONS = [
   'gem',
   'waves',
   'cloud-fog',
+  'container',
+  'laptop',
 ]
 const CACTUS = [
   ['path', { d: 'M10 21V6a2 2 0 0 1 4 0v15' }],

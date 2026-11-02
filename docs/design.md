@@ -161,8 +161,11 @@ speaker's review.
 (English), then `es/`, `de/`, `ru/` and `sr/`.
 
 - **Sections** (design 20): hero, "you'll need the board game", stats, features, gallery, how it
-  works, the deal, the math, Seafarers, scenarios, languages, install, FAQ, footer with the legal
-  notice.
+  works, the deal, the math, Seafarers, scenarios, languages, install, FAQ, run your own copy, footer
+  with the legal notice.
+- **Run your own copy** (#42): the Docker command for the published image and the four commands
+  that run it from source, each with a Copy button (shown only where the clipboard works), and a link
+  to the README's Deploy section.
 - **Each page shows the app in its own language.** `npm run site:shots` captures the app with
   Playwright and Google Chrome in every language: 11 phone screens and the 4 deal frames (the board
   alone, paused at 80, 380, 760 and 1000 ms: coast, spiral, tokens, harbors). They aren't committed; the Pages workflow captures them on every

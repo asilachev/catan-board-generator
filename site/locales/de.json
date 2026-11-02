@@ -243,6 +243,20 @@
       }
     ]
   },
+  "host": {
+    "eyebrow": "Open Source",
+    "title": "Selbst betreiben",
+    "lead": "Die App ist Open Source unter der MIT-Lizenz: eine statische Website ohne Backend. Betreib sie auf deinem eigenen Server oder Rechner; jede Kopie legt mit demselben Code denselben Spielplan aus.",
+    "docker": "Mit Docker",
+    "dockerText": "Ein Befehl startet das veröffentlichte Image, für amd64 und arm64.",
+    "dockerNote": "Dann localhost:8080 öffnen. Damit sie sich auf dem Handy installieren lässt und offline läuft, braucht sie HTTPS, etwa hinter deinem Reverse Proxy.",
+    "local": "Aus dem Quellcode",
+    "localText": "Mit Node.js 22 oder neuer und npm: Repository klonen, installieren, starten.",
+    "localNote": "Dann localhost:5173 öffnen.",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "more": "Docker Compose, Vercel und Updates: siehe README"
+  },
   "footer": {
     "tagline": "Faire, teilbare Spielpläne für das Catan-Basisspiel und Seefahrer. Gemacht für den Spieleabend.",
     "app": "App",

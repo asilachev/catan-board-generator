@@ -1578,6 +1578,124 @@ section.seafarers {
   color: var(--ink-soft);
 }
 
+/* ---- Run your own copy ------------------------------------------------------------------------- */
+
+.host-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.host-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 28px;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow:
+    inset 0 0 0 1px var(--border),
+    0 14px 30px rgb(47 36 21 / 8%);
+}
+
+.host-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.host-head h3 {
+  font-size: 24px;
+}
+
+.host-card p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.host-card .host-note {
+  font-size: 15px;
+}
+
+.terminal {
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--wood);
+  color: var(--on-sea);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 8px 0 16px;
+  background: rgb(246 236 214 / 7%);
+}
+
+/* A terminal window's three lights, in brick, wheat and pasture. */
+.dots {
+  width: 44px;
+  height: 10px;
+  background:
+    radial-gradient(circle at 5px 50%, #c8553d 4.5px, transparent 5px),
+    radial-gradient(circle at 22px 50%, #e5b93d 4.5px, transparent 5px),
+    radial-gradient(circle at 39px 50%, #8dbe4d 4.5px, transparent 5px);
+  opacity: 0.9;
+}
+
+.copy {
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9px;
+  background: rgb(246 236 214 / 12%);
+  color: var(--on-sea);
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.copy:hover {
+  background: rgb(246 236 214 / 20%);
+}
+
+.copy[hidden] {
+  display: none;
+}
+
+/* Long lines wrap rather than scroll: what gets copied is the text, not the wrapping. */
+.terminal pre {
+  margin: 0;
+  padding: 16px 20px 20px;
+  font-family: var(--mono);
+  font-size: 14.5px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.host-more {
+  margin: 28px 0 0;
+}
+
+.host-more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.host-more a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 /* ---- Footer ----------------------------------------------------------------------------------- */
 
 .footer {
@@ -1748,6 +1866,9 @@ section.seafarers {
   .footer-grid {
     grid-template-columns: 1fr 1fr;
   }
+  .host-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1818,6 +1939,13 @@ section.seafarers {
   }
   .chart {
     padding: 18px;
+  }
+  .host-card {
+    padding: 22px 18px;
+  }
+  .terminal pre {
+    padding: 14px 16px 18px;
+    font-size: 13.5px;
   }
   .footer-grid {
     grid-template-columns: 1fr;
