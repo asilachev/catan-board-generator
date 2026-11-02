@@ -47,8 +47,9 @@ change to a rule or ruling updates the docs in the same PR.
 - **Faithful to the rulebooks.** Tile, token and harbor counts and victory targets come from the
   rulebooks (`docs/rules.md` lists the pages). Each gap is a ruling in `docs/rules.md`. Don't
   silently change a default.
-- **Fonts.** Alegreya SC for headings, PT Sans for text, Spectral for numerals (Alegreya has old-style
-  figures), PT Mono for codes. All OFL, bundled from `@fontsource`. Don't add another face.
+- **Fonts.** Alegreya SC for headings only: titles and the wordmark. PT Sans for text and every
+  control: buttons, tiles, chips and labels. Spectral for numerals (Alegreya has old-style figures),
+  PT Mono for codes. All OFL, bundled from `@fontsource`. Don't add another face.
 - **Rulebooks are not ours.** Never commit the PDFs. The app points to CATAN GmbH's official rules
   page and names the section to read, not a page of one edition.
 - **Credit and disclaim.** Wherever credits appear: CATAN® and CATAN – Seafarers are trademarks of

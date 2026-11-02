@@ -9,9 +9,10 @@
   padding: 0 22px;
   border: 0;
   border-radius: var(--radius);
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 20px;
+  /* Sans, like every control: the serif is for headings only (#43). */
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
   line-height: 1;
   white-space: nowrap;
   transition:
